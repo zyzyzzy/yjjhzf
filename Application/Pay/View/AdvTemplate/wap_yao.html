@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>广告页面</title>
+    <link rel="stylesheet" href="index.css?v=0401">
+    <style>
+        body {
+            margin: 0;
+            color: #111;
+            font-size: 12px;
+            font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+            position: relative
+        }
+        * {
+            -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+        }
+        input, textarea, button, select, a {
+            -webkit-tap-highlight-color: transparent
+        }
+        h1, h2, h3 {
+            font-weight: normal
+        }
+        h1 {
+            font-size: 24px;
+            line-height: 32px;
+            word-break: break-all
+        }
+        .close-con{ position: fixed; right: .625rem; top: .625rem;}
+        .close-con span,.close-con a{ float: left; display: block;}
+        .close-con span{ font-size: 1.25rem; color: #fff; padding-top: .375rem;}
+        .close-con a{ width: 1.875rem; height: 1.875rem; margin-left: .625rem;}
+        .close-con img{ display: block; width: 100%; height: 100%;}
+        .pic-content{ font-size: 1.125rem; line-height: 1.625rem;}
+        .big-img img{ display: block; max-width: 100%;}
+        .text-content{ color: #3d3d3d; text-align: center;}
+        .text-content h1{ font-size: 1.125rem; line-height: 1.625rem;}
+
+    </style>
+</head>
+
+<body>
+<section>
+    <div class="ad-content">
+        <div class="close-con"><span class="countdown"></span><a href="JavaScript:;"><img src="/Public/images/adv/yao/close-white.png" /></a></div>
+        <div class="pic-content">
+            <div class="big-img"><img src="/Public/images/adv/yao/pic_01.jpg" /></div>
+        </div>
+        <div class="text-content"><h1>我是电话或公司名或文案</h1></div>
+    </div>
+</section>
+<script src="/Public/js/jquery.min.js"></script>
+<script>
+    var time = 5;
+    var url = '<{$jump_url}>?code=<{$code}>';
+    function closeWindow() {
+        window.setTimeout('closeWindow()', 1000);
+        if (time > 0) {
+            $(".countdown").html(time + "s");
+            time--;
+        }
+        else {
+            /* window.opener = null; */
+            // $(".ad-content").hide();
+            location.href = url;
+        }
+        $(".close-con a").click(function () {
+            // $(".ad-content").hide();
+            location.href = url;
+        });
+    }
+    window.onload = closeWindow;
+</script>
+</body>
+
+</html>

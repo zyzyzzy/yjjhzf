@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改登录模板</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .thumb {
+            margin-left: 5px;
+            margin-top: 15px;
+            height: 128px
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div id='prevModal'>
+        <img id='img_prev'/>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" value="<{$info['id']}>" name="id" id="id" class="layui-input addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录类型</label>
+            <div class="layui-input-block">
+                <select name="type" id="type" class="layui-select addeditinput">
+                    <option value=""></option>
+                    <option value="1" <if condition="$info['type'] eq 1">selected</if> >管理后台</option>
+                    <option value="2" <if condition="$info['type'] eq 2">selected</if> >用户后台</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板文件名</label>
+            <div class="layui-input-block">
+                <input type="text" name="temp_name" id="temp_name" placeholder="例如:index"
+                       value="<{$info['temp_name']}>" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板说明</label>
+            <div class="layui-input-block">
+                <textarea name="msg" id="msg" class="layui-textarea addeditinput" placeholder="此为模板说明性文字,可选填"><{$info['msg']}></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" value="fal" id="img_upload">
+            <label class="layui-form-label">模板截图</label>
+            <div class="layui-input-block" style="margin-left: 15%;">
+                <button type="button" class="layui-btn upload">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+            </div>
+            <div class='layui-input-block' id='div_prev' title=''>
+                <img src="/<{$info['img_path']}>" alt="" style="margin-top: 15px;margin-left:5px;height: 128px;" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $('#btn').click(function () {
+        var type = $('#type').val();
+        if (type == '') {
+            layer.msg("请选择登录类型", {icon: 5, time: 2000});
+            return false;
+        }
+        var temp_name = $('#temp_name').val();
+        if (temp_name == '') {
+            layer.msg("请填写模板文件名", {icon: 5, time: 2000});
+            return false;
+        }
+        var str = $('#div_prev').html();
+        if (str == '') {
+            layer.msg("请先上传图片", {icon: 5, time: 2000});
+            return false;
+        }
+        //未点击上传图片，只需要修改输入框的内容
+        if($('#img_upload').val()=='fal'){
+            var datastr = "";
+            $(".addeditinput").each(function () {
+                datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+            });
+            $.ajax({
+                type: 'post',
+                url: '<{:U("editTemplate")}>',
+                data: datastr,
+                dataType: 'json',
+                success: function (res) {
+                    if(res.status=='ok'){
+                        layer.msg(res.msg,{icon:6,time:2000},function () {
+                            parent.location.reload();
+                        });
+                    }else{
+                        layer.msg(res.msg,{icon:5,time:2000});
+                    }
+                },
+                error: function (XMLHttpRequest, textStauts, errorThrown) {
+                    layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                    return false;
+                }
+            });
+        }
+    });
+
+    //有重新上传图片时
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        //执行实例
+        upload.render({
+            elem: '.upload'
+            , url: '<{:U("editTemplateUpload")}>'	//后台接收地址
+            , auto: false				//不自动上传设置
+            , accept: 'images'				 //允许上传的文件类型
+            , size: 2097152				 //单位：字节，允许上传的文件大小 2M
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            , bindAction: '#btn'			//“上传”按钮的ID
+            , choose: function (obj) { //文件选择后的回调
+                $('#img_upload').val('tr');
+                //图片预览
+                obj.preview(function (index, file, result) {
+                    $("#div_prev").html(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    //放大
+                    imgobj.className = 'thumb';
+                    $("#div_prev").html(imgobj); //添加到预览区域
+                });
+            }
+            , before: function (obj) { //obj参数包含的信息
+                //需要传到后台的其他参数
+                var id = $('#id').val();
+                var temp_name = $('#temp_name').val();
+                var type = $('#type').val();
+                var msg = $('#msg').val();
+                this.data = {id: id, temp_name: temp_name, type: type, msg: msg};//传递到后台的数据
+            }
+            , done: function (res, index, upload) {//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if (res.status == 'ok') {
+                    layer.msg(res.msg, {icon: 6, time: 2000}, function () {
+                        parent.location.reload();
+                    });
+                } else {
+                    layer.msg(res.msg, {icon: 5, time: 2000});
+                }
+            }
+        })
+    });
+
+
+</script>

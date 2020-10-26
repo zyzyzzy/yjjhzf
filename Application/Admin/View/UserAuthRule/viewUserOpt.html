@@ -1,0 +1,66 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">查看用户三级菜单</block>
+<block name="nav">
+    <a href="">用户列表</a>
+    <a href="">用户菜单列表</a>
+    <a><cite>查看操作</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="menu_title" id="menuTitle" value="" placeholder="请输入菜单名称" autocomplete="off" class="layui-input">
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllInfo(this,'viewUserOpt')"
+                ajaxurl="<{:U('delAllUserMenu')}>"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="viewUserOpt" layui-data="{id:'viewUserOpt'}" dataurl="<{:U('loadUserOptList')}>?id=<{$id}>"></table>
+
+    <!--菜单名称-->
+    <script type="text/html" id="showmenutitle">
+        {{d.menu_title}}
+    </script>
+
+    <!--控制器名称-->
+    <script type="text/html" id="showcontroller">
+        {{#  if(d.controller){ }}
+        {{d.controller}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+
+    <!--方法名称-->
+    <script type="text/html" id="showaction">
+        {{#  if(d.action){ }}
+        {{d.action}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+
+    <!--操作-->
+    <script type="text/html" id="caozuo">
+
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("editUserMenu")}>?id={{d.id}}',800,500)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+        </i>
+        </a>
+
+        <!--删除-->
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('delUserMenu')}>">
+            <i class="layui-icon">
+                 <span class="layui-badge layui-bg-danger" >
+                     <i class="layui-icon">&#xe640;</i>
+                 </span>
+            </i>
+        </a>
+
+    </script>
+</block>
+
+

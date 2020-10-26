@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>交易记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <link rel="stylesheet" href="/Public/css/account.css">
+    <style>
+        .layui-input{
+            margin-bottom: 1%;
+        }
+        .x-so{
+            margin-bottom: 0;
+        }
+        .x-body{
+            padding: 10px;
+        }
+        .acc-content .amount-type li{
+            width: 25%;
+        }
+        .x-so input.input_ordernum {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+         <a href="javascript:;">交易管理</a>
+    <a><cite>交易记录</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <div class="account-wrapper">
+        <div class="acc-title">账户总览</div>
+        <div class="acc-content clearfix">
+            <ul class="fl amount-type">
+                <li>订单金额<span class="txt-blue">￥<em id="sum_ordermoney"></em></span></li>
+                <!--<li>成本金额<span class="txt-red">￥<em id="sum_costmoney"></em></span></li>-->
+                <li>手续费<span class="txt-yellow">￥<em id="sum_trademoney"></em></span></li>
+                <li>到账金额<span class="txt-green">￥<em id="sum_money"></em></span></li>
+                <li>冻结金额<span class="txt-red">￥<em id="sum_freezemoney"></em></span></li>
+            </ul>
+            <div class="fl succeed-rate">
+                <div class="fl circleProgress_wrapper">
+                    <div class="wrapper-box wrapper-right">
+                        <div class="circleProgress rightcircle"></div>
+                    </div>
+                    <div class="wrapper-box wrapper-left">
+                        <div class="circleProgress leftcircle"></div>
+                    </div>
+                    <div class="percent-con"><span class="percent" int-percent='' id="success_rate"></span>成功率</div>
+                </div>
+                <div class="fl suc-number">
+                    <p class="green">成功笔数：<span id="count_success"></span>笔</p>
+                    <p class="red">失败笔数：<span id="count_fail"></span>笔</p>
+                    <p class="yellow">测试笔数：<span id="count_test"></span>笔</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 1%;">
+        <form class="layui-form layui-col-md9 x-so" method="GET" onsubmit="return false">
+            提交时间：<input class="layui-input searchstr" placeholder="开始时间" name="start" id="start" value="<{$open_start}>" autocomplete="off">
+                <input class="layui-input searchstr" placeholder="结束时间" name="end" id="end" value="<{$open_end}>" autocomplete="off">
+            成功时间：<input class="layui-input searchstr" placeholder="开始时间" name="success_start" id="success_start" autocomplete="off">
+            <input class="layui-input searchstr" placeholder="结束时间" name="success_end" id="success_end" autocomplete="off">
+            订单金额：<input type="text" class="layui-input searchstr" placeholder="起始金额" name="money_start" id="money_start" autocomplete="off">
+            <input type="text" class="layui-input searchstr" placeholder="结束金额" name="money_end" id="money_end" autocomplete="off">
+                <div class="layui-input-inline">
+                    <select name="status" id="status" class="layui-select searchstr">
+                        <option value="">请选择状态</option>
+                        <volist name="statustype" id="vo">
+                            <option value="<{$key}>"><{$vo}></option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="ordertype" id="ordertype" class="layui-select searchstr">
+                        <option value="">请选择类型</option>
+                        <option value="0">交易</option>
+                        <option value="1">测试</option>
+                    </select>
+                </div>
+                <input type="text" name="userip" id="userip" placeholder="请输入提交地址IP" autocomplete="off" class="layui-input searchstr">
+            <input type="text" name="userordernumber" id="userordernumber" placeholder="用户订单号" autocomplete="off" class="layui-input searchstr input_ordernum">
+                <block name="searchbutton">
+                    <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+                    <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+                </block>
+        </form>
+        <div class="layui-col-md1"></div>
+        <form class="layui-form layui-col-md2"  method="post" onsubmit="return false" style="float: right">
+            <input type="hidden" name="user_id" id="user_id" value="<{$user_id}>" autocomplete="off" class="layui-input addeditinput">
+            <p style="margin-bottom: 2%">请选择提交时间：</p>
+            <div class="layui-input-inline" style="width: 63%;">
+                <select name="order_open_type" id="order_open_type" class="layui-select addeditinput">
+                    <volist name="all_open_type" id="vo">
+                        <option value="<{$key}>" <if condition="$user_open_type eq $key">selected</if>><{$vo}></option>
+                    </volist>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <div class="layui-input-inline">
+                    <button onclick="javascript: FormSumit('<{:U("changeOpenType")}>','',true,false);" class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <table class="layui-hide" lay-filter="demo" id="orderList" layui-data="{id:'orderList'}" dataurl="<{:U('loadOrderList')}>"></table>
+
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" onclick="orderlistdownload()" id="orderlistdownload" url='<{:U("downloadOrderList")}>'><i class="layui-icon">&#xe62d;</i>导出交易记录</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="payapiclassname">
+        {{# if(d.payapiclassname){ }}
+        {{d.payapiclassname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="successtime">
+        {{# if(d.successtime){ }}
+        {{d.successtime}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="freezemoney">
+        {{#  if(d.freezemoney>0 && d.status>0){ }}
+        <a title="查看明细" onclick="y_admin_show('查看冻结金额明细','<{:U("seeOrderFreezeMoney")}>?orderid={{d.orderid}}',1300,550)" style="text-decoration:underline;cursor: pointer">{{d.new_freezemoney}}</a>
+        {{# }else{return d.new_freezemoney} }}
+    </script>
+
+    <script type="text/html" id="orderstatus">
+            {{#  if(d.status==0){ }}
+                <span style="color: #f00">{{d.statusname}}</span>
+            {{#  } }}
+            {{#  if(d.status==1){ }}
+            <span style="color: #1E9FFF">{{d.statusname}}</span>
+            {{#  } }}
+            {{#  if(d.status==2){ }}
+            <span style="color: #009688">{{d.statusname}}</span>
+            {{#  } }}
+    </script>
+
+    <script type="text/html" id="type">
+            {{#  if(d.type==1){ }}
+            测试
+            {{#  } else { }}
+            交易
+            {{#  } }}
+    </script>
+
+    <script type="text/html" id="true_ordermoney">
+        {{#  if(d.new_true_ordermoney){ }}
+        {{d.new_true_ordermoney}}
+        {{#  } else { }}
+        -
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <p style="color: #1E9FFF">
+            <button style="background: #4a89f5" class="layui-btn layui-btn-normal self-btn" onclick="y_admin_show('查看订单详细信息','<{:U("seeOrderInfo")}>?orderid={{d.orderid}}',1000,680)" title="查看订单详细信息">查看</button>
+            <!--<button style="background: #FF5722" class="layui-btn layui-btn-normal layui-a">删除</button>-->
+        </p>
+    </script>
+
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>

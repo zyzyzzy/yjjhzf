@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>认证信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-label{
+            font-size: 18px;
+            color: #5f5f5f;
+            margin-bottom: 12px;
+            padding: 0;
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <if condition="$verify['authentication'] eq 2">
+        <div class="layui-form-item" style="text-align: center">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="applyAuth(this,'<{$user_id}>',4)" ajaxurl="<{:U('Admin/User/applyAuth')}>" style="background-color: #c9302c">审核不通过</button>
+                <button class="layui-btn" onclick="applyAuth(this,'<{$user_id}>',3)" ajaxurl="<{:U('Admin/User/applyAuth')}>">审核通过</button>
+            </div>
+        </div>
+    </if>
+    <if condition="$verify['authentication'] eq 1">
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>未认证</span>
+        </div>
+    </if>
+    <if condition="$verify['authentication'] eq 3">
+        <div class="layui-form-item" style="text-align: center;color: #009688;font-size: 36px;">
+            <span>已认证</span>
+        </div>
+    </if>
+    <if condition="$verify['authentication'] eq 4">
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;">
+            <span>审核未通过</span>
+        </div>
+    </if>
+    <if condition="$verify['authentication'] neq 1">
+        <div class="layui-inline layui-col-md3">
+            <div class="layui-input-block">
+                <label class="layui-form-label">身份证正面</label>
+                <a href="<{$verify['idcard_front']}>" target="_blank"><img width="100%" src="<{$verify['idcard_front']}>" alt="身份证正面"></a>
+            </div>
+            <div class="layui-input-block" style="margin-top: 20px;">
+                <label class="layui-form-label">身份证反面</label>
+                <a href="<{$verify['idcard_back']}>" target="_blank"><img width="100%" src="<{$verify['idcard_back']}>" alt="身份证反面"></a>
+            </div>
+        </div>
+        <div class="layui-inline layui-col-md3">
+            <div class="layui-input-block">
+                <label class="layui-form-label">手持身份证</label>
+                <a href="<{$verify['idcard_hand']}>" target="_blank"><img width="100%" src="<{$verify['idcard_hand']}>" alt="手持身份证"></a>
+            </div>
+        </div>
+        <div class="layui-inline layui-col-md3">
+            <div class="layui-input-block">
+                <label class="layui-form-label">营业执照</label>
+                <a href="<{$verify['business_license']}>" target="_blank"><img width="100%" src="<{$verify['business_license']}>" alt="营业执照"></a>
+            </div>
+        </div>
+        <div class="layui-inline layui-col-md3">
+            <div class="layui-input-block">
+                <label class="layui-form-label">银行卡正面</label>
+                <a href="<{$verify['bankcard_front']}>" target="_blank"><img width="100%" src="<{$verify['bankcard_front']}>" alt="银行卡正面"></a>
+            </div>
+            <div class="layui-input-block" style="margin-top: 20px;">
+                <label class="layui-form-label">银行卡反面</label>
+                <a href="<{$verify['bankcard_back']}>" target="_blank"><img width="100%" src="<{$verify['bankcard_back']}>" alt="银行卡反面"></a>
+            </div>
+        </div>
+    </if>
+
+</div>
+</body>
+</html>
+<script>
+    //2019-3-25 任梦龙：修改为json输出
+    function applyAuth(obj,user_id,type) {
+        var ajaxurl = $(obj).attr("ajaxurl");
+        layer.confirm('确认要修改吗？',function(index){
+            $.ajax({
+                type:'POST',
+                url:ajaxurl,
+                data:{user_id:user_id,type:type},
+                dataType:'json',
+                success:function(data){
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:1500},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000});
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error");
+                }
+            });
+        });
+    }
+</script>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>修改短信接口</title>
+
+    <include file="BaseTemplate:includecssjs"/>
+
+</head>
+
+<body>
+
+<div class="x-body">
+
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$sms['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">短信接口名</label>
+            <div class="layui-input-block">
+                <input type="text" name="app_name" id="app_name" value="<{$sms['app_name']}>" placeholder="请输入短信接口名" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">短信接口key</label>
+            <div class="layui-input-block">
+                <input type="text" name="app_key" id="app_key" value="<{$sms['app_key']}>" placeholder="请输入短信接口key" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">接口秘钥</label>
+            <div class="layui-input-block">
+                <input type="text" name="app_secret" id="app_secret" value="<{$sms['app_secret']}>" placeholder="请输入短信接口秘钥" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板号</label>
+            <div class="layui-input-block">
+                <input type="text" name="mode_code" id="mode_code" value="<{$sms['mode_code']}>"
+                       placeholder="请输入短信接口模板号" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("SmsSeting/updateSms")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

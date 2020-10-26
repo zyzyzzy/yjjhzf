@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试安装</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link href="/Public/install/css/install.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/Public/install/js/jquery.js"></script>
+    <script type="text/javascript" src="/Public/install/js/jquery.validation.min.js"></script>
+    <script type="text/javascript" src="/Public/install/js/jquery.icheck.min.js"></script>
+    <style>
+        .layui-form-pane .layui-form-label {
+            width: 130px;
+            padding: 8px 10px;
+        }
+
+        .layui-form-pane .layui-input-block {
+            margin-left: 130px;
+        }
+        .layui-input {
+            width: 95%;
+
+        }
+        input[type="text"],input[type="password"]{
+            height: 38px;
+        }
+
+
+    </style>
+</head>
+<body class="x-body">
+<form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+    <h3>数据库信息</h3>
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务器地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="db_host" placeholder="数据库服务器地址" value="localhost" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据库名</label>
+        <div class="layui-input-block">
+            <input type="text" name="db_name" placeholder="数据库名" class="layui-input addeditinput" autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据库用户名</label>
+        <div class="layui-input-block">
+            <input type="text" name="db_user" placeholder="数据库用户名" class="layui-input addeditinput" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据库密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="db_pwd" placeholder="数据库密码" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据库表前缀</label>
+        <div class="layui-input-block">
+            <input type="text" name="db_prefix" placeholder="数据库表前缀" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">数据库端口</label>
+        <div class="layui-input-block">
+            <input type="text" name="db_port" value="3306" placeholder="数据库端口" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+    <h3>网站信息</h3>
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="web_site" placeholder="站点名称" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="admin_name" placeholder="管理员账号" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">管理员密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="password" placeholder="管理员密码" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-block">
+            <input type="password" name="repassword" placeholder="确认密码" class="layui-input addeditinput"
+                   autocomplete="off">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <a href="<{:U('Index/step1')}>" id="url" data-url="<{:U('Index/sqlLink')}>" class="btn btn-primary">上一步</a>
+            <a id="next" href="javascript:void(0);" class="btn btn-primary">下一步</a>
+            <!--<button id="prev" type="button" onclick="javascript: location.href=back.go(-1);" class="layui-btn layui-btn-primary">上一步</button>-->
+            <!--<button class="layui-btn" onclick="javascript: FormSumit1('<{:U("Index/sqlLink")}>');">下一步</button>-->
+            <!--<button type="reset" class="layui-btn layui-btn-primary">重置</button>-->
+        </div>
+    </div>
+
+</form>
+</body>
+</html>
+<script>
+    $('#next').click(function(){
+        var ajaxurl=$('#url').attr('data-url');
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500}, function () {
+                        window.location.href = obj.url;
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                    return false;
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    });
+</script>

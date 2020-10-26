@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册 - 易吉聚合支付系统</title>
+    <link rel="stylesheet" href="/Public/css/user/registered.css">
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+
+<body>
+<div class="yiji-regis-wrapper">
+    <div class="system-head clearfix">
+        <div class="system-main clearfix">
+            <span class="fl"><a href="JavaScript:;" title="易吉支付"><img src="/Public/css/user/images/logo.png" /></a></span>
+            <cite class="fl">易吉聚合支付系统</cite>
+        </div>
+    </div>
+
+    <div class="regis-plane">
+        <div class="zhuce-box">
+            <h2>注册</h2>
+            <input type="hidden" id="loginUrl" value="<{:U('User/UserLogin/index')}>">
+            <input type="hidden" id="regUrl" value="<{:U('User/UserLogin/doReg')}>">
+            <form method="post" class="layui-form">
+                <ul class="form-ul">
+                    <li class="sys-name"><input name="reg_name" id="regName" placeholder="请输入用户名" type="text"
+                                                lay-verify="required" class="layui-input addeditinput"></li>
+                    <li class="sys-pwd"><input name="reg_pwd" id="regPwd" lay-verify="required" placeholder="请输入密码"
+                                               type="password" class="layui-input addeditinput"></li>
+                    <li class="sys-pwd"><input name="pwd_confirm" id="pwdConfirm" lay-verify="required" placeholder="请再次输入密码"
+                                               type="password" class="layui-input addeditinput"></li>
+                    <li class="sys-yzm"><input name="reg_code" id="code" lay-verify="required" placeholder="请输入验证码" type="text"
+                                               class="layui-input addeditinput">
+                        <div class="yzm-con" style="border-radius: 10px;"><img style="width: 100px;height: 42px"  id="verifyImg" class="verify_img" src="<{:U('UserLogin/verify')}>"
+                                                  onclick="this.src=this.src + '?' + Math.random()"></div>
+                    </li>
+                    <li class="sys-invite"><input name="reg_invite" lay-verify="required" placeholder="请像你的代理商或者管理员索要邀请码"
+                                                  type="text" class="layui-input addeditinput"></li>
+                    <li class="btn-submit"><input id="regWeb" value="立即注册" style="width:100%;"
+                                                  type="button" title="立即注册"></li>
+                </ul>
+                <div class="regis-agreement clearfix">
+                    <span class="fr"><a href="<{:U('UserLogin/index')}>" title="马上登录">马上登录</a></span>
+                    <!-- <label class="layui-form-label"></label> --><input type="checkbox" />我已阅读<a
+                        href="JavaScript:;" title="《注册协议》">《注册协议》</a>
+                </div>
+            </form>
+        </div>
+        <div class="masks-box"></div>
+    </div>
+</div>
+</body>
+<script>
+    $('#regWeb').click(function () {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        var reg_url = $('#regUrl').val();
+        var logini_url = $('#loginUrl').val();
+        $.ajax({
+            url: reg_url,
+            type: 'post',
+            data: datastr,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 'ok') {
+                    layer.msg(data.msg, {icon: 6}, function () {
+                        window.location.href = logini_url;
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 5});
+                    var old_src = $('#verifyImg').attr('src');
+                    $('#verifyImg').attr('src', old_src + '?' + Math.random());
+                }
+            },
+            error: function () {
+                layer.msg('操作错误，请重试', {icon: 5});
+            }
+        });
+
+    });
+</script>
+</html>

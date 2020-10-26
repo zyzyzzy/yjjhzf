@@ -1,0 +1,103 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background: #f3f3f3;}
+
+
+.home-wrapper{ width: 100%; min-width: 800px; padding: 20px 20px; box-sizing: border-box; font-size: 14px;}
+
+/* 用户信息 */
+.user-info{ /* display: flex; */}
+.user-info li{ /* flex: 1; */ float: left; /* width: 398px; */ height: 118px; border: 1px solid #01988c; border-radius: 10px; margin: 20px 20px 0 0;}
+.user-info li:last-child{ margin-right: 0;}
+.user-info li div{ height: 59px; line-height: 59px; padding: 0 50px; overflow: hidden;}
+.user-info li div:first-child{ border-bottom: 1px solid #d2d2d2;}
+.user-info li div em,.user-info li div span,.user-info li div a{ float: left;}
+.user-info li div em{ margin-right: 10px;}
+.user-info li .btn-click{ display: block; width: 90px; height: 36px; line-height: 36px; text-align: center; color: #01988c; border: 1px solid #01988c; border-radius: 15px; margin-top: 10px;transition: 0.5s;}
+.user-info li .btn-click:hover{ background: #01988c; color: #fff;}
+.user-info li .rate:after{ content: "元"; display: inline-block; padding-left: 5px;}
+.user-info li span{ margin-right: 10px;}
+.user-info li span img{ position: relative; top: 5px;}
+/* .user-info li .renzheng:after{ content: ""; display: inline-block; background: url(../images/wrz.png) no-repeat; width: 92px; height: 23px; margin-left: 5px; position: relative; top: 5px;}
+.user-info li .no-renzheng:after{ background: url(../images/rz.png) no-repeat;} */
+
+
+/* 通道和费率 */
+.plane-comm{ margin-top: 20px; border-radius: 10px; overflow: hidden; background: #fff;}
+
+.plane-tongdao{}
+.plane-title{ height: 54px; line-height: 54px; color: #fff; background: #01988c; font-weight: bold; padding-left: 20px;}
+.pay-box{ width: 100%; padding: 10px 16px 30px; background: #fff; box-sizing: border-box; font-size: 22px;}
+.pay-box li{ float: left; width: 15%; height: 98px; line-height: 98px; border: 1px solid #01988c; border-radius: 6px; margin: 0.8%; color: #01988c; box-sizing: border-box; position: relative; text-align: right;}
+.pay-box li img{ display: block; width: 60%; position: absolute; top: 50%; margin: -28px 0 0 10px;}
+.pay-box li span{ position: relative; z-index: 10;}
+.pay-box li span:after{ content: "‰"; display: inline-block; color: #01988c; margin-right: 6px;}
+
+
+/* 最近交易记录 */
+.plane-record{ padding-bottom: 30px;}
+
+.record-box{ width: 100%; padding: 0 10px; box-sizing: border-box; margin: 20px 0;}
+.record-box1 ul{  float: left; width: 48%; margin: 0 1%; border: 1px solid #dbdbdb; border-left: 0 none; box-sizing: border-box;}
+.record-box1 li{ float: left; width: 100%; min-height: 30px; /* padding: 10px 0; */ border-top: 1px solid #dbdbdb; text-align: center;}
+/* .record-box1 li:first-child{ border-top: 0 none; font-size: 16px;}
+.record-box1 li:nth-child(odd){ background: #efefef;}
+.record-box1 li:nth-child(even){ background: #fff;}
+.record-box1 li span{ float: left; width: 14%; padding: 10px 1%; border-left: 1px solid #dbdbdb; box-sizing: border-box; word-wrap:break-word; min-height: 55px;   display: table-cell;}
+
+.record-box span:nth-child(3){ width: 24%;}
+.record-box span:nth-child(4){ width: 20%;}
+.record-box span.red{ color: #fe0201;}
+.record-box span.green{ color: #01988c;}
+.record-box span.blue{ color: #224bfd;} */
+
+
+.table-con{ display:table; border-collapse:collapse; /* border:1px solid #ccc; */}  
+.table-row-group{ display:table-row-group; float: left; width: 48%; margin: 0 1%;}  
+.table-row-group ul{display:table-row;}
+.table-row-group ul li{ display:table-cell; border:1px solid #ccc; text-align: center; width: 15%; padding: 10px 1%; box-sizing: border-box; position: relative; vertical-align: middle;}  
+
+
+.record-box ul:first-child{ border-top: 0 none; font-size: 16px;}
+.record-box ul:nth-child(odd){ background: #efefef;}
+.record-box ul:nth-child(even){ background: #fff;}
+/* .record-box ul li{ width: 15%; padding: 10px 1%; word-wrap:break-word; min-height: 55px;} */
+
+.record-box li:nth-child(3){ width: 23%;}
+.record-box li:nth-child(3) span{ display:table; width:100%; table-layout:fixed; word-wrap:break-word;}
+.record-box li:nth-child(4){ width: 20%;}
+.record-box li:nth-child(6){ width: 12%;}
+.record-box li.red{ color: #fe0201;}
+.record-box li.green{ color: #01988c;}
+.record-box li.blue{ color: #224bfd;}
+
+.record-box .btn-details{ display: block; padding: 0 18px; height: 30px; text-align: center; line-height: 30px; background: #01988c; color: #fff; border-radius: 6px; overflow: hidden;
+    /* position: absolute; top: 50%; left: 50%; margin: -15px 0 0 -32px; */}
+.record-box .btn-details:hover{ opacity: .8;}
+
+/* 统计图 */
+.count-content{ padding: 20px;}
+
+.count-content .count{ font-size: 30px;}
+.count-content .count:before{ content: ""; display: inline-block; width: 19px; height: 48px; background: #ff8500; vertical-align: middle; margin-right: 15px;}
+.count-content .count:after{ content: ""; display: inline-block; background: url(../images/circle.jpg) no-repeat; width: 32px; height: 32px;vertical-align: middle; margin-left: 10px;}
+
+.days-box{ width: 48%; margin: 0 1%;}
+.days-box .data-info{ width: 100%; height: 500px; margin-top: 20px; border: 1px solid #e0e0e0;}
+
+
+
+
+@media screen and (max-width: 1200px){
+    .home-wrapper{ font-size: 12px;}
+    .user-info li{ margin-left: 10px;}
+    .user-info li div{ padding: 0 15px;}
+    .user-info li .btn-click{ width: 80px; height: 30px; line-height: 30px; margin-top: 13px;}
+
+    .pay-box li{ font-size: 50%; height: 50px; line-height: 50px;}
+    .pay-box li img{ top: 0; margin-top: 10px;}
+    .pay-box li span:after{ margin-right: 5px;}
+
+    .record-box .btn-details{ padding: 0 6px;}
+}

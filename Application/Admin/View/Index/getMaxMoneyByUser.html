@@ -1,0 +1,69 @@
+<div id="getMaxMoneyByUser_line" loadUrl="<{:U('Index/getMaxMoneyByUser')}>"
+     style="width: 1400px;height: 400px;box-shadow:0 0 1px #000 inset;">
+</div>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ech = echarts;
+    var line = ech.init(document.getElementById('getMaxMoneyByUser_line'));
+
+    // 指定图表的配置项和数据
+    var lineOption = {
+        title: {
+            text: '今日充值排名'
+        },
+        tooltip: {},
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                magicType: {show: true, type: ['line','bar']},
+                //saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            y:'top'
+        },
+        xAxis: {
+            type: 'category',
+            name: '用户名'
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '充值金额',
+                type: 'line',
+                data: [5, 20, 36, 10, 10, 20]
+            },
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    line.setOption(lineOption);
+    var lineOptions = line.getOption();
+    var url = $('#getMaxMoneyByUser_line').attr('loadUrl');
+    $.ajax({
+        type: "post",
+        async: false, //同步执行
+        url: url,
+        data: {},
+        dataType: "json", //返回数据形式为json
+        success: function (result) {
+            //console.log(result);
+            if (result.status == "success") {
+                lineOptions.series[0].data = result.data.amount;
+                lineOptions.xAxis[0].data = result.data.username;
+                line.hideLoading();
+                line.setOption(lineOptions);
+
+            } else {
+
+            }
+        },
+        error: function (errorMsg) {
+
+            //alert("不好意思，大爷，图表请求数据失败啦!");
+            line.hideLoading();
+        }
+    });
+
+</script>

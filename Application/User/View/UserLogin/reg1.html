@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模拟用户后台注册界面</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link rel="stylesheet" href="/Public/css/logincss/userReg.css">
+</head>
+<body>
+<div class="box">
+    <div class="title">
+        <!--2019-3-1 任梦龙：修改-->
+        <div class="logo">
+            <img class="img" src="/Public/images/user_logo.png"/>
+        </div>
+    </div>
+    <div class="wrap">
+        <input type="hidden" id="indexUrl1" value="<{:U('Index/index')}>">
+        <input type="hidden" id="regUrl" value="<{:U('User/UserLogin/doReg')}>">
+        <form method="post" action="">
+            <ul>
+                <li>
+                    <h1 class="text-center">注册</h1>
+                </li>
+                <li>
+                    <span class="icon"><i class="layui-icon layui-icon-username"></i></span>
+                    <input style="outline:none;" type="text" name="reg_name" id="regName" placeholder="请输入用户名"
+                           class="layui-input addeditinput">
+                    <!--<p class="position">6~18个字符，可使用字母、数字、下划线，需以字母开头</p>-->
+                </li>
+                <li>
+                    <span class="icon"><i class="layui-icon layui-icon-password"></i></span>
+                    <input type="password" name="reg_pwd" id="regPwd" placeholder="请输入密码"
+                           autocomplete="off" class="layui-input addeditinput">
+                    <!--<p class="position">6~16个字符，区分大小写</p>-->
+                </li>
+                <li>
+                    <span class="icon"><i class="layui-icon layui-icon-password"></i></span>
+                    <input type="password" name="pwd_confirm" id="pwdConfirm" placeholder="请再次输入密码"
+                           autocomplete="off" class="layui-input addeditinput">
+                    <!--<p class="position">请再次填写密码</p>-->
+                </li>
+                <li class="verify_code">
+                    <span class="icon"><i class="layui-icon layui-icon-vercode"></i></span>
+                    <input type="text" name="reg_code" id="code" maxlength="4"
+                           placeholder="请输入验证码" autocomplete="off" class="layui-input addeditinput">
+                    <!--2019-3-7 任梦龙：给验证码加id-->
+                    <img id="verifyImg" class="verify_img" src="<{:U('UserLogin/verify')}>"
+                         onclick="this.src=this.src + '?' + Math.random()">
+                </li>
+                <li>
+                    <span class="icon"><i class="layui-icon layui-icon-component"></i></span>
+                    <input type="text" name="reg_invite" id="regInvite" placeholder="请向你的代理商或管理员索要邀请码"
+                           autocomplete="off" class="layui-input addeditinput">
+                </li>
+                <li class="btn" id="regWeb">立即注册</li>
+                <li class="checkbox">
+                    <p>
+                        <input type="checkbox" title="">
+                        <label>我以阅读<a class="reg_agree" href="">《注册协议》</a></label>
+                    </p>
+                    <a class="login_now" href="<{:U('UserLogin/index')}>">马上登陆</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+<script src="/Public/User/userLogin.js"></script>
+</body>
+</html>

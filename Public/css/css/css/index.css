@@ -1,0 +1,127 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{ background: #f3f3f3;}
+
+
+.home-wrapper{ width: 100%; min-width: 800px; padding: 20px 20px; box-sizing: border-box; font-size: 14px;}
+
+/* 用户名 */
+.user-detail{ display: -webkit-flex; -webkit-flex-wrap: wrap; display: flex; flex-wrap: wrap; }
+.user-detail li{ padding: 26px 30px; height: 80px; background: #fff; border-radius: 6px; margin: 0 15px 15px 0;}
+.name-content span,.merchant-num span{ font-size: 16px; color: #373737;}
+.name-content img{ vertical-align: middle; margin-left: 10px;}
+.name-content a{ display: inline-block; width: 87px; height: 26px; line-height: 26px; border-radius: 15px; border:1px solid #1e9fff; color: #1e9fff; text-align: center; -webkit-transition: all .3s;}
+.name-content a:hover{ background: #1e9fff; color: #fff;}
+.name-content .key-con{ margin-left: 80px;}
+.merchant-num{ margin-top: 15px;}
+.merchant-num .login-time{ color: #6a6a6a; font-size: 14px; margin-left: 15px;}
+.merchant-num {}
+
+.user-detail .merchandise{ display: flex;}
+.user-detail .merchandise h1{ flex: 1; color: #1e9fff; font-size: 24px; padding-left: 15px;}
+.user-detail .merchandise h1 span{ display: block; color: #373737; font-size: 16px; margin: 10px 0 12px;}
+
+
+.plane-title{ position: relative; font-size: 16px; color: #424242; border-bottom: 1px solid #f3f3f3; padding: 22px 0 15px 30px;}
+.plane-title:before{ content: ""; display: inline-block; width: 5px; height: 20px; background: #009688; position: absolute; left: 15px; top: 23px;}
+.plane-comm{ margin-top: 20px; border-radius: 10px; overflow: hidden; background: #fff;}
+
+
+/* 通道和费率 */
+.passage-rate{  padding-bottom: 32px;}
+.passage-rate ul{ display: -webkit-flex; -webkit-flex-wrap: wrap; display: flex; flex-wrap: wrap;}
+.passage-rate li{ height: 90px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; margin: 30px 0 0 35px; font-size: 24px; color: #3d3c3c; position: relative;}
+.passage-rate li img,.passage-rate li span{ display: block; text-align: center;}
+.passage-rate li span{ padding-top: 12px; position: absolute; bottom: 20px; left: 50%; transform: translate(-50%,-0%);}
+
+
+
+/* 最近交易记录 */
+.plane-record{ padding-bottom: 30px;}
+
+.record-box{ width: 100%; padding: 0 10px; box-sizing: border-box; margin: 20px 0;}
+
+.table-con{ display:table; border-collapse:collapse; /* border:1px solid #ccc; */}
+.table-row-group{ display:table-row-group; float: left; width: 48%; margin: 0 1%;}
+.table-row-group ul{display:table-row;}
+.table-row-group ul li{ display:table-cell; border:1px solid #ccc; text-align: center; width: 15%; padding: 10px 1%; box-sizing: border-box; position: relative; vertical-align: middle;}
+
+
+.record-box ul:first-child{ border-top: 0 none; font-size: 16px;}
+.record-box ul:nth-child(odd){ background: #efefef;}
+.record-box ul:nth-child(even){ background: #fff;}
+
+.record-box li:nth-child(3){ width: 23%;}
+.record-box li:nth-child(3) span{ display:table; width:100%; table-layout:fixed; word-wrap:break-word;}
+.record-box li:nth-child(4){ width: 20%;}
+.record-box li:nth-child(6){ width: 12%;}
+.record-box li.red{ color: #fe0000;}
+.record-box li.green{ color: #01988c;}
+.record-box li.blue{ color: #1e9ffd;}
+.record-box li.orange{ color: #f85800;}
+
+.record-box .btn-details{ display: block; padding: 0 12px; height: 30px; text-align: center; line-height: 30px; background: #01988c; color: #fff; border-radius: 6px; overflow: hidden;}
+.record-box .btn-details:hover{ opacity: .8;}
+
+/* 统计图 */
+.count-content{ padding: 20px;}
+
+.count-content .count{ font-size: 30px;}
+.count-content .count:before{ content: ""; display: inline-block; width: 19px; height: 48px; background: #ff8500; vertical-align: middle; margin-right: 15px;}
+.count-content .count:after{ content: ""; display: inline-block; background: url(../images/circle.jpg) no-repeat; width: 32px; height: 32px;vertical-align: middle; margin-left: 10px;}
+
+.days-box{ width: 48%; margin: 0 1%;}
+.days-box .data-info{ width: 100%; height: 500px; border: 1px solid #e0e0e0;}
+
+
+/* 弹窗遮罩 */
+.lbOverlay{ display: none; position: fixed; left: 0; top: 0; width: 100%; zoom: 1; background: #2f2e2e; z-index: 999; width:100%; height:100%;
+    filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+}
+.hidden_pro_au { display:none; background: #fff; padding: 50px 50px; overflow: auto; position: absolute; top: 0; left: 0; z-index: 9999;}
+
+.form-title{}
+.form-title label,.form-title .input-txt{ float: left;}
+.form-title label{ height: 38px; line-height: 38px;}
+.input-txt input{ padding: 0 10px; line-height: 1.3; height: 38px; border: 1px solid #e6e6e6; border-radius: 5px;}
+.input-txt input:focus{ border-color: #189f92!important;}
+.form-button{ margin-top: 15px; padding-left: 56px;}
+.form-button button{ display: inline-block; padding: 0 18px; height: 38px; line-height: 38px; font-size: 14px; text-align: center; white-space: nowrap; border-radius: 5px; border: 0 none; cursor: pointer;}
+.form-button .btn-confirm{ background: #009688; color: #fff;}
+.form-button .btn-confirm:hover{ opacity: 0.8;}
+.form-button .btn-primary{ background: #fff; color: #555; border: 1px solid #c9c9c9; margin-left: 10px;}
+.form-button .btn-primary:hover{ border: 1px solid #009688;}
+.box-close{ position: absolute; right: 12px; top: 12px;}
+.box-close .layui-layer-ico{ display: block; width: 16px; height: 16px; background:url(https://www.juhezhifu.cc/Public/lib/layui/css/modules/layer/default/icon.png) no-repeat; height: 70px; background-position: 0 -41px;}
+
+
+
+@media screen and (max-width: 1200px){
+    .home-wrapper{ font-size: 12px;}
+    .user-info li{ margin: 10px 10px 0 0;}
+    .user-info li div{ padding: 0 12px;}
+    .user-info li .btn-click{ width: 80px; height: 30px; line-height: 30px; margin-top: 13px;}
+
+    .pay-box li{ font-size: 50%; height: 50px; line-height: 50px;}
+    .pay-box li img{ top: 0; margin-top: 10px;}
+    .pay-box li span:after{ margin-right: 5px;}
+
+    .record-box .btn-details{ padding: 0 6px;}
+}
+
+
+
+/* 用户密钥详情 */
+.key-details{ background: #fff; padding: 20px;}
+.key-details li:after{ content: " "; display: block; height:0; clear:both; visibility: hidden;}
+.key-details li{ margin-bottom: 15px;}
+.key-details label{ display: block; width: 75px; text-align-last: justify; color: #333;}
+.key-details .md5-label{ height: 36px; line-height: 36px;}
+.key-details .form-txt{ height: 36px; line-height: 36px; border: 1px solid #ccc; padding: 0 10px; border-radius: 2px; color: #666;}
+
+.txt-box:after{ content: " "; display: block; height:0; clear:both; visibility: hidden;}
+.txt-box textarea{ width: 50%; height: 200px; border: 1px solid #ccc; padding: 6px 10px; margin-top: 5px; border-radius: 2px; color: #666; line-height: 20px; resize: vertical;}
+.txt-box{}

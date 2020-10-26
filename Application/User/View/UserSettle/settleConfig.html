@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算设置 - 易吉聚合支付后台用户系统</title>
+    <include file="BaseTemplate:includecssjs" />
+    <link rel="stylesheet" href="/Public/css/user/settleconfig.css">
+</head>
+<body>
+    <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">用户后台</a>
+            <a href="">结算管理</a>
+            <a><cite>结算设置</cite></a>
+          </span>
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+            <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+    </div>
+    <if condition="$type eq 1">
+        <ul class="settlement-set">
+            <li><label>结算时间：</label><{$config['day_start']}> — <{$config['day_end']}></li>
+            <li><label>单笔提款金额范围（元）：</label><{$config['min_money']}> — <{$config['max_money']}></li>
+            <li><label>当日提款最大金额（元）：</label><{$config['day_maxmoney']}></li>
+            <li><label>当日提款最大次数（次）：</label><{$config['day_maxnum']}></li>
+            <li><label>提款状态：</label><{$config['status']}></li>
+            <li><label>提款方式：</label><{$config['auto_type']}>
+                <cite><i class="layui-icon layui-icon-about"></i> 自动提款：程序设置某个时间自动到账</cite><cite>手动提款：用户申请后，管理员需手动给用户打款</cite></li>
+            <li><label>代付通道：</label><{$config['daifu']}></li>
+            <li><label>代付账号：</label><{$config['account']}></li>
+            <li><label>手续费扣款类型：</label><{$config['deduction_type']}>
+                <cite><i class="layui-icon layui-icon-about"></i> 内扣：手续费从提款金额中扣除，余下的为到账金额</cite>
+                <cite>外扣：手续费从用户总金额中扣除，提款金额即为到账金额</cite>
+            </li>
+            <li><label>结算费率：</label><{$config['settle_feilv']}></li>
+            <li><label>单笔最小手续费（元）：</label><{$config['settle_min_feilv']}></li>
+        </ul>
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>还未设置结算配置,请联系管理员处理</span>
+        </div>
+    </if>
+
+</body>
+</html>

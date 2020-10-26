@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆次数</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-select .layui-input,.layui-input{
+            width: 95%;
+        }
+    </style>
+</head>
+<body class="x-body">
+<form class="layui-form" action="" method="post" onsubmit="return false">
+    <div class="layui-form-item">
+        <label class="layui-form-label">登陆次数</label>
+        <div class="layui-input-block">
+                <input type="text" name="login_count" placeholder="请输入限制次数" autocomplete="off"
+                    <if condition="$exist eq 1">value="<{$login_count}>"</if> class="layui-input addeditinput">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">等待时间</label>
+        <div class="layui-input-block">
+            <select name="set_time" class="layui-input addeditinput">
+                <option value="">请选择</option>
+                <option value="300" <if condition="$set_time eq 300">selected</if>>5分钟</option>
+                <option value="600" <if condition="$set_time eq 600">selected</if>>10分钟</option>
+                <option value="1800" <if condition="$set_time eq 1800">selected</if>>30分钟</option>
+                <option value="3600" <if condition="$set_time eq 3600">selected</if>>1小时</option>
+                <option value="10800" <if condition="$set_time eq 10800">selected</if>>3小时</option>
+                <option value="86400" <if condition="$set_time eq 86400">selected</if>>24小时</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button onclick="javascript: FormSumit('<{:U("editLoginSeting")}>','',true,false);" class="layui-btn"
+            lay-submit lay-filter="formDemo">确认修改</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

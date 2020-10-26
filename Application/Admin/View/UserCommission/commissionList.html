@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><block name="title">无标题</block></title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <if condition="$type eq 2">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+                <input type="text" name="transid" id="transid" placeholder="订单号" autocomplete="off" class="layui-input">
+                <input class="layui-input" placeholder="订单开始日" name="start" id="start">
+                <input class="layui-input" placeholder="订单截止日" name="end" id="end">
+                <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+                <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+            </form>
+        </div>
+        <table class="layui-hide" id="commissionList" layui-data="{id:'commissionList'}" dataurl="<{:U("loadCommissionList")}>?userid=<{$userid}>"></table>
+        <script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>普通用户,无提成记录</span>
+        </div>
+    </if>
+</div>
+</body>
+
+</html>

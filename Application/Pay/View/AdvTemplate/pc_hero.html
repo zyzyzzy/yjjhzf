@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>广告页面</title>
+    <style>
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+        body { background:#fff; color:#333; font-family: Verdana, Arial, Helvetica, sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+        address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+        a { text-decoration:none; }
+        img { border:none; }
+        ol,ul,li { list-style:none; }
+        input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; outline: none; }
+        table { border-collapse:collapse; }
+        html {overflow-y: scroll;}
+        body{ min-width: 1200px; background: #fff;}
+        .clearfix:after {content: " "; display: block; height:0; font-size: 0; clear:both; visibility: hidden;}
+        .clearfix { *zoom:1; }
+        .fl { float: left;}
+        .fr { float: right;}
+        .ad-wrapper{ padding: 40px 20px; background: #fbfbfb; position: relative; -moz-box-shadow:0px 2px 10px #ededed; -webkit-box-shadow:0px 2px 10px #ededed; box-shadow:0px 2px 10px #ededed;}
+        .main{ width: 1200px; margin: 0 auto;}
+        .pic-panel{ width: 600px;}
+        .pic-panel .big-img{ width: 600px; height: 428px; overflow: hidden;}
+        .pic-panel .small-img{ display: flex; justify-content: space-between; padding-top: 36px;}
+        .pic-panel .small-img span{ display: block; width: 185px; height: 167px; overflow: hidden;}
+        .text-panel{ width: 520px; margin-left: 80px;}
+        .text-panel h1{ color: #3d3d3d; font-size: 26px; line-height: 44px;}
+        .text-panel p{ color: #7c7c7c; font-size: 18px; text-align: justify; line-height: 30px; padding: 12px 0; word-wrap:break-word}
+        .text-panel .address{ border-top: 1px solid #d5d5d5; color: #3d3d3d; font-size: 18px; padding-top: 25px; margin-top: 12px;}
+        .text-panel .address span{ display: block; padding-top: 10px; line-height: 30px;}
+        .close-con{ position: absolute; right: 10px; top: 10px;}
+        .close-con .countdown{ display: block; color: #3d3d3d; font-size: 24px; font-weight: bold; padding-right: 24px;}
+        .close-con .countdown,.close a{ float: left;}
+        .close-con a{ display: block; width: 29px; height: 29px; overflow: hidden;}
+        .close-con a:hover img{ opacity: .7;}
+    </style>
+</head>
+<body>
+<div class="ad-wrapper">
+    <div class="main clearfix">
+        <div class="pic-panel fl">
+            <div class="big-img"><img src="/Public/images/adv/hero/pic1.jpg" /></div>
+            <div class="small-img">
+                <span><img src="/Public/images/adv/hero/pic2.jpg" /></span>
+                <span><img src="/Public/images/adv/hero/pic2.jpg" /></span>
+                <span><img src="/Public/images/adv/hero/pic2.jpg" /></span>
+            </div>
+        </div>
+        <div class="text-panel fl">
+            <h1>我是标题：海贼王938：和之国公主日和出现竟爱上索隆，狂四郎在下一盘大棋</h1>
+            <p>它才是“海中牛奶”，隔三差五吃一点，孩子头脑聪明长得快。海鲜真的是很多人的最爱，尤其是贝类蛋白质含量都非常丰富，是很好的滋补佳品。青口贝不知道大家是不是经常吃，它产自新西兰，在当地被称作“贝类妖姬”，很多吃过的人都对它的鲜美口感念念不忘，它还有另一个称号“海中牛奶”，
+            </p>
+            <p>它才是“海中牛奶”，隔三差五吃一点，孩子头脑聪明长得快。海鲜真的是很多人的最爱，尤其是贝类蛋白质含量都非常丰富，是很好的滋补佳品。青口贝不知道大家是不是经常吃，它产自新西兰，在当地被称作“贝类妖姬”，很多吃过的人都对它的鲜美口感念念不忘，它还有另一个称号“海中牛奶”，
+            </p>
+            <div class="address">
+                <span>地址：答复你的家附近可根据凤凰国际法对方可看到几个开放剪个头发是的咖啡机</span>
+                <span>电话：1235454545454</span>
+                <span>邮箱：1235454545454</span>
+            </div>
+            <div class="close-con">
+                <span class="countdown"></span>
+                <a href="JavaScript:;" title="关闭"><img src="/Public/images/adv/hero/close.png" /></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Public/js/jquery.min.js"></script>
+<script>
+    var time = 5;
+    var url = '<{$jump_url}>?code=<{$code}>';
+    function closeWindow() {
+        window.setTimeout('closeWindow()', 1000);
+        if (time > 0) {
+            $(".countdown").html(time + "s");
+            time--;
+        }
+        else {
+            /* window.opener = null; */
+            location.href = url;
+        }
+        $(".close-con a").click(function(){
+            // $(".ad-wrapper").hide();
+            location.href = url;
+        });
+    }
+
+    window.onload = closeWindow;
+</script>
+
+</body>
+
+</html>

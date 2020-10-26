@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <js href="/Public/js/holder.js" />
+    <link rel="stylesheet" href="/Public/css/user/renzhenimg.css">
+</head>
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="javascript:;">用户后台</a>
+        <a href="javascript:;">账号管理</a>
+          <a><cite>认证信息</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <if condition='$authentication eq 1'>
+        <if condition="$idcard_front != '' and $idcard_back != '' and $idcard_hand != '' and $bankcard_front != '' and $bankcard_back != '' and $business_license != ''">
+            <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+                <button class="layui-btn" onclick="applyAuth(this,'<{$user_id}>')"  ajaxurl="<{:U('User/UserAuth/applyAuth')}>">申请认证</button>
+            </xblock>
+        <else/>
+            <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+                <span class="x-left" style="color: #f00;">上传完六个图片后才能申请认证！</span>
+            </xblock>
+        </if>
+    </if>
+    <if condition='$authentication eq 2'>
+        <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+            <span class="x-left" style="color: #F60;">已申请认证,正在等待审核中！</span>
+        </xblock>
+    </if>
+    <if condition='$authentication eq 3'>
+        <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+            <span class="x-left" style="color: #85ca85;">审核成功,已是认证用户！</span>
+        </xblock>
+    </if>
+    <if condition='$authentication eq 4'>
+        <if condition="$idcard_front neq '' and $idcard_back neq '' and $idcard_hand neq '' and $bankcard_front neq '' and $bankcard_back neq '' and $business_license neq ''">
+            <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+                <button class="layui-btn" onclick="applyAuth(this,'<{$user_id}>')"  ajaxurl="<{:U('User/UserAuth/applyAuth')}>">重新申请</button>
+                <span class="x-left" style="color: #f00;">之前审核未通过,请检查图片后再重新申请认证！</span>
+            </xblock>
+        <else/>
+            <xblock style="height: 40px;line-height:40px;width: 92.5%;">
+                <span class="x-left" style="color: #f00;">上传完六个图片后才能申请认证！</span>
+            </xblock>
+        </if>
+    </if>
+    <div class="box_img">
+        <ul class="top">
+            <li>
+                <p class="title">身份证正面</p>
+                <div class="img_area">
+                    <if condition="$idcard_front neq ''">
+                        <img src="<{$idcard_front}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'idcard_front',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','idcard_front')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                            <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                            <div class="renzhenimg">
+                                <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                            </div>
+
+                    </if>
+
+                </div>
+            </li>
+            <li>
+                <p class="title">身份证反面</p>
+                <div class="img_area">
+                    <if condition="$idcard_back neq ''">
+                        <img src="<{$idcard_back}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'idcard_back',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','idcard_back')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                        <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                        <div class="renzhenimg">
+                            <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                        </div>
+
+                    </if>
+                </div>
+            </li>
+            <li>
+                <p class="title">手持身份证</p>
+                <div class="img_area">
+                    <if condition="$idcard_hand neq ''">
+                        <img src="<{$idcard_hand}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'idcard_hand',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','idcard_hand')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                        <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                        <div class="renzhenimg">
+                            <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                        </div>
+
+                    </if>
+                </div>
+            </li>
+
+        </ul>
+        <ul class="top">
+            <li>
+                <p class="title">银行卡正面</p>
+                <div class="img_area">
+                    <if condition="$bankcard_front neq ''">
+                        <img src="<{$bankcard_front}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'bankcard_front',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','bankcard_front')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                        <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                        <div class="renzhenimg">
+                            <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                        </div>
+
+                    </if>
+                </div>
+            </li>
+            <li>
+                <p class="title">银行卡反面</p>
+                <div class="img_area">
+                    <if condition="$bankcard_back neq ''">
+                        <img src="<{$bankcard_back}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'bankcard_back',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','bankcard_back')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                        <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                        <div class="renzhenimg">
+                            <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                        </div>
+
+                    </if>
+                </div>
+            </li>
+            <li>
+                <p class="title">营业执照</p>
+                <div class="img_area">
+                    <if condition="$business_license neq ''">
+                        <img src="<{$business_license}>">
+                        <else/>
+                        <img src="/Public/images/default_400x300.png">
+                    </if>
+                </div>
+                <div class="upload_area">
+                    <if condition="($authentication eq 1) OR ($authentication eq 4)">
+                        <button type="button" class="layui-btn upload" lay-data="{url:'<{:U('User/UserAuth/upload')}>',data:{fieldsname:'business_license',user_id:<{$user_id}>},accept:'images',size:2048}">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn layui-btn-danger" onclick="del(this,'<{$user_id}>','business_license')"  ajaxurl="<{:U('User/UserAuth/delete')}>">
+                            <i class="layui-icon"></i>删除
+                        </button>
+                        <p style="color: #f00;">可上传图片类型(jpg,jpeg, gif, png, bmp),图片大小 2M 以内</p>
+                        <elseif condition="$authentication eq 2"/>
+                        <p class="dengdai">正在等待审核中......</p>
+                        <else />
+                        <div class="renzhenimg">
+                            <img width="50%" src="/Public/images/rzyh.gif" alt="">
+                        </div>
+                    </if>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        upload.render({
+            elem: '.upload'
+            ,before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+                layer.load(); //上传loading
+            }
+            ,done: function(res, index, upload){
+                layer.closeAll('loading'); //关闭loading
+                if(res.code == 1){
+                    layer.msg(res.msg,{icon:6,time:2000},function () {
+                        location.reload()
+                    });
+                    /*$('.img_'+res.fieldsname).html('');
+                    var str = '<img width="100%" src="'+res.src+'" alt="">';
+                    $('.img_'+res.fieldsname).append(str);
+                    $('.delete_'+res.fieldsname).html('');
+                    var str1 = '<button class="layui-btn layui-btn-danger" onclick="del(this,'+"'"+res.user_id+"'"+','+"'"+res.fieldsname+"'"+')"  ajaxurl="<{:U('User/UserAuth/delete')}>"><i class="layui-icon"></i>删除</button>';
+                    $('.delete_'+res.fieldsname).append(str1);*/
+                }else{
+                    layer.msg(res.msg,{icon:5,time:2000});
+                }
+            }
+            ,error: function(index, upload){
+                layer.closeAll('loading'); //关闭loading
+            }
+        })
+    });
+
+    function applyAuth(obj,user_id) {
+        var ajaxurl = $(obj).attr("ajaxurl");
+        layer.confirm('确认要申请认证吗？',function(index){
+            $.ajax({
+                type:'POST',
+                url:ajaxurl,
+                data:{user_id:user_id},
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:3000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000});
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error");
+                }
+            });
+        });
+    }
+    function del(obj,user_id,fieldsname){
+        var ajaxurl = $(obj).attr("ajaxurl");
+        layer.confirm('确认要删除吗？',function(index){
+            $.ajax({
+                type:'POST',
+                url:ajaxurl,
+                data:{user_id:user_id,fieldsname:fieldsname},
+                dataType:'json',
+                success:function(data){
+                    console.log(data);
+                    if(data.status=='ok'){
+                        layer.msg(data.msg,{icon:6,time:1000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:1000});
+                    }
+                },
+                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error");
+                }
+            });
+        });
+    }
+</script>

@@ -1,0 +1,115 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">邀请码列表</block>
+<block name="nav">
+    <a href="javascript:;">代理专区</a>
+    <a><cite>邀请码列表</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="invite_code" id="inviteCode" value="" placeholder="请输入邀请码" autocomplete="off" class="layui-input" style="width: 300px;">
+    <input type="text" name="user_name" id="userName"  value="" placeholder="请输入使用者" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="reg_type" id="regType" class="layui-select">
+            <option value="">注册类型</option>
+            <volist name="user_type_list" id="vo">
+                <option value="<{$vo.id}>"><{$vo.usertypename}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="status" id="allStatus" class="layui-select">
+            <option value="">所有状态</option>
+            <volist name="code_status" id="vo">
+                <option value="<{$vo.id}>"><{$vo.status_name}></option>
+            </volist>
+        </select>
+    </div>
+</block>
+
+<block name="table_script">
+    <table class="layui-hide" id="inviteCodeList" layui-data="{id:'inviteCodeList'}" dataurl="<{:U('loadInviteCodeList')}>"></table>
+
+    <!--添加批量删除,只有代理商的类型可以添加，注册，删除邀请码-->
+    <script type="text/html" id="showtoolbar">
+        {{#  if(<{$user_type}> == 2){ }}
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'inviteCodeList')" ajaxurl="<{:U('delAll')}>">
+            <i class="layui-icon"></i>批量删除
+        </button>
+        <button class="layui-btn" onclick="y_admin_show('添加邀请码','<{:U("userInviteAdd")}>?user_id=<{$user_id}>',700,510)">
+             <i class="layui-icon">&#xe61f;</i>添加
+        </button>
+        {{#  } }}
+    </script>
+
+    <!--注册地址-->
+    <script type="text/html" id="showregaddress">
+        {{#  if(d.status == 1 && <{$user_type}> == 2){ }}
+            <a style="color:#428bca;" href="<{:U('User/UserLogin/reg/invite_{{d.invite_code}}')}>" target="_blank">注册地址</a>
+        {{#  } else { }}
+            <a style="color: #999999;" href="javascript:void(0);">注册地址</a>
+        {{#  } }}
+
+    </script>
+    
+    <!--使用时间-->
+    <script type="text/html" id="showusetime">
+        {{#  if(d.use_time == '0000-00-00 00:00:00'){ }}
+            -
+        {{#  } else { }}
+           {{d.use_time}}
+        {{#  } }}
+    </script>
+    
+    <!--注册类型-->
+    <script type="text/html" id="showregtype">
+        {{#  if(d.reg_type == 1){ }}
+             普通用户
+        {{#  } else if(d.reg_type == 2){ }}
+             代理商
+        {{#  } else{ }}
+             测试用户
+        {{#  } }}
+    </script>
+    
+    <!--状态-->
+    <script type="text/html" id="showstatus">
+        {{#  if(d.status == 1){ }}
+            <span style="color: green;">可以使用</span>
+        {{#  } else if(d.status == 2) { }}
+            <span style="color:#06C">已过期</span>
+        {{#  } else if(d.status == 3) { }}
+            <span>已使用</span>
+        {{#  } else if(d.status == 4) { }}
+            <span>禁止使用</span>
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="showmaketype">
+        {{#  if(d.type == 2){ }}
+             主用户
+        {{#  } else if(d.type == 3) { }}
+             子账号
+        {{#  } }}
+    </script>
+
+    <!--操作-->
+    <script type="text/html" id="caozuo">
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('inviteDel')}>">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>
+        {{#  if(d.status == 1 || d.status == 4){ }}
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("userInviteEdit")}>?id={{d.id}}',700,500)" href="javascript:;">
+             <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+             </i>
+        </a>
+        {{#  } }}
+    </script>
+</block>
+
+

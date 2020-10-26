@@ -1,0 +1,80 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">下级用户列表</block>
+<block name="nav">
+    <a href="javascript:;">代理专区</a>
+    <a><cite>[<{$user_name}>]的下级用户</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="username" id="username" placeholder="商户号或用户名" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="layui-select">
+            <option value="">状态</option>
+            <volist name="user_status_list" id="vo">
+                <option value="<{$vo.id}>"><{$vo.statusname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="userrengzheng" id="userrengzheng">
+            <option value="">认证</option>
+            <volist name="user_rengzheng_list" id="vo">
+                <option value="<{$vo.id}>"><{$vo.userrengzhengname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="usertype" id="usertype">
+            <option value="">用户类型</option>
+            <volist name="user_type_list" id="vo">
+                <option value="<{$vo.id}>"><{$vo.usertypename}></option>
+            </volist>
+        </select>
+    </div>
+    <input class="layui-input" placeholder="注册开始日" name="start" id="start" autocomplete="off">
+    <input class="layui-input" placeholder="注册截止日" name="end" id="end" autocomplete="off">
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="childUserChildList" layui-data="{id:'childUserChildList'}" dataurl="<{:U('loadChildUserChildList')}>?superior_id=<{$user_id}>"></table>
+
+    <script type="text/html" id="showmemberid">
+        {{# if(d.memberid=="未生成") { }}
+        无
+        {{#
+        }else{
+        return d.memberid
+        }
+        }}
+    </script>
+    <script type="text/html" id="showauthentication">
+        {{# if(d.authentication=='未认证'){ }}
+        <span style="color: #f00;">{{d.authentication}}</span>
+        {{# } }}
+        {{# if(d.authentication=='审核中'){ }}
+        <span style="color: #1E9FFF;">{{d.authentication}}</span>
+        {{# } }}
+        {{# if(d.authentication=='已认证'){ }}
+        <span style="color: #009688;">{{d.authentication}}</span>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showstatus">
+        {{# if(d.status == 1){ }}
+        <span style="color: #f00;">未激活</span>
+        {{# }else if(d.status == 2){ }}
+        <span style="color: #009688;">正常</span>
+        {{# }else{ }}
+        <span style="color: #f00;">禁用</span>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="user_type">
+        {{# if(d.usertype=='普通用户') { }}
+        普通用户
+        {{# } }}
+
+        {{# if(d.usertype=='代理商') { }}
+        <span style="color: #5bc0de">代理商</span>
+        {{# } }}
+    </script>
+
+</block>

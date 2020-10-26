@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新用户后台登陆界面</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link rel="stylesheet" href="/Public/css/logincss/userLogin3.css">
+</head>
+<body>
+<!--logo区域-->
+<div class="logo_area">
+    <img class="logo_bg" src="/Public/images/user_logo.png">
+</div>
+<!--背景图和输入框区域-->
+<div class="box">
+    <input type="hidden" id="indexUrl2" value="<{:U('Index/index')}>">
+    <input type="hidden" id="loginUrl" value="<{:U('UserLogin/doLogin')}>">
+    <ul class="input_area">
+        <li>
+            <span class="icons"><img src="/Public/images/admin_icon1.png"></span>
+            <input type="text" name="login_name" id="loginName" placeholder="请输入用户名" class="addeditinput">
+        </li>
+
+        <li>
+            <span class="icons"><img src="/Public/images/admin_icon2.png"></span>
+            <input type="password" name="login_pwd" id="loginPwd" placeholder="请输入密码" autocomplete="off" class="addeditinput">
+        </li>
+
+        <li class="code">
+            <span class="icons"><img src="/Public/images/admin_icon3.png"></span>
+            <input type="text" name="login_code" id="code" placeholder="请输入验证码" autocomplete="off" class="yzm addeditinput">
+            <!--2019-3-7 任梦龙：给验证码加id-->
+            <img id="verifyImg" class="verify_img" src="<{:U('UserLogin/verify')}>"
+                 onclick="this.src=this.src + '?' + Math.random()">
+        </li>
+
+        <li class="login_btn" id="subLogin">登&nbsp;录</li>
+    </ul>
+
+</div>
+<!--底部公司说明-->
+<p class="gongsi">武汉爱码农网络科技有限公司</p>
+
+<script src="/Public/User/userLogin.js"></script>
+</body>
+</html>

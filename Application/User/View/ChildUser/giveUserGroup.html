@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户分配角色</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<!--2019-3-15 任梦龙:修改流程-->
+<form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+    <div class="layui-form-item" style="padding-left: 20px;padding-top: 20px;">
+        <label class="layui-form-label">选择角色</label>
+        <input type="hidden" name="user_id" id="userId" value="<{$user_id}>" class="addeditinput" />
+        <input type="hidden" name="id" id="id" value="<{$id}>" class="addeditinput" />
+        <div class="layui-input-block">
+            <foreach name="list" item="v">
+                <input type="checkbox" lay-filter="choice" title="<{$v.auth_name}>"
+                       value="<{$v.id}>" name="group_id[<{$key}>]" <?php if(in_array($v['id'],$check_list)){echo 'checked';} ?>>
+
+            </foreach>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <!--<button class="layui-btn" onclick="javascript: FormSumit('<{:U("confirmUserGroup")}>');">立即提交</button>-->
+            <button class="layui-btn" lay-submit lay-filter="giveusergroup">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+        var form = layui.form,
+            $ = layui.jquery;
+        $("button[type=reset]").click();
+
+        // 监听提交
+        form.on('submit(giveusergroup)', function (data) {
+            var user_group_info = data.field;
+            var url = '<{:U("confirmUserGroup")}>';
+            $.post(url, user_group_info, function (data) {
+                if(data.status == 'ok') {
+                    layer.confirm(data.msg, {
+                        btn: ['确认'] //按钮
+                    }, function () {
+                        parent.location.reload();
+                    });
+                }else {
+                    layer.msg(data.msg, {icon: 5, time: 2000});//失败的表情
+                    return false;
+                }
+            });
+            return false;//阻止表单跳转
+        });
+    });
+</script>

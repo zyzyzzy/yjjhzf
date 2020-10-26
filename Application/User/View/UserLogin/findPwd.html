@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link rel="stylesheet" href="/Public/css/findPwd.css">
+</head>
+<body>
+<div class="box">
+    <div class="top">
+        <div class="logo_img">
+            <img src="/Public/images/mima_logo.png">
+        </div>
+    </div>
+    <div class="bot">
+        <div class="find">重置密码</div>
+        <div class="email_area">
+            <form action="" method="post" onsubmit="return false">
+                <input type="hidden" name="email" value="<{$email}>" class="addeditinput">
+                <input type="hidden" name="token" value="<{$token}>" class="addeditinput">
+                <p>新密码</p>
+                <input class="addeditinput" name="pwd" type="password" placeholder="请输入您的新密码" class="addeditinput">
+                <p>确认密码</p>
+                <input class="addeditinput" name="repwd" type="password" placeholder="请确认密码">
+                <input class="sub" type="button" id="sub_btn" value="提交" onclick="javascript: FormSumit('<{:U("UserLogin/editLoginpwd")}>');">
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    function FormSumit(ajaxurl) {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        var login_url = "<{:U('UserLogin/index')}>";
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 'ok') {
+                    layer.msg(data.msg, {icon: 6, time: 1500}, function () {
+                        window.location.href = login_url;
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 5, time: 1500});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>

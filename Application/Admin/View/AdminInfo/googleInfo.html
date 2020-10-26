@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>谷歌验证</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <if condition='$google_code eq 0'>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>未开通</span>
+        </div>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 20px;">
+            <span>如想要开通谷歌验证功能,请联系超级管理员处理</span>
+        </div>
+        <elseif condition="$google_code eq 1"/>
+        <div style="width: 40%">
+            <!--继承开通谷歌验证页面-->
+            <include file="BaseTemplate:openGoogle"/>
+        </div>
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>已开启</span>
+        </div>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 20px;">
+            <span>如想要关闭谷歌验证,请联系超级管理员处理</span>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+

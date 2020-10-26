@@ -1,0 +1,112 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">用户手续费列表</block>
+<block name="nav">
+    <a href="">用户管理</a>
+    <a href="">会员管理</a>
+    <a><cite>用户手续费列表</cite></a>
+</block>
+<block name="search">
+    <div class="layui-input-inline">
+        <input type="hidden" name="userid" id="userid" value="<{$userid}>">
+        <select name="payapiid" id="payapiid">
+            <option value="">通道</option>
+            <volist name="payapis" id="payapi">
+                <option value="<{$payapi.id}>"><{$payapi.zh_payname}></option>
+            </volist>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <!--<xblock>
+        <button class="layui-btn" onclick="x_admin_show1('添加费率','<{:U("Fee/showCreateFrom")}>?userid=<{$userid}>',0.6,0.8)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>-->
+    <script>
+        function x_admin_show1(title, url, w, h) {
+            if (title == null || title == '') {
+                title = false;
+            }
+            ;
+            if (url == null || url == '') {
+                url = "404.html";
+            }
+            ;
+            if (w == null || w == '') {
+                w = ($(window).width() * 0.9);
+            } else {
+                w = ($(window).width() * w);
+            }
+            ;
+            if (h == null || h == '') {
+                h = ($(window).height() - 50);
+            } else {
+                h = ($(window).height() * h);
+            }
+            ;
+            layer.open({
+                type: 2,
+                area: [w + 'px', h + 'px'],
+                fix: false, //不固定
+                maxmin: false,
+                shadeClose: true,
+                shade: 0.4,
+                title: title,
+                content: url
+            });
+        }
+    </script>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="fees" layui-data="{id:'fees'}" dataurl="<{:U("Fee/loadUserFees")}>"></table>
+    <script type="text/html" id="user">
+       {{d.userpayapiclass.user.username}}
+    </script>
+    <script type="text/html" id="payapi">
+        {{d.userpayapiclass.payapi.zh_payname}}
+    </script>
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("Fee/ShowEditFee")}>?id={{d.id}}')" href="javascript:;">
+        <i class="layui-icon">
+            <span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe642;</i></span>
+        </i>
+        </a>
+        <!--<a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>-->
+    </script>
+    <script>
+        var tableIns;
+
+        layui.use('table', function() {
+
+            var table = layui.table;
+
+            var form = layui.form;
+
+            tableIns = table.render({
+                elem: '#fees',
+                url: $("#fees").attr("dataurl"),
+                where: {
+                    userid: $("#userid").val()
+                }
+                , cols: [[
+                    {type: 'numbers'}
+                    , {field: 'userid', title: '用户名', templet: '#user'}
+                    , {field: 'payapiid', title: '通道', templet: '#payapi'}
+                    , {field: 'rate', title: '手续费'}
+                    , {field: 'id', title: '操作', templet: '#caozuo'}
+                ]]
+                , page: true
+                , text: {
+                    none: '无数据'
+                }
+                , method: 'post'
+            });
+
+        });
+    </script>
+</block>

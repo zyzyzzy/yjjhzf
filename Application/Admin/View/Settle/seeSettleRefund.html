@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看订单信息</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .top .layui-form-item{
+            border-bottom: 1px solid #f2f2f2;
+            margin-bottom: 0;
+        }
+        .top .layui-form-label{
+            width: 120px;
+        }
+        .top .layui-input-block{
+            margin-left: 150px;
+        }
+        .top .layui-input{
+            border: 0;
+            padding-left: 0;
+        }
+        .back .layui-form-label{
+            width: 130px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form top"  method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">商户用户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['username']}>" readonly autocomplete="off" class="layui-input" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">结算金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['ordermoney']}>" readonly autocomplete="off" class="layui-input" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">商户编号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['memberid']}>" readonly autocomplete="off" class="layui-input" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">交易费率：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['traderate']*100}>%" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">订单号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['ordernumber']}>" readonly autocomplete="off" class="layui-input" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">交易手续费：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['moneytrade']}>" readonly autocomplete="off" class="layui-input" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">银行名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankname']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">成本费率：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['costrate']*100}>%" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">银行卡号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankcardnumber']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">成本金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['moneycost']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">开户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankusername']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">手续费扣款方式：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['deduction_type']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">身份证号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['identitynumber']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">到账金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['money']}>" readonly autocomplete="off" class="layui-input" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">手机号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['phonenumber']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">结算状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="<{$order_info['status']}>" readonly autocomplete="off" class="layui-input" style="color: #f00;display: inline-block;width: 30%;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">申请时间：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['applytime']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">退款状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="<{$order_info['refundstatus']}>" readonly autocomplete="off" class="layui-input" style="color: #f00;display: inline-block;width: 30%;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">处理时间：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['dealtime']}>" readonly autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class="layui-form back"  method="post" onsubmit="return false">
+        <div  style="border: 1px solid #E6E6E6;margin-top: 30px;padding-top: 15px;padding-bottom: 15px;">
+            <input type="hidden" name="settle_id" value="<{$order_info['settleid']}>" class="addeditinput" />
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否同意退款</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" lay-filter="filter" type="radio" name="refundstatus" value="2" title="同意退款">
+                    <input class="layui-input" lay-filter="filter" type="radio" name="refundstatus" value="3" title="拒绝退款">
+                </div>
+            </div>
+            <div class="layui-form-item refund_money" style="display: none;">
+                <label class="layui-form-label">退款金额</label>
+                <div class="layui-input-block">
+                    <input style="width: 30%;" type="text" name="refundmoney" id="refundmoney" placeholder="￥" autocomplete="off" class="layui-input addeditinput" onKeyUp="amount(this)"  onBlur="overFormat(this)">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input style="width: 30%;" type="text" name="refundremarks" id="refundremarks" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <!--2019-4-18 rml：修改为验证码-->
+            <include file="BaseTemplate:verifycode"/>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="javascript: FormSubmit('<{:U("refundConfirm")}>');">确定</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('form',function() {
+        var form = layui.form;
+        form.on('radio(filter)', function (data) {
+            var cla = this.name;
+            $("input[name='"+cla+"']").each(function () {
+                this.classList.remove("addeditinput");
+            });
+            this.classList.add("addeditinput");
+            var val = this.value;
+            if (val == 2) {
+                $('.refund_money').show();
+            } else {
+                $('.refund_money').hide();
+            }
+        });
+    });
+    function FormSubmit(ajaxurl) {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6},function () {
+                        parent.location.reload();
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>
+<script>
+
+    /**
+     * 实时动态强制更改用户录入
+     * arg1 inputObject
+     **/
+    function amount(th) {
+        var regStrs = [
+            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+            ['^(\\d+\\.\\d{4}).+', '$1'] //禁止录入小数点后两位以上
+        ];
+        for (var i = 0; i < regStrs.length; i++) {
+            var reg = new RegExp(regStrs[i][0]);
+            th.value = th.value.replace(reg, regStrs[i][1]);
+        }
+    }
+    /**
+     * 录入完成后，输入模式失去焦点后对录入进行判断并强制更改，并对小数点进行0补全
+     * arg1 inputObject
+     **/
+    function overFormat(th) {
+        var v = th.value;
+        if (v === '') {
+            v = '0.0000';
+        } else if (v === '0') {
+            v = '0.0000';
+        } else if (v === '0.') {
+            v = '0.0000';
+        } else if (/^0+\d+\.?\d*.*$/.test(v)) {
+            v = v.replace(/^0+(\d+\.?\d*).*$/, '$1');
+            v = inp.getRightPriceFormat(v).val;
+        } else if (/^0\.\d$/.test(v)) {
+            v = v + '000';
+        } else if (!/^\d+\.\d{4}$/.test(v)) {
+            if (/^\d+\.\d{4}.+/.test(v)) {
+                v = v.replace(/^(\d+\.\d{4}).*$/, '$1');
+            } else if (/^\d+$/.test(v)) {
+                v = v + '.0000';
+            } else if (/^\d+\.$/.test(v)) {
+                v = v + '0000';
+            } else if (/^\d+\.\d$/.test(v)) {
+                v = v + '000';
+            } else if (/^\d+\.\d\d$/.test(v)) {
+                v = v + '00';
+            } else if (/^\d+\.\d\d\d$/.test(v)) {
+                v = v + '0';
+            }else if (/^[^\d]+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^[^\d]+(\d+\.?\d*)$/, '$1');
+            } else if (/\d+/.test(v)) {
+                v = v.replace(/^[^\d]*(\d+\.?\d*).*$/, '$1');
+                ty = false;
+            } else if (/^0+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^0+(\d+\.?\d*)$/, '$1');
+                ty = false;
+            } else {
+                v = '0.0000';
+            }
+        }
+        th.value = v;
+    }
+
+</script>

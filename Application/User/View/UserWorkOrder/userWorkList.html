@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户工单管理列表</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+          <block name="nav">
+              <a href="">工单管理</a>
+              <a href="">
+                  <cate>工单记录</cate>
+              </a>
+          </block>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <block name="search">
+                <input type="text" name="work_num" id="work_num" placeholder="工单编号" autocomplete="off" class="layui-input">
+                <input type="text" name="title" id="title" placeholder="标题" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <select name="status" id="statusSearch" class="layui-select searchstr">
+                        <option value="">请选择状态</option>
+                        <option value="1">未处理</option>
+                        <option value="2">沟通中</option>
+                        <option value="3">已解决</option>
+                    </select>
+                </div>
+                &nbsp;&nbsp;创建时间：<input class="layui-input" placeholder="开始时间" name="start" id="start" autocomplete="off">
+                <input class="layui-input" placeholder="结束时间" name="end" id="end" autocomplete="off">
+            </block>
+
+            <block name="searchbutton">
+                <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+                <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+            </block>
+        </form>
+    </div>
+
+    <block name="xblock">
+        <xblock>
+            <button class="layui-btn layui-btn-danger" onclick="delAll(this)" ajaxurl="<{:U('delAll')}>"><i class="layui-icon"></i>批量删除</button>
+            <button class="layui-btn" onclick="y_admin_show('添加工单','<{:U("addUserWork")}>?user_id=<{$user_id}>',1200,700)">
+                <i class="layui-icon">&#xe61f;</i>添加
+            </button>
+            <span class="x-right" style="line-height:40px"></span>
+        </xblock>
+    </block>
+
+    <block name="table_script">
+        <table class="layui-hide" id="userWorkList" layui-data="{id:'userWorkList'}" dataurl="<{:U('loadUserWorkList')}>?user_id=<{$user_id}>"></table>
+
+        <script type="text/html" id="updatetime">
+            {{#  if(d.update_time != '0000-00-00 00:00:00'){ }}
+            {{d.update_time}}
+            {{#  } else { }}
+            -
+            {{#  } }}
+        </script>
+
+        <script type="text/html" id="status">
+            {{#  if(d.status == 1){ }}
+            <span style="color: #f00;">未处理</span>
+            {{#  } }}
+            {{#  if(d.status == 2){ }}
+            <span style="color: #1E9FFF;">沟通中</span>
+            {{#  } }}
+            {{#  if(d.status == 3){ }}
+            <span style="color: #009688;">已解决</span>
+            {{#  } }}
+        </script>
+
+        <script type="text/html" id="caozuo">
+            <a title="查看"  onclick="y_admin_show('查看工单信息','<{:U("seeWorkOrder")}>?id={{ d.id }}',1200,700)" href="javascript:;">
+            {{#  if(d.read == 1){ }}
+            <img height = "18px" src="/Public/icon/notsee.png"
+                 style="background:#009688;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;" / >
+            {{#  } }}
+            {{#  if(d.read != 1){ }}
+            <img height = "18px" src="/Public/icon/hassee.png"
+                 style="background:#009688;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;" / >
+            {{#  } }}
+            </a>
+
+            <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('delWorkOrder')}>">
+                <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+            </a>
+
+        </script>
+    </block>
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+</html>

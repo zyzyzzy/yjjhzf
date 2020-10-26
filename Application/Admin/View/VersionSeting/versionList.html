@@ -1,0 +1,61 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">交易接口设置</block>
+<block name="nav">
+    <a href="">系统设置</a>
+    <a><cite>交易接口设置</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="numberstr" id="numberstr" value="" placeholder="接口版本号" autocomplete="off" class="layui-input">
+    <input type="text" name="bieming" id="bieming" value="" placeholder="接口版本别名" autocomplete="off" class="layui-input">
+    <input type="text" name="actionname" id="actionname" value="" placeholder="控制器名称" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="layui-select">
+            <option value="">状态开关</option>
+            <option value="1">启用</option>
+            <option value="2">禁用</option>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="all_use" id="all_use" class="layui-select">
+            <option value="">通用开关</option>
+            <option value="1">开启</option>
+            <option value="2">关闭</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加','<{:U("versionAdd")}>',700,400)"><i class="layui-icon">&#xe61f;</i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="versionList" layui-data="{id:'versionList'}" dataurl="<{:U('VersionSeting/loadVersionList')}>"></table>
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U("updateStatus")}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="showalluse">
+        <input type="checkbox" name="all_use" ajaxurl="<{:U('updateAlluse')}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="开启|关闭" lay-filter="allusecheckbox" {{ d.all_use == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("VersionSeting/versionEdit")}>?id={{d.id}}',700,400)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+        </i>
+        </a>
+
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('VersionSeting/versionDel')}>">
+            <i class="layui-icon">
+                     <span class="layui-badge layui-bg-danger" >
+                          <i class="layui-icon">&#xe640;</i>
+                     </span>
+            </i>
+        </a>
+    </script>
+</block>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>转交工单</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" onsubmit="return false">
+        <input type="hidden" name="admin_id" value="<{$admin_id}>" autocomplete="off" class="layui-input addeditinput">
+        <input type="hidden" name="work_num" value="<{$work_num}>" autocomplete="off" class="layui-input addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">转交管理员</label>
+            <div class="layui-input-block">
+                <select name="admin_id" lay-search class="layui-input addeditinput">
+                    <option value=""></option>
+                    <volist name="amn_admin" id="vo">
+                        <option value="<{$vo['id']}>"><{$vo["user_name"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容</label>
+            <div class="layui-input-block">
+                <textarea style="width: 100%;height: 100px;" name="content" class="layui-input addeditinput">编号为<{$work_num}>的工单需要您处理，请注意查收</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("AdminWorkOrder/sendEmail")}>');" lay-submit lay-filter="formDemo">确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

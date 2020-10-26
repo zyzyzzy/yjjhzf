@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算申请</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+        <a href="">结算管理</a>
+        <a><cite>结算申请</cite></a>
+      </span>
+</div>
+<div class="x-body" style="width: 60%">
+    <xblock style="height: 40px;line-height:40px;">
+        <button class="layui-btn" onclick="apply(this,'<{$user_id}>',1)" ajaxurl="<{:U('applyStatus')}>" dataurl="<{:U('applyInfo')}>?type=1&usercode=<{$usercode}>">T + 1结算</button>
+        <button class="layui-btn" onclick="apply(this,'<{$user_id}>',0)" ajaxurl="<{:U('applyStatus')}>" dataurl="<{:U('applyInfo')}>?type=0&usercode=<{$usercode}>">T + 0结算</button>
+    </xblock>
+</div>
+</body>
+</html>
+<script>
+    function apply(obj,user_id,type) {
+        var ajaxurl = $(obj).attr("ajaxurl");
+        var dataurl = $(obj).attr("dataurl");
+        $.ajax({
+            type:'POST',
+            url:ajaxurl,
+            data:{user_id:user_id,type:type},
+            dataType:'json',
+            success:function(data){
+                console.log(data);
+                if(data.status=='ok'){
+                    location.href = dataurl;
+                }else{
+                    layer.confirm(data.msg);
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("error");
+            }
+        });
+    }
+</script>

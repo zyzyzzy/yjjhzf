@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看公告</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">公告内容</label>
+            <div class="layui-input-block">
+                <textarea name="notice" placeholder="请输入公告内容" class="layui-textarea addeditinput"><{$notice}></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

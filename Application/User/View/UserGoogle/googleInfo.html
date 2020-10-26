@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<!--2019-3-19 任梦龙：谷歌验证修改为谷歌验证-->
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="javascript:;">用户后台</a>
+        <a href="javascript:;">账号管理</a>
+          <a><cite>谷歌验证</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i>
+    </a>
+</div>
+<div class="x-body" >
+    <if condition="$google_code eq 0">
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>未开通</span>
+        </div>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 20px;">
+            <if condition="$type eq 0">
+                <span>如想要开通谷歌验证功能,请联系主用户处理</span>
+                <else/>
+                <span>如想要开通谷歌验证功能,请联系管理员处理</span>
+            </if>
+
+        </div>
+        <elseif condition="$google_code eq 1" />
+        <div style="width: 40%">
+            <!--继承开通谷歌验证页面-->
+            <include file="BaseTemplate:openGoogle"/>
+        </div>
+
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>已开启</span>
+        </div>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 20px;">
+            <if condition="$type eq 0">
+                <span>如想要关闭谷歌验证,请联系主用户处理</span>
+                <else/>
+                <span>如想要关闭谷歌验证,请联系管理员处理</span>
+            </if>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+

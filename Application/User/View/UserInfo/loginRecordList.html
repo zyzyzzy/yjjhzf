@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="javascript:;">用户后台</a>
+        <a href="javascript:;">账号管理</a>
+        <a><cite>登录记录</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i>
+    </a>
+</div>
+<div class="x-body">
+
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <!--2019-3-20 任梦龙：修改子账号的搜索-->
+            <if condition="$_SESSION['child_info'] eq ''">
+                <div class="layui-input-inline">
+                    <select name="child_id" id="child_id" class="layui-select addeditinput" lay-search>
+                        <option value="">请选择子账号</option>
+                        <volist name="child_list" id="vo">
+                            <option value="<{$vo.id}>"><{$vo.child_name}></option>
+                        </volist>
+                    </select>
+                </div>
+            </if>
+            <input class="layui-input addeditinput" placeholder="登录ip" name="loginip" id="loginip">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="登录开始日" name="start" id="start">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="登录截止日" name="end" id="end">
+            <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+        </form>
+    </div>
+    <table class="layui-hide" id="loginRecordList" layui-data="{id:'loginRecordList'}" dataurl="<{:U("loadLoginRecordList")}>"></table>
+    <script type="text/html" id="login_ip">
+        {{# if(d.loginip){ }}
+        {{d.loginip}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="loginaddress">
+        {{# if(d.loginaddress){ }}
+        {{d.loginaddress}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+</div>
+
+</body>
+
+</html>

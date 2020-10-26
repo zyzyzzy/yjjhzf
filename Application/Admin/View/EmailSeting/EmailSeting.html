@@ -1,0 +1,44 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">邮箱设置</block>
+<block name="nav">
+    <a href="">信息设置</a>
+    <a><cite>邮箱设置</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="user_name" id="username" placeholder="用户名" autocomplete="off" class="layui-input">
+    <input type="text" name="email" id="email" placeholder="邮箱地址" autocomplete="off" class="layui-input">
+    <input type="text" name="receive_email" id="receiveEmail" placeholder="收件人邮箱" autocomplete="off" class="layui-input">
+</block>
+<block name="searchbutton">
+    <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+    <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加邮箱','<{:U("EmailSeting/EmailSetingAdd")}>',700,650)">
+        <i class="layui-icon"></i>
+        添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+
+<block name="table_script">
+    <table class="layui-hide" id="EmailSeting" layui-data="{id:'EmailSeting'}" dataurl="<{:U('EmailSeting/LoadEmailSeting')}>">
+    </table>
+    <script type="text/html" id="TestEmail">
+        <a class="layui-btn layui-btn-xs layui-btn-warm" href="javascript:y_admin_show('测试发送邮件','<{:U("EmailSeting/testEmail")}>?id={{ d.id }}',700,500)">测试发送邮件</a>
+    </script>
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("EmailSeting/EmailEdit")}>?id={{ d.id }}',700,650)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">
+            &#xe642;</i></span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('EmailSeting/DelEmailSeting')}>">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>
+    </script>
+</block>

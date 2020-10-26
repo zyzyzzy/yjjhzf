@@ -1,0 +1,169 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">通道帐号</block>
+<block name="nav">
+    <a href="">通道管理</a>
+    <a><cite>通道帐号</cite></a>
+</block>
+<block name="search">
+	<input type="text" name="bieming" id="bieming"  placeholder="账号名称" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="memberid" id="memberid"  placeholder="商户号" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="account" id="account"  placeholder="账号" autocomplete="off" class="layui-input addeditinput">
+  <div class="layui-input-inline">
+    <select name="payapishangjiaid" id="payapishangjiaid" class="addeditinput" lay-search>
+      <option value="">所属商家</option>
+      <volist name="PayapishangjiaList" id="vo">
+      <option value="<{$vo.id}>"><{$vo.shangjianame}></option>
+      </volist>
+    </select>
+  </div>
+    <div class="layui-input-inline">
+    <select name="moneytypeclassid" id="moneytypeclassid" class="addeditinput" lay-search>
+      <option value="">到账方案</option>
+      <volist name="MoneytypeclassList" id="vo">
+      <option value="<{$vo.id}>"><{$vo.moneyclassname}></option>
+      </volist>
+    </select>
+  </div>
+  <div class="layui-input-inline">
+    <select name="status" id="status" class="addeditinput">
+      <option value="">状态</option>
+      <option value="1">启用</option>
+      <option value="0">禁用</option>
+    </select>
+  </div>
+</block>
+<block name="xblock"></block>
+<block name="table_script">
+    <table class="layui-hide" id="PayapiAccount" layui-data="{id:'PayapiAccount'}" dataurl="<{:U('Payapi/LoadPayapiAccount')}>"></table>
+    <script type="text/html" id="owner_name">
+        {{# if(d.owner_name!='无'){ }}
+        {{d.owner_name}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="commission_rate">
+        {{# if(d.commission_rate){ }}
+        {{(d.commission_rate)*100}}%
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="showtype">
+        {{# if(d.user_id==0){ }}
+        <input type="checkbox" name="type" ajaxurl="<{:U('Payapi/editAccountType')}>" value="{{d.id}}" lay-skin="switch" lay-text="普通|测试" lay-filter="typecheckbox" {{ d.type == 0 ? 'checked' : '' }}>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="memberid_temp">
+        {{# if(d.memberid){ }}
+        {{d.memberid}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="account_temp">
+        {{# if(d.account){ }}
+        {{d.account}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+     <script type="text/html" id="showmoney">
+         {{# if(d.user_id==0){ }}
+    	<a style="text-decoration: underline" href="javascript:y_admin_show('设置每日交易总额','<{:U("Payapi/EditPayapiaccountMoney")}>?id={{ d.id }}',500,600)">{{ (d.money / 10000).toFixed(2) }}万</a>
+        {{# }else{ }}
+        -
+        {{# } }}
+     </script>
+      <script type="text/html" id="showtoolbar">
+      <div class="layui-btn-container">
+        <button class="layui-btn" onclick="y_admin_show('添加通道帐号','<{:U("AddPayapiAccount")}>',600,400)">
+            <i class="layui-icon"></i>
+            添加</button>
+      </div>
+      </script>
+    <script type="text/html" id="showstatus">
+        {{# if(d.user_id==0){ }}
+        <input type="checkbox" name="status" ajaxurl="<{:U('Payapi/payapiaccountStatus')}>" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showoddment">
+        {{# if(d.user_id==0){ }}
+        {{# if(d.oddment==1){ }}
+        <button class="layui-btn layui-btn-sm" onclick="y_admin_show('充值零头','<{:U("Payapi/accountOddment")}>?id={{ d.id }}',600,250)">已启用</button>
+        {{# }else{ }}
+        <button class="layui-btn layui-btn-sm" onclick="y_admin_show('充值零头','<{:U("Payapi/accountOddment")}>?id={{ d.id }}',600,250)">禁用</button>
+        {{# } }}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="showmoneytypeclass">
+        {{# if(d.user_id==0){ }}
+    	<button class="layui-btn layui-btn-sm" onclick="y_admin_show('到账方案[{{d.moneytypeclassname}}]','<{:U("Payapi/ShowMoneytypeclass")}>?id={{ d.moneytypeclassid }}',600,500)">查看</button>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+     <script type="text/html" id="showmd5keystr">
+         {{# if(d.user_id==0){ }}
+    	<button class="layui-btn layui-btn-sm" onclick="y_admin_show('设置密钥','<{:U("Payapi/Secretkey")}>?id={{ d.id }}')">设置</button>
+         {{# }else{ }}
+         -
+         {{# } }}
+     </script>
+      <!--<script type="text/html" id="showfeilv">
+        <a style="text-decoration: underline; color:#FF0000" href="javascript:y_admin_show('设置费率','<{:U("Payapi/PayapiaccountFeilv")}>?id={{ d.id }}&cbfeilv={{ d.cbfeilv }}',600,300)">{{ (d.feilv * 100).toFixed(2) }}%</a>
+      </script>-->
+    <script type="text/html" id="showfeilv">
+        {{# if(d.user_id==0){ }}
+        <a style="text-decoration: underline;" href="javascript:y_admin_show('设置费率','<{:U("Payapi/PayapiaccountFeilv")}>?id={{ d.id }}',800,500)">设置</a>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+        <!--单笔最小金额-->
+    <script type="text/html" id="showminmoney">
+        {{# if(d.user_id==0){ }}
+        <a style="text-decoration: underline" href="javascript:y_admin_show('设置单笔最小金额','<{:U("Payapi/editMinMoney")}>?id={{ d.id }}',600,300)">{{ (d.min_money) }}</a>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <!--单笔最大金额-->
+    <script type="text/html" id="showmaxmoney">
+        {{# if(d.user_id==0){ }}
+        <a style="text-decoration: underline" href="javascript:y_admin_show('设置单笔最大金额','<{:U("Payapi/editMaxMoney")}>?id={{ d.id }}',600,300)">{{ (d.max_money) }}</a>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+
+    <script type="text/html" id="caozuo">
+        {{# if(d.user_id==0){ }}
+        <a title="编辑"  onclick="y_admin_show('编辑','<{:U("Payapi/EditPayapiAccount")}>?id={{ d.id }}',600,400)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe642;</i></span></i>
+        </a>
+        <a title="轮循权重"  onclick="y_admin_show('轮循权重','<{:U("Payapi/PayapiAccountLoops")}>?id={{ d.id }}',600,600)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe665;</i></span></i>
+        </a>
+        <!--2019-3-4 任梦龙：将delete_del修改为delete_info-->
+        <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/PayapiAccountDel')}>">
+        <i class="layui-icon"><span class="layui-badge layui-bg-danger" style="font-size: 15px;"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</block>

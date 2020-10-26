@@ -1,0 +1,26 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">帮助文档</block>
+<block name="nav">
+    <a href="javascript:;">工单管理</a>
+    <a><cite>帮助文档</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="title" id="title" placeholder="标题或问题内容" autocomplete="off" class="layui-input">
+    &nbsp;&nbsp;创建时间：<input class="layui-input" placeholder="开始时间" name="start" id="start" autocomplete="off">
+    <input class="layui-input" placeholder="结束时间" name="end" id="end" autocomplete="off">
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'workHelpList')" ajaxurl="<{:U('delAllHelp')}>"><i class="layui-icon"></i>批量删除</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="workHelpList" layui-data="{id:'workHelpList'}" dataurl="<{:U('loadWorkHelpList')}>"></table>
+    <script type="text/html" id="caozuo">
+        <a onclick="y_admin_show('查看帮助文档','<{:U("seeHelpDocument")}>?id={{d.id}}',1200,650)" title="查看" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-blue"><i class="layui-icon">&#xe606;</i> </span></i>
+        </a>
+    </script>
+</block>
+

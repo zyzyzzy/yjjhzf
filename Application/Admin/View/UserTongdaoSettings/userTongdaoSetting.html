@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <include file="BaseTemplate:includecssjs" />
+    <title>用户通道设置</title>
+    <style>
+        .x-so input.layui-input{
+            width: 100%!important;
+        }
+        .layui-input-inline {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<table class="layui-table">
+
+    <thead>
+    <tr>
+        <th style="width:15%;">通道分类</th>
+
+        <th style="width: 30%;">设置通道</th>
+        <th>通道账号</th>
+    </tr>
+    </thead>
+    <tbody>
+    <input type="hidden" name="user_id" id="userId" value="<{$user_id}>">
+    <volist name="payapiclasslist" id="vo">
+
+        <tr>
+            <td>
+                <div class="layui-row">
+
+                    <form class="layui-form layui-col-md12 x-so" method="GET"  onsubmit="return false">
+
+                    <input type="checkbox" name="tongdaoclass<{$vo['id']}>" id="tongdaoclass<{$vo['id']}>"
+                           value="<{$vo['id']}>" lay-filter="checkboxtongdaoclass" title="<{$vo['classname']}>" >
+
+                    </form>
+
+                </div>
+            </td>
+
+            <!--2018-12-28 任梦龙 显示设置通道-->
+            <td style="display: none;" class="showtongdao<{$vo['id']}>">
+                <div class="layui-fluid" style="display: block;">
+
+                    <form class="layui-form layui-col-md12" method="GET" onsubmit="return false">
+
+                        <div class="layui-input-inline x-so">
+                            <select lay-filter="tdpayapi" name="<{$vo['id']}>" id="payapi<{$vo['id']}>">
+                                <option value="0">请选择通道</option>
+                                <{:showpayapioption($vo["id"])}>
+                            </select>
+                        </div>
+
+                    </form>
+
+                </div>
+            </td>
+
+            <!--2018-12-28 任梦龙 显示编辑通道账户按钮-->
+            <td style="display: none;" class="showuseraccount<{$vo['id']}>">
+                <div class="layui-row">
+                    <!--2019-2-27 任梦龙：添加标识-->
+                    <input type="hidden" id="class<{$vo['id']}>" value="">
+
+                    <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+
+                        <div class="layui-input-inline">
+
+                            <div class="layui-btn-container">
+                                <button class="layui-btn" onclick="javascript:window.location.href='<{:U("ShowUserPayapiaccount")}>?payapiclassid=<{$vo["id"]}>&userid=<{$Think.get.userid}>'">编辑通道账号</button>
+
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </td>
+        </tr>
+    </volist>
+
+
+    </tbody>
+</table>
+<script>
+
+    var user_id = $('#userId').val(); //用户id
+    layui.use(['layer', 'form'],function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        $('.layui-form-checkbox').on('click', function (e){
+            var input = $(this).parent().find('input');
+            if($(this).hasClass('layui-form-checked') == true){
+                input.prop('checked', true);
+                $(this).addClass('layui-form-checked');
+            }else {
+                input.prop('checked', false);
+                $(this).removeClass('layui-form-checked');
+            }
+
+        });
+        //监听通道分类的复选框事件
+        form.on('checkbox(checkboxtongdaoclass)',function (data) {
+            //如果选中，则显示设置通道，取消则将设置通道和编辑账户都隐藏，并且数据库里的数据也要删除
+            if (data.elem.checked) {
+                $('.showtongdao' + data.elem.value).show();   //2019-2-27 任梦龙：添加注释：如果勾选了通道分类，则设置通道显示
+            } else {
+                //2019-2-27 任梦龙：如果取消了通道分类，则需要将通道设置和通道账号隐藏，但是有可能没有设置通道，所以需要分情况
+                var class_val = $('#class'+data.elem.value).val();
+                //1. 勾选后，显示设置通道，并且设置了通道，显示出了通道账号，然后取消，这时候就是走ajax了，同时隐藏通道和账号
+                if(class_val){
+                    $('.showtongdao' + data.elem.value).hide();
+                    $('.showuseraccount' + data.elem.value).hide();
+                    ajaxurl = '<{:U("EditUserTongdaoclass")}>';
+                    datastr = 'payapiclass_id=' + data.elem.value + '&checked=' + (data.elem.checked?1:0) + '&user_id=' + user_id;
+                    /*************************************************************/
+                    $.ajax({
+                        type: 'post',
+                        url: ajaxurl,
+                        data: datastr,
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.status == 'ok') {
+                                layer.msg(res.msg,{icon:6,time:1500});
+                            }else {
+                                layer.msg(res.msg,{icon:5,time:1500});
+                                return false;
+                            }
+                        },
+                        error: function () {
+                            layer.msg('操作错误',{icon:5,time:1500});
+                        }
+                    });
+                    /*************************************************************/
+                }else {
+                    //2. 勾选后，显示设置通道，然后取消，这是不涉及ajax，只是隐藏了通道
+                    $('.showtongdao' + data.elem.value).hide();
+                }
+                //取消后将标识清空
+                $('#class'+data.elem.value).val('');
+            }
+        });
+
+        //监听设置通道
+        form.on('select(tdpayapi)',function (obj) {
+            id = obj.elem.name;   //分类id
+            payapiid = obj.elem.value;  //通道id
+        /**************************************************************/
+            ajaxurl = '<{:U("EditUserPayapiClass")}>';
+            // datastr = "id=" + id+ "&payapiid=" + payapiid + '$user_id='.user_id;
+            $.ajax({
+                type: 'post',
+                url: ajaxurl,
+                data: {id: id, payapiid: payapiid, user_id: user_id},
+                dataType: 'json',
+                success: function (objdata) {
+                    // console.log(objdata);
+                    if (objdata.status == 'ok') {
+                        //2019-2-27 任梦龙：设置通道成功时，给一个标识，用于判断是否有设置通道，修改提示信息的输出方式
+                        $('#class'+id).val(id);
+                        layer.tips(objdata.msg, obj.othis,{
+                            tips: [2,'#5FB878']
+                        });
+                        $('.showuseraccount' + id).show();  //显示编辑账户
+                    }else {
+                        layer.tips(objdata.msg, obj.othis,{
+                            tips: [3,'#FF5722']
+                        });
+                    }
+                },
+                error: function () {
+                    layer.msg('操作错误,请检查',{icon: 5,time: 1500});
+                }
+            });
+         /*****************************************************/
+        });
+
+    });
+
+    //2019-2-27 任梦龙：添加class标识
+    <volist name='list' id='vo'>
+        $("#tongdaoclass<{$vo['payapiclassid']}>").attr("checked",true);
+        $(".showtongdao<{$vo['payapiclassid']}>").show();
+        $(".showuseraccount<{$vo['payapiclassid']}>").show();
+        $("#payapi<{$vo['payapiclassid']}>").val(<{$vo["payapiid"]}>);
+        $("#class<{$vo['payapiclassid']}>").val(<{$vo['payapiclassid']}>);
+    </volist>
+</script>
+</body>
+</html>

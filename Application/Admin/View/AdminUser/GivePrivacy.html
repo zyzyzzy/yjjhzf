@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>分配隐私</title>
+    <include file="BaseTemplate:includecssjs"/> 
+</head>
+<body>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">分配隐私</label>
+            <input type="hidden" name="id" id="id" value="<{$id}>" class="addeditinput"/>
+            <div class="layui-input-block">
+                <foreach name="privacy" item="v">
+                    <input type="checkbox" <?php if(in_array($v['id'],$pri_arr)){echo 'checked';} ?> lay-filter="choice" title="<{$v.pri_name}>" value="<{$v.id}>" name="privacy_id[<{$key}>]" >
+                </foreach>
+
+            </div>
+        </div>  
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="privacy">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+        var form = layui.form,
+                $ = layui.jquery;
+        $("button[type=reset]").click();
+        //监听提交
+        form.on('submit(privacy)', function (data) {
+            var roleInfo = data.field;
+            var url = "<{:U('AdminUser/ConfirmPrivacy')}>";
+            $.post(url, roleInfo, function (data) {
+                if(data.status == 'ok') {
+                    layer.msg(data.msg, {
+                        icon: 6,
+                        time: 1500
+                    }, function () {
+                        location.reload();
+                    });
+                }else {
+                    layer.msg(data.msg, {icon: 5, time: 1000});
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>

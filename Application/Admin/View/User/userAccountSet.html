@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户自助通道设置</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false" lay-filter="switch">
+        <input type="hidden" name="user_id" value="<{$user_id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择通道</label>
+            <div class="layui-input-block">
+                <foreach name="payapi_list" item="v">
+                    <input type="checkbox" id="payapi<{$v.id}>" lay-filter="checkbox" lay-skin="checkbox" title="<{$v.zh_payname}>" value="<{$v.id}>"
+                           name="payapi_id[<{$key}>]" <?php if(in_array($v['id'],$check_payapi)){echo 'checked';} ?>
+                    <?php if(in_array($v['id'],$check_payapi)){echo 'class="addeditinput"';} ?>  class="">
+                </foreach>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">自助通道</label>
+            <div class="layui-input-block">
+                <input type="checkbox"  name="self_payapi" id="self_payapi" lay-text="开通|关闭"  value="<{$self_payapi}>" class="addeditinput"
+                       lay-filter="switch" lay-skin="switch" class="addeditinput" <if condition="$self_payapi eq 1">checked</if>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">是否开通用户的自助通道功能</div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("editUserAccount")}>','',true,false);" class="layui-btn"
+                lay-submit lay-filter="formDemo">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+        form.on('switch(switch)', function(data){
+            if(data.elem.checked==true){
+                $('#self_payapi').attr("value","1");
+            }else{
+                $('#self_payapi').attr("value","2");
+            }
+        });
+
+        form.on('checkbox(checkbox)', function(data){
+            if(data.elem.checked==true){
+                $('#payapi'+data.value).addClass('addeditinput');
+            }else{
+                $('#payapi'+data.value).removeClass('addeditinput');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

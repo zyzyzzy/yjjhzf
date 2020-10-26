@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提成设置</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <if condition="$type eq 2">
+        <form class="layui-form" method="post" onsubmit="return false" lay-filter="switch">
+        <input type="hidden" name="user_id" value="<{$user_id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">利润上限</label>
+            <div class="layui-input-block">
+                <input type="text" name="max_profit" id="max_profit" value="<{$max_profit}>" autocomplete="off" class="layui-input addeditinput" onKeyUp="amount(this)"  onBlur="overFormat(this)">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left: 110px;">代理商能从下级抽取提成的费率上限费;系统默认的代理商的提成费率为<{$system}>,即<{$b_system}>;费率为百分比，如果设置0.1%，请输入0.0010;</div>
+        </div>
+         <include file="BaseTemplate:verifycode" />
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("editCommission")}>','',true,false);" class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+            </div>
+        </div>
+    </form>
+    <else/>
+    <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+        <span>普通用户,无提成设置</span>
+    </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+
+    /**
+     * 实时动态强制更改用户录入
+     * arg1 inputObject
+     **/
+    function amount(th) {
+        var regStrs = [
+            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+            ['^(\\d+\\.\\d{4}).+', '$1'] //禁止录入小数点后两位以上
+        ];
+        for (var i = 0; i < regStrs.length; i++) {
+            var reg = new RegExp(regStrs[i][0]);
+            th.value = th.value.replace(reg, regStrs[i][1]);
+        }
+    }
+    /**
+     * 录入完成后，输入模式失去焦点后对录入进行判断并强制更改，并对小数点进行0补全
+     * arg1 inputObject
+     **/
+    function overFormat(th) {
+        var v = th.value;
+        if (v === '') {
+            v = '0.0000';
+        } else if (v === '0') {
+            v = '0.0000';
+        } else if (v === '0.') {
+            v = '0.0000';
+        } else if (/^0+\d+\.?\d*.*$/.test(v)) {
+            v = v.replace(/^0+(\d+\.?\d*).*$/, '$1');
+            v = inp.getRightPriceFormat(v).val;
+        } else if (/^0\.\d$/.test(v)) {
+            v = v + '000';
+        } else if (!/^\d+\.\d{4}$/.test(v)) {
+            if (/^\d+\.\d{4}.+/.test(v)) {
+                v = v.replace(/^(\d+\.\d{4}).*$/, '$1');
+            } else if (/^\d+$/.test(v)) {
+                v = v + '.0000';
+            } else if (/^\d+\.$/.test(v)) {
+                v = v + '0000';
+            } else if (/^\d+\.\d$/.test(v)) {
+                v = v + '000';
+            } else if (/^\d+\.\d\d$/.test(v)) {
+                v = v + '00';
+            } else if (/^\d+\.\d\d\d$/.test(v)) {
+                v = v + '0';
+            }else if (/^[^\d]+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^[^\d]+(\d+\.?\d*)$/, '$1');
+            } else if (/\d+/.test(v)) {
+                v = v.replace(/^[^\d]*(\d+\.?\d*).*$/, '$1');
+                ty = false;
+            } else if (/^0+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^0+(\d+\.?\d*)$/, '$1');
+                ty = false;
+            } else {
+                v = '0.0000';
+            }
+        }
+        th.value = v;
+    }
+
+
+    $(".form-decimal4").blur(function(){
+        var valueInput = $(this).val().replace(/(^\s*)|(\s*$)/g, "");
+        if(valueInput!=""){
+            if(regularNumber.test(valueInput)){
+                var value=(Math.round(parseFloat(valueInput)*10000)/10000).toFixed(4);
+                var xsd=value.toString().split(".");
+                if(xsd.length==1){
+                    value=value.toString()+".000";
+                }else if(xsd.length>1){
+                    if(xsd[1].length==2){
+                        value=value.toString()+"0";
+                    }else if(xsd[1].length==1){
+                        value=value.toString()+"00";
+                    }if(xsd[1].length==0){
+                        value=value.toString()+"000";
+                    }
+                }
+                $(this).val(value);
+            }else{
+                layer.msg("请填写正确的数字格式");
+            }
+        }
+    });
+</script>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通道分类编辑</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-label{
+            width: 120px;
+        }
+        .layui-input-block{
+            margin-left: 150px;
+        }
+        .thumb {margin-left:5px; margin-top:15px; height:128px}
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+    	<input type="hidden" name="id" id="id" class="addeditinput" value="<{$find['id']}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="classname" id="classname" value="<{$find['classname']}>" <if condition="$find.sys eq 1" >disabled</if> required  lay-verify="required" placeholder="请输入通道分类名称" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="classbm" id="classbm" value="<{$find['classbm']}>" required placeholder="请输入通道分类编码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">默认交易运营费率</label>
+            <div class="layui-input-block">
+                <input type="text" name="order_feilv" id="order_feilv" value="<{$find['order_feilv']}>" placeholder="请输入默认运营费率" autocomplete="off" class="layui-input addeditinput"  onKeyUp="amount(this)"  onBlur="overFormat(this)">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单笔最低手续费</label>
+            <div class="layui-input-block">
+                <input type="text" name="order_min_feilv" id="order_min_feilv" value="<{$find['order_min_feilv']}>" placeholder="请输入默认单笔最低手续费" autocomplete="off" class="layui-input addeditinput"  onKeyUp="amount(this)"  onBlur="overFormat(this)">
+            </div>
+            <div class="layui-form-mid layui-word-aux"><i class="layui-icon layui-icon-about"></i>费率为百分比，如果设置2%，请输入0.02；手续费为具体金额，单位为元，如直接输入0.01</div>
+        </div>
+        <div class="layui-form-item">
+            <input type="hidden" value="fal" id="img_upload">
+            <label class="layui-form-label">分类图片</label>
+            <div class="layui-input-block" style="margin-left: 15%;">
+                <button type="button" class="layui-btn upload">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+            </div>
+            <div class='layui-input-block' id='div_prev' title=''>
+                <img src="/<{$find['img_url']}>" alt="" style="margin-top: 15px;margin-left:5px;height: 128px;" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $('#btn').click(function () {
+        var classname = $('#classname').val();
+        if(classname==''){
+            layer.msg("请填写分类名称",{icon:5,time:3000});
+            return false;
+        }
+        var classbm = $('#classbm').val();
+        if(classbm==''){
+            layer.msg("请填写分类编码",{icon:5,time:3000});
+            return false;
+        }
+        var order_feilv = $('#order_feilv').val();
+        if(order_feilv==''){
+            layer.msg("请填写默认运营费率",{icon:5,time:3000});
+            return false;
+        }
+        var order_min_feilv = $('#order_min_feilv').val();
+        if(order_min_feilv==''){
+            layer.msg("请填写默认单笔最低手续费",{icon:5,time:3000});
+            return false;
+        }
+        var str = $('#div_prev').html();
+        if(str==''){
+            layer.msg("请先上传图片",{icon:5,time:3000});
+            return false;
+        }
+        //未点击过上传图片
+        if($('#img_upload').val()=='fal'){
+            var datastr = "";
+            $(".addeditinput").each(function () {
+                datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+            });
+            $.ajax({
+                type: 'post',
+                url: '<{:U("PayapiClassEdit")}>',
+                data: datastr,
+                datatype: 'json',
+                success: function (res) {
+                    if(res.status=='ok'){
+                        layer.msg(res.msg,{icon:6,time:2000},function () {
+                            parent.location.reload();
+                        });
+                    }else{
+                        layer.msg(res.msg,{icon:5,time:3000});
+                    }
+                },
+                error: function (XMLHttpRequest, textStauts, errorThrown) {
+                    layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                }
+            });
+        }
+    });
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        //点击过上传图片
+        upload.render({
+            elem: '.upload'
+            ,url: '<{:U("PayapiClassEditImg")}>'	//后台接收地址
+            ,auto: false				//不自动上传设置
+            ,accept: 'images'				 //允许上传的文件类型
+            ,size: 2097152				 //允许上传的文件大小 2M
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            ,bindAction: '#btn'			//“上传”按钮的ID
+            ,choose: function(obj){ //文件选择后的回调
+                $('#img_upload').val('tr');
+                //图片预览
+                obj.preview(function(index, file, result){
+                    $("#div_prev").html(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    //放大
+                    imgobj.className = 'thumb';
+                    $("#div_prev").html(imgobj); //添加到预览区域
+                });
+            }
+            ,before: function(obj){ //obj参数包含的信息
+                //需要传到后台的其他参数
+                var id = $('#id').val();
+                var classname = $('#classname').val();
+                var classbm = $('#classbm').val();
+                var order_feilv = $('#order_feilv').val();
+                var order_min_feilv = $('#order_min_feilv').val();
+                this.data= {id:id,classname:classname,classbm:classbm,order_feilv:order_feilv,order_min_feilv:order_min_feilv};//传递到后台的数据
+            }
+            ,done: function(res, index, upload){//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status=='ok'){
+                    layer.msg(res.msg,{icon:6,time:2000},function () {
+                        parent.location.reload();
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:5,time:3000});
+                }
+            }
+        })
+    });
+
+
+</script>
+<script>
+    /**
+     * 实时动态强制更改用户录入
+     * arg1 inputObject
+     **/
+    function amount(th) {
+        var regStrs = [
+            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+            ['^(\\d+\\.\\d{4}).+', '$1'] //禁止录入小数点后两位以上
+
+        ];
+        for (var i = 0; i < regStrs.length; i++) {
+            var reg = new RegExp(regStrs[i][0]);
+            th.value = th.value.replace(reg, regStrs[i][1]);
+        }
+    }
+    /**
+     * 录入完成后，输入模式失去焦点后对录入进行判断并强制更改，并对小数点进行0补全
+     * arg1 inputObject
+     **/
+    function overFormat(th) {
+        var v = th.value;
+        if (v === '') {
+            v = '0.0000';
+        } else if (v === '0') {
+            v = '0.0000';
+        } else if (v === '0.') {
+            v = '0.0000';
+        } else if (/^0+\d+\.?\d*.*$/.test(v)) {
+            v = v.replace(/^0+(\d+\.?\d*).*$/, '$1');
+            v = inp.getRightPriceFormat(v).val;
+        } else if (/^0\.\d$/.test(v)) {
+            v = v + '000';
+        } else if (!/^\d+\.\d{4}$/.test(v)) {
+            if (/^\d+\.\d{4}.+/.test(v)) {
+                v = v.replace(/^(\d+\.\d{4}).*$/, '$1');
+            } else if (/^\d+$/.test(v)) {
+                v = v + '.0000';
+            } else if (/^\d+\.$/.test(v)) {
+                v = v + '0000';
+            } else if (/^\d+\.\d$/.test(v)) {
+                v = v + '000';
+            } else if (/^\d+\.\d\d$/.test(v)) {
+                v = v + '00';
+            } else if (/^\d+\.\d\d\d$/.test(v)) {
+                v = v + '0';
+            }else if (/^[^\d]+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^[^\d]+(\d+\.?\d*)$/, '$1');
+            } else if (/\d+/.test(v)) {
+                v = v.replace(/^[^\d]*(\d+\.?\d*).*$/, '$1');
+                ty = false;
+            } else if (/^0+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^0+(\d+\.?\d*)$/, '$1');
+                ty = false;
+            } else {
+                v = '0.0000';
+            }
+        }
+        th.value = v;
+    }
+
+
+    $(".form-decimal4").blur(function(){
+        var valueInput = $(this).val().replace(/(^\s*)|(\s*$)/g, "");
+        if(valueInput!=""){
+            if(regularNumber.test(valueInput)){
+                var value=(Math.round(parseFloat(valueInput)*10000)/10000).toFixed(4);
+                var xsd=value.toString().split(".");
+                if(xsd.length==1){
+                    value=value.toString()+".000";
+                }else if(xsd.length>1){
+                    if(xsd[1].length==2){
+                        value=value.toString()+"0";
+                    }else if(xsd[1].length==1){
+                        value=value.toString()+"00";
+                    }if(xsd[1].length==0){
+                        value=value.toString()+"000";
+                    }
+                }
+                $(this).val(value);
+            }else{
+                layer.msg("请填写正确的数字格式");
+            }
+        }
+    });
+</script>

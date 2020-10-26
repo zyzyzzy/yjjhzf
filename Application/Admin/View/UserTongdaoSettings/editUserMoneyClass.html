@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置用户到账方案</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="payapiaccountid" id="payapiaccountid" value="<{$payapiaccountid}>" class="addeditinput" />
+        <input type="hidden" name="userid" id="userid" value="<{$userid}>" class="addeditinput" />
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">到账方案</label>
+            <div class="layui-input-block">
+                <select name="moneytypeclass_id" lay-verify="" lay-search class="addeditinput">
+                    <option value="">请选择到账方案</option>
+                    <volist name="money_class_list" id="vo">
+                        <if condition="$moneyclass_id eq $vo['id']">
+                            <option selected value="<{$vo.id}>"><{$vo.moneyclassname}></option>
+                            <else />
+                            <option value="<{$vo.id}>"><{$vo.moneyclassname}></option>
+                        </if>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("userMoneyClassEdit")}>');">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

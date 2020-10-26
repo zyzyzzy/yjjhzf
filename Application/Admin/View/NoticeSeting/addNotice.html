@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加公告</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择用户</label>
+            <div class="layui-input-block">
+                <select name="user_id" class="layui-input addeditinput" lay-search>
+                    <option value="0">所有用户</option>
+                    <volist name="user_list" id="user">
+                        <option value="<{$user['id']}>"><{$user["username"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">发布公告</label>
+            <div class="layui-input-block">
+                <textarea name="notice" placeholder="请输入公告内容" class="layui-textarea addeditinput"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("noticeAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

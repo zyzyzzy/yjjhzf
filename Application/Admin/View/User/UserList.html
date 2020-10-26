@@ -1,0 +1,257 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">用户列表</block>
+<block name="nav">
+    <a href="javascript:;">用户管理</a>
+    <a><cite>用户列表</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="username" id="username" placeholder="商户号或用户名" autocomplete="off" class="layui-input">
+    <input type="text" name="bieming" id="bieming" placeholder="用户别名" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="layui-select">
+            <option value="">状态</option>
+            <volist name="userstatuslist" id="vo">
+                <option value="<{$vo.id}>"><{$vo.statusname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="userrengzheng" id="userrengzheng">
+            <option value="">认证</option>
+            <volist name="userrengzhenglist" id="vo">
+                <option value="<{$vo.id}>"><{$vo.userrengzhengname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="usertype" id="usertype">
+            <option value="">用户类型</option>
+            <volist name="usertypelist" id="vo">
+                <option value="<{$vo.id}>"><{$vo.usertypename}></option>
+            </volist>
+        </select>
+    </div>
+    <input class="layui-input" placeholder="注册开始日" name="start" id="start" autocomplete="off">
+    <input class="layui-input" placeholder="注册截止日" name="end" id="end" autocomplete="off">
+</block>
+<block name="relationsearch">
+    <button class="layui-btn layui-btn-primary" onclick="relation()">关联查询</button>
+    <div id="relation" style="display: none;">
+        <form class="layui-form" method="post" onsubmit="return false">
+            <div class="layui-form-item" style="margin-top: 5%;width: 90%;">
+                <label class="layui-form-label">交易类型</label>
+                <div class="layui-input-block">
+                    <select name="order_type" id="order_type" class="layui-input addeditinput" lay-search="">
+                        <option value="1">充值订单</option>
+                        <option value="2">结算订单</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-top: 3%;width: 90%;">
+                <label class="layui-form-label">交易订单号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="order_id" id="order_id" value="" placeholder="请输入用户订单号或系统订单号" autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid layui-word-aux" style="margin-left: 110px;">
+                    <i class="layui-icon layui-icon-about"></i> 请输入完整的订单,不能进行模糊搜索;撤销关联查询请点击全部数据按钮
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="javascript:relationsearchbutton();">确认搜索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        function relation() {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 1,
+                    area: ['600px', '400px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    shadeClose: true,
+                    shade: 0.4,
+                    title: '关联查询',
+                    content: $('#relation')
+                });
+            });
+        }
+    </script>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="UserList" layui-data="{id:'UserList'}" dataurl="<{:U('LoadUserList')}>"></table>
+    <script type="text/html" id="showtoolbar">
+        <button class="layui-btn" onclick="y_admin_show('添加用户','<{:U("UserAdd")}>',800,600)"><i class="layui-icon"></i>添加</button>
+    </script>
+    <script type="text/html" id="showusername">
+        <a onclick="javascript:searchusername('{{d.id}}')">{{d.username}}</a>
+    </script>
+    <script type="text/html" id="showsuperiorid">
+        {{#
+        if(d.superiorid == '无'){
+        return d.superiorid;
+        }else{
+        }}
+        <a onclick="javascript:searchsuperiorid('{{d.superiorid}}')">{{d.superiorid}}</a>
+        {{#
+        }
+        }}
+    </script>
+    <script type="text/html" id="caozuo">
+        {{# if(d.status==1){ }}
+        <a title="激活用户" onclick="y_admin_show('激活用户[{{d.username}}]','<{:U("activeUser")}>?userid={{d.id}}',500,300)">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon"></i>点击激活
+                </span>
+            </i>
+        </a>
+        {{# }else{ }}
+            <a title="编辑"  onclick="y_admin_show('【<b>{{d.username}}</b>】用户编辑','<{:U("UserEdit")}>?userid={{d.id}}')"  href="javascript:;">
+                <i class="layui-icon">
+                    <span class="layui-badge layui-bg-green">
+                        <i class="layui-icon">&#xe642;</i>
+                    </span>
+                </i>
+            </a>
+        <a onclick="y_admin_show('修改密码','<{:U("editUserPwd")}>?userid={{d.id}}',600,430)" title="修改密码" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-blue"><i class="layui-icon">&#xe673;</i> </span></i>
+        </a>
+
+        <a onclick="y_admin_show('设置账号登录','<{:U("setSameUser")}>?userid={{d.id}}',500,300)" title="设置账号登录" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe620;</i> </span></i>
+        </a>
+
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('User/userDel')}>">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>
+
+
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showorderstatus">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <input type="checkbox" name="order" ajaxurl="<{:U('User/UserOrder')}>" value="{{d.id}}" lay-skin="switch" lay-text="正常|禁用" lay-filter="ordercheckbox" {{ d.order == 0 ? 'checked' : '' }}>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showteststatus">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <input type="checkbox" name="test_status" ajaxurl="<{:U('User/userTestStatus')}>" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="teststatuscheckbox" {{ d.test_status == 0 ? 'checked' : '' }}>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showstatusname">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <input type="checkbox" name="status" ajaxurl="<{:U('User/UserStatus')}>" value="{{d.id}}" lay-skin="switch" lay-text="正常|禁用" lay-filter="statuscheckbox" {{ d.status == 2 ? 'checked' : '' }}>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showmiyaoyuming">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】密钥/域名','<{:U("Secretkey/SecretkeyDomain")}>?userid={{d.id}}')" style="text-decoration: underline">密钥/域名</a>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showuserstatus">
+        {{# if(d.status==1){ }}
+            <span style="color: #1e9fff;">未激活</span>
+        {{# }else if(d.status==2){ }}
+            正常
+        {{# }else{ }}
+            <span style="color: #ff0101;">未激活</span>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="sxf">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】手续费','<{:U("User/showsxf")}>?userid={{d.id}}')" style="text-decoration: underline">手续费</a>
+        {{# } }}
+    </script>
+    <script type="text/html" id="showmemberid">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+
+        {{# if(d.memberid=="未生成") { }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】生成商户号','<{:U("ShowMemberid")}>?userid={{d.id}}',500,400)" style="text-decoration: underline">点击生成</a>
+        {{# }else{
+        return d.memberid
+        } }}
+
+        {{# } }}
+
+    </script>
+    <script type="text/html" id="showyinhangguanli">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】结算银行卡管理','<{:U("UserBankCard/UserBankCardList")}>?userid={{d.id}}')" style="text-decoration: underline">银行卡</a>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showauthentication">
+        {{# if(d.authentication=='未认证'){ }}
+        <span style="color: #ff0101;">{{d.authentication}}</span>
+        {{# }else if(d.authentication=='审核中'){ }}
+        <span style="color: #1e9fff;">{{d.authentication}}</span>
+        {{# }else{ }}
+        {{d.authentication}}
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="google">
+        {{# if(d.google==0){ }}
+        <a style="color: #1e9fff;text-decoration: underline" href="javascript:y_admin_show('【<b>{{d.username}}</b>】谷歌验证','<{:U("googleInformation")}>?userid={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">开通未开启</a>
+        {{# }else if(d.google==1){ }}
+        <a style="text-decoration: underline" href="javascript:y_admin_show('【<b>{{d.username}}</b>】谷歌验证','<{:U("googleInformation")}>?userid={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">已开启</a>
+        {{# }else{ }}
+        <a style="color: #ff0101;text-decoration: underline" href="javascript:y_admin_show('【<b>{{d.username}}</b>】谷歌验证','<{:U("googleInformation")}>?userid={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">未开通</a>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="has_money">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】余额','<{:U("UserMoneyEdit/userMoney")}>?userid={{d.id}}',700,500)" style="text-decoration: underline">{{d.money}}</a>
+        {{# } }}
+
+    </script>
+
+    <script type="text/html" id="freeze_money">
+        {{# if(d.status==1){ }}
+        -
+        {{# }else{ }}
+
+        {{# if(d.freezemoney>0) { }}
+        <a href="javascript:y_admin_show('【<b>{{d.username}}</b>】冻结金额','<{:U("UserMoneyEdit/userFreezeMoneyList")}>?userid={{d.id}}',1300,700)" style="text-decoration: underline">{{d.freezemoney}}</a>
+        {{#
+        }else{
+        return d.freezemoney
+        }
+        }}
+
+        {{# } }}
+    </script>
+
+</block>

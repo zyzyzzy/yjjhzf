@@ -1,0 +1,76 @@
+<fieldset class="layui-elem-field">
+    <legend>近7日成功率统计</legend>
+    <div class="layui-col-md7" id="UserLatelySuccessrate_line" loadUrl="<{:U('Index/getUserLatelySuccessrate')}>"
+         style="width: 1000px;height: 600px;box-shadow:0 0 1px #000 inset;">
+    </div>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ech = echarts;
+    var line = ech.init(document.getElementById('UserLatelySuccessrate_line'));
+
+
+    // 指定图表的配置项和数据
+    var lineOption = {
+        title: {
+            text: '近7日成功率统计(%)'
+        },
+        tooltip: {},
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                magicType: {show: true, type: ['line', 'bar']},
+                //saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            data: ['成功率']
+        },
+        xAxis: {
+            type: 'category',
+            name: '时间'
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '成功率',
+                type: 'line',
+                //data: [5, 20, 36, 10, 10, 20]
+            },
+
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    line.setOption(lineOption);
+
+
+    var lineOptions = line.getOption();
+
+
+    var url = $('#UserLatelySuccessrate_line').attr('loadUrl');
+    $.ajax({
+        type: "post",
+        async: false, //同步执行
+        url: url,
+        data: {},
+        dataType: "json", //返回数据形式为json
+        success: function (result) {
+            console.log(result);
+            if (result.status == "success") {
+                lineOptions.series[0].data = result.data.rate;
+                lineOptions.xAxis[0].data = result.data.date;
+                line.hideLoading();
+                line.setOption(lineOptions);
+            } else {
+            }
+        },
+        error: function (errorMsg) {
+            //alert("不好意思，大爷，图表请求数据失败啦!");
+            line.hideLoading();
+        }
+    });
+
+</script>

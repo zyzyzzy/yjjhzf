@@ -1,0 +1,127 @@
+<include file="BaseTemplate:includecssjs"/>
+<table class="layui-table">
+
+    <thead>
+
+    <tr>
+
+        <th>序号</th>
+
+        <th>菜单名称</th>
+
+        <th>控制器名称</th>
+
+        <th>方法名称</th>
+
+        <th>管理</th>
+
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <foreach name="opts" key="k" item="vo">
+
+        <tr>
+
+            <php>$opt = explode('/',$vo['menu_url']);</php>
+
+            <td><{$k+1}></td>
+
+            <td><{$vo.menu_title}></td>
+
+            <td><{$opt[0]}></td>
+
+            <td><{$opt[1]}></td>
+
+            <td>
+
+                <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("MenuEdit")}>?id=<{$vo.id}>',800,500)">
+                    <i class="layui-icon">
+                        <span class="layui-badge layui-bg-green">
+                            <i class="layui-icon">&#xe642;</i>
+                        </span>
+                    </i>
+                </a>
+                <a title="删除" onclick="member_del1(this,<{$vo.id}>)" href="javascript:;" ajaxurl="<{:U('MenuDel')}>">
+                    <i class="layui-icon">
+                        <span class="layui-badge layui-bg-danger" >
+                            <i class="layui-icon">&#xe640;</i>
+                        </span>
+                    </i>
+                </a>
+
+
+            </td>
+
+        </tr>
+
+    </foreach>
+
+    </tbody>
+
+</table>
+<script>
+    //删除操作
+    function member_del1(obj, id) {
+
+        layer.confirm('确认要删除吗？', function (index) {
+
+            //发异步删除数据
+
+            /******************************************************/
+
+            ajaxurl = $(obj).attr("ajaxurl");
+
+
+            datastr = "id=" + id;
+
+
+            //  alert(ajaxurl+"----"+datastr);
+
+            $.ajax({
+
+                type: 'POST',
+
+                url: ajaxurl,
+
+                data: datastr,
+
+                dataType: 'text',
+
+                success: function (str) {
+                    if (str == "ok") {
+
+                        $(obj).parents("tr").remove();
+
+                        layer.msg('已删除!', {icon: 1, time: 1000});
+
+                    } else if(str == "isexist"){
+
+                        layer.msg('存在子菜单!!', {icon: 2, time: 1000});
+                    }else  {
+
+                        layer.msg('删除失败!', {icon: 2, time: 1000});
+
+                    }
+
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+
+                    alert("error");
+
+                }
+
+            });
+
+            /*****************************************************/
+
+
+
+        });
+
+    }
+
+</script>

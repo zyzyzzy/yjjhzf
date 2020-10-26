@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>修改用户结算银行</title>
+
+    <include file="BaseTemplate:includecssjs" />
+    <script type="text/javascript" src="/Public/js/xcity.js"></script>
+
+</head>
+
+<body>
+
+
+
+<div class="x-body">
+
+    <form class="layui-form" method="post" onsubmit="return false">
+    <input type="hidden" name="id" id="id" value="<{$find['id']}>" class="addeditinput" />
+    <input type="hidden" name="userid" id="userid" value="<{$find['userid']}>" class="addeditinput" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行名称</label>
+            <div class="layui-input-block">
+                <input type="text" disabled name="bankname" id="bankname" value="<{$find['bankname']}>"
+                       placeholder="请输入银行名称" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">银行卡号</label>
+
+            <div class="layui-input-block">
+
+                <input type="text" name="banknumber" id="banknumber" value="<{$find['banknumber']}>"
+                       placeholder="请输入银行卡号" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">所在分行</label>
+
+            <div class="layui-input-block">
+
+                <input type="text" name="bankfenname" id="bankfenname" value="<{$find['bankfenname']}>"
+                       placeholder="请输入所在分行,可选填" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+ 
+        </div>
+        
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">所在支行</label>
+
+            <div class="layui-input-block">
+
+                <input type="text" name="bankzhiname" id="bankzhiname" value="<{$find['bankzhiname']}>"
+                       placeholder="请输入所在支行,可选填" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+ 
+        </div>
+        
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">开户人姓名</label>
+
+            <div class="layui-input-block">
+
+                <input type="text" name="bankmyname" id="bankmyname" value="<{$find['bankmyname']}>"
+                       placeholder="请输入开户人姓名" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+ 
+        </div>
+        
+        <div id="x-city">
+        
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">开户省</label>
+
+            <div class="layui-input-block">
+
+                 <select name="banksheng" id="banksheng" required class="layui-select addeditinput" lay-filter="province">
+                   <option value="">请选择省,可选填</option>
+                </select>
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">开户市</label>
+
+            <div class="layui-input-block">
+
+                 <select name="bankshi" id="bankshi" required class="layui-select addeditinput" lay-filter="city">
+                   <option value="">请选择市,可选填</option>
+                </select>
+
+            </div>
+
+        </div>
+        </div>
+        
+		<div class="layui-form-item">
+
+            <label class="layui-form-label">联行号</label>
+
+            <div class="layui-input-block">
+
+              <input type="text" name="banklianhanghao" id="banklianhanghao" value="<{$find['banklianhanghao']}>"
+                     placeholder="请输入联行号,可选填" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">身份证号</label>
+
+            <div class="layui-input-block">
+
+              <input type="text" name="shenfenzheng" id="shenfenzheng" value="<{$find['shenfenzheng']}>"
+                     placeholder="请输入身份证号" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">手机号</label>
+
+            <div class="layui-input-block">
+
+              <input type="text" name="tel" id="tel" value="<{$find['tel']}>"
+                placeholder="请输入手机号" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <div class="layui-input-block">
+
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("EditUserBankCard")}>');">确认修改</button>
+
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script type="text/javascript">
+layui.use(['form','code'],function () {
+	form = layui.form;
+	layui.code();
+	$("#x-city").xcity('<{$find["banksheng"]}>','<{$find["bankshi"]}>');	
+	
+});
+</script>
+
+</body>
+
+</html>

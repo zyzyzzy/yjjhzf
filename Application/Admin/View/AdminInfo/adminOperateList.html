@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><block name="title">操作记录</block></title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <!--2019-3-21 添加管理员的搜索条件-->
+            <if condition="$_SESSION['admin_info']['super_admin'] eq 1">
+                <div class="layui-input-inline">
+                    <select name="admin_id" id="admin_id" class="layui-select addeditinput" lay-search>
+                        <option value="">请选择管理员</option>
+                        <volist name="admin_list" id="vo">
+                            <option value="<{$vo.id}>"><{$vo.user_name}></option>
+                        </volist>
+                    </select>
+                </div>
+            </if>
+            <input class="layui-input addeditinput" placeholder="登录ip" name="admin_ip" id="admin_ip">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="开始时间" name="start" id="start">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="结束时间" name="end" id="end">
+            <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+        </form>
+    </div>
+    <table class="layui-hide" id="adminOperateList" layui-data="{id:'adminOperateList'}" dataurl="<{:U('loadAdminOperate')}>"></table>
+    <script type="text/html" id="login_ip">
+        {{# if(d.login_ip){ }}
+        {{d.login_ip}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="login_address">
+        {{# if(d.login_address){ }}
+        {{d.login_address}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</div>
+<script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>
+

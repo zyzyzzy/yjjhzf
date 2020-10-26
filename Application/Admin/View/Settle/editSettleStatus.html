@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改订单状态</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" action="" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$id}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单状态</label>
+            <div class="layui-input-block">
+                <volist name="allStatus" id="vo">
+                    <if condition="($status eq 0) and (($key eq 1) or ($key eq 2))">
+                        <if condition="$status eq $key">
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>" checked>
+                            <else/>
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>">
+                        </if>
+                    </if>
+                    <if condition="($status eq 1) and ($key eq 2)">
+                        <if condition="$status eq $key">
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>" checked>
+                            <else/>
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>">
+                        </if>
+                    </if>
+                    <if condition="($status eq 2) and ($key eq 2)">
+                        <if condition="$status eq $key">
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>" checked>
+                            <else/>
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>">
+                        </if>
+                    </if>
+                    <if condition="($status eq 3) and ($key eq 3)">
+                        <if condition="$status eq $key">
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>" checked>
+                            <else/>
+                            <input type="radio" name="status" value="<{$key}>" title="<{$vo}>">
+                        </if>
+                    </if>
+                </volist>
+            </div>
+            (当前状态:<{$allStatus[$status]}>)
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="change(this)" ajaxurl="<{:U('settleStatusEdit')}>" class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        function change(obj) {
+            var ajaxurl = $(obj).attr('ajaxurl');
+            var id = $("input[name='id']").val();
+            var status = $("input[name='status']:checked").val();
+            $.ajax({
+                type:"POST",
+                url: ajaxurl,
+                dataType: "json",
+                data:{id:id,status:status},
+                success:function (data) {
+                    if(data.status=='ok'){
+                        layer.msg(data.msg,{icon:6,time:1500},function () {
+                            parent.location.href="<{:U('seeSettleInfo')}>?settleid="+data.id;
+                        });
+
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:1500});
+                    }
+                }
+            })
+        }
+        //Demo
+        /*layui.use('form', function(){
+            var form = layui.form;
+
+            //监听提交
+            form.on('submit(formDemo)', function(data){
+                if(data){
+                    layer.msg('订单状态修改成功');
+                }else{
+                    layer.msg('订单状态修改失败');
+                }
+            });
+        });*/
+    </script>
+</div>
+</body>
+</html>

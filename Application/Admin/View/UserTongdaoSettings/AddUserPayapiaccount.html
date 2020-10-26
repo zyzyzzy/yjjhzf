@@ -1,0 +1,27 @@
+<extend name="BaseTemplate:List" />
+<block name="title">通道列表</block>
+<block name="nav">
+
+</block>
+<block name="search"></block>
+<block name="searchbutton"></block>
+
+<block name="xblock">
+
+	<xblock>
+        <button class="layui-btn layui-btn-danger" onclick="AddAll(this)" ajaxurl="<{:U('UserPayapiaccountAdd')}>?userpayapiclassid=<{$userpayapiclassid}>">
+            <i class="layui-icon">&#xe61f;</i>添加选中账号
+        </button>
+    </xblock>
+
+</block>
+
+
+
+<block name="table_script">
+
+	 <table class="layui-hide" id="PayapiAccountList" layui-data="{id:'PayapiAccountList'}"
+            dataurl="<{:U('LoadPayapiAccount')}>?payapiid=<{$payapiid}>&userpayapiclassid=<{$userpayapiclassid}>"></table>
+
+</block>
+

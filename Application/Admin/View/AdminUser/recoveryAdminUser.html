@@ -1,0 +1,39 @@
+<extend name="BaseTemplate:recovery"/>
+<block name="title">管理员回收列表</block>
+<block name="nav">
+    <a href="">管理员管理</a>
+    <a href="">管理员列表</a>
+    <a><cite>回收站</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="user_name" id="userName" value="" placeholder="请输入管理员名称" autocomplete="off" class="layui-input">
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'recoveryAdminUser')"
+                ajaxurl="<{:U("AdminUser/delAllActualInfo")}>"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+        <button class="layui-btn layui-btn-normal" onclick="recoveryAllData(this,'recoveryAdminUser')"
+                ajaxurl="<{:U("AdminUser/recoveryAll")}>"><i class="layui-icon layui-icon-ok-circle"></i>批量恢复</button>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="recoveryAdminUser" layui-data="{id:'recoveryAdminUser'}" dataurl="<{:U("AdminUser/loadRecoveryAdmin")}>"></table>
+
+    <script type="text/html" id="caozuo">
+        <a title="删除" onclick="delActualInfo(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('AdminUser/delActualAdmin')}>">
+            <i class="layui-icon">
+                     <span class="layui-badge layui-bg-danger">
+                          <i class="layui-icon layui-icon-delete"></i>
+                     </span>
+            </i>
+        </a>
+
+        <a title="恢复" onclick="recoveryInfo(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('AdminUser/recoveryInfo')}>">
+            <i class="layui-icon">
+                     <span class="layui-badge layui-bg-blue" >
+                          <i class="layui-icon layui-icon-ok"></i>
+                     </span>
+            </i>
+        </a>
+    </script>
+</block>

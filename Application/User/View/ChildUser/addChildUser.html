@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户子账号</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <!--2019-3-15 任梦龙：由于添加子账号只有主用户才能操作,所以后面的用户id参数直接从session中获取-->
+        <input type="hidden" name="user_id" value="<{:session('user_id')}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">子账号名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="child_name" id="childName" placeholder="请输入账号名称"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-2-28 任梦龙：添加子账号别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">子账号别名</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming" placeholder="请输入账号名称"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+
+        <!--2019-1-25 任梦龙：将推进子账号的别名移到编辑时添加-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="child_pwd" id="childPwd" value="123456" placeholder="请输入登录密码"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-2-28 任梦龙：添加管理密码，并将登录密码和管理密码默认设置为123456-->
+        <!--2019-1-21 任梦龙：添加子账号的确认密码-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="manage_pwd" id="manage_pwd" value="123456" placeholder="请输入管理密码"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+            <div class="layui-form-mid layui-word-aux">登录密码默认设置为:123456;管理密码默认设置为:123456</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("childUserAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

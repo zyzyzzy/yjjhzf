@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加通道</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道商家</label>
+            <div class="layui-input-block">
+                <select name="payapishangjiaid" id="payapishangjiaid" lay-filter="shangjiaid" class="addeditinput" lay-search>
+                    <option value=""></option>
+                    <volist name="PayapishangjiaList" id="vo">
+                        <option value="<{$vo['id']}>"><{$vo[ "shangjianame"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道分类</label>
+            <div class="layui-input-block">
+                <select name="payapiclassid" id="payapiclassid" class="addeditinput">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="zh_payname" id="zh_payname" placeholder="请输入原通道名称" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="en_payname" id="en_payname" placeholder="请输入原通道编码" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("PayapiListAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('select(shangjiaid)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: "<{:U('Payapi/LoadPayapiclassSelect')}>",
+                data: "id=" + data.value,
+                dataType: 'json',
+                success: function (data) {
+                    //2019-2-18 任梦龙：返回数据类型修改为json,然后如果选择请选择项时，分类框要清空
+                    $("#payapiclassid").html(data.str);
+                    form.render("select");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg('操作错误,请重试!',{icon:5,time:1000});
+                }
+            });
+
+        });
+    });
+
+</script>
+</html>

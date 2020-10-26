@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加银行</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .thumb {margin-left:5px; margin-top:15px; height:128px}
+        /*#prevModal {width:40%; height:50%; text-align:center; display:none;}*/
+        /*#img_prev {max-width:98%; max-height:98%; margin: 10px auto}*/
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="bankname" id="bankname" placeholder="请输入银行名称" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="bankcode" id="bankcode" placeholder="请输入银行编码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行图片</label>
+            <div class="layui-input-block" style="margin-left: 15%;">
+                <button type="button" class="layui-btn upload">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+            </div>
+            <div class='layui-input-block' id='div_prev' title=''></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $('#btn').click(function () {
+        var bankname = $('#bankname').val();
+        if(bankname==''){
+            layer.msg("请填写银行名称",{icon:5,time:3000});
+            return false;
+        }
+        var bankcode = $('#bankcode').val();
+        if(bankcode==''){
+            layer.msg("请填写银行编码",{icon:5,time:3000});
+            return false;
+        }
+        var str = $('#div_prev').html();
+        if(str==''){
+            layer.msg("请先上传图片",{icon:5,time:3000});
+            return false;
+        }
+    });
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        upload.render({
+            elem: '.upload'
+            ,url: '<{:U("BankCardAdd")}>'	//后台接收地址
+            ,auto: false				//不自动上传设置
+            ,accept: 'images'				 //允许上传的文件类型
+            ,size: 2097152				 //允许上传的文件大小 2M
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            ,bindAction: '#btn'			//“上传”按钮的ID
+            ,choose: function(obj){ //文件选择后的回调
+                //图片预览
+                obj.preview(function(index, file, result){
+                    $("#div_prev").html(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    //放大
+                    imgobj.className = 'thumb';
+                    $("#div_prev").html(imgobj); //添加到预览区域
+                });
+            }
+            ,before: function(obj){ //obj参数包含的信息
+                //需要传到后台的其他参数
+                var bankname = $('#bankname').val();
+                var bankcode = $('#bankcode').val();
+                this.data= {bankname:bankname,bankcode:bankcode};//传递到后台的数据
+            }
+            ,done: function(res, index, upload){//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status=='ok'){
+                    layer.msg(res.msg,{icon:6,time:2000},function () {
+                        parent.location.reload();
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:5,time:3000});
+                }
+            }
+        })
+    });
+</script>

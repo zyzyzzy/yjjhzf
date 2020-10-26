@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>广告页面</title>
+    <link rel="stylesheet" href="index.css?v=0401">
+    <style>
+        body {
+            margin: 0;
+            color: #111;
+            font-size: 12px;
+            font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+            position: relative
+        }
+        * {
+            -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+        }
+        input, textarea, button, select, a {
+            -webkit-tap-highlight-color: transparent
+        }
+        h1, h2, h3 {
+            font-weight: normal
+        }
+        h1 {
+            font-size: 24px;
+            line-height: 32px;
+            word-break: break-all
+        }
+        .ad-wrapper{ padding: .9375rem .625rem; position: relative;}
+        .close-con{ position: absolute; right: .625rem; top: .625rem;}
+        .close-con span,.close-con a{ float: left; display: block;}
+        .close-con span{ font-size: 1.25rem; color: #0d0d0d; padding-top: .375rem;}
+        .close-con a{ width: 1.875rem; height: 1.875rem; margin-left: .625rem;}
+        .close-con img{ display: block; width: 100%; height: 100%;}
+        .pic-content{ margin-top: 1.875rem; font-size: 1.125rem; line-height: 1.625rem;}
+        .big-img img{ display: block; max-width: 100%;}
+        .small-img{ width: 100%; display: flex; justify-content: space-between; margin-top: .75rem;}
+        .small-img span{ width: 31%;}
+        .small-img span img{ max-width: 100%;}
+        .text-content{ color: #3d3d3d;}
+        .text-content h1{ font-size: 1.125rem; line-height: 1.625rem;}
+        .text-content p{ font-size: .75rem; color: #7c7c7c; word-break: break-all; line-height: 1.5rem; text-align: justify; border-bottom: 1px solid #adadad; padding-bottom: 1rem; margin-bottom: .625rem;}
+        .text-content span{ display: block; font-size: .875rem; line-height: 1.625rem;}
+
+    </style>
+</head>
+
+<body>
+<section>
+    <div class="ad-wrapper">
+        <div class="close-con"><span class="countdown"></span><a href="JavaScript:;"><img src="/Public/images/adv/hero/close.png" /></a></div>
+        <div class="pic-content">
+            <div class="big-img"><img src="/Public/images/adv/hero/pic_03.png" /></div>
+            <div class="small-img">
+                <span><img src="/Public/images/adv/hero/pic_06.png" /></span>
+                <span><img src="/Public/images/adv/hero/pic_06.png" /></span>
+                <span><img src="/Public/images/adv/hero/pic_06.png" /></span>
+            </div>
+        </div>
+        <div class="text-content">
+            <h1>我是标题：海贼王938：和之国公主日和出现竟爱上索隆，狂四郎在下一盘大棋</h1>
+            <p>它才是“海中牛奶”，隔三差五吃一点，孩子头脑聪明长得快。海鲜真的是很多人的最爱，尤其是贝类蛋白质含量都非常丰富，是很好的滋补佳品。青口贝不知道大家是不是经常吃，它产自新西兰，在当地被称作“贝类妖姬”，很多吃过的人都对它的鲜美口感念念不忘，它还有另一个称号“海中牛奶”，只因为它的蛋白质和钙含量可以和牛奶比拟。青口贝还是很多大厨的海鲜首选，今天就教给大家青口贝的家常做法，这样我
+            </p>
+            <span>地址：答复你的家附近可根据凤凰国际法对方可看到几个开放剪个头发是的咖啡机</span>
+            <span>电话：1235454545454</span>
+            <span>邮箱：1235454545454</span>
+        </div>
+    </div>
+</section>
+<script src="/Public/js/jquery.min.js"></script>
+<script>
+    var time = 5;
+    var url = '<{$jump_url}>?code=<{$code}>';
+    function closeWindow() {
+        window.setTimeout('closeWindow()', 1000);
+        if (time > 0) {
+            $(".countdown").html(time + "s");
+            time--;
+        }
+        else {
+            /* window.opener = null; */
+            // $(".ad-wrapper").hide();
+            location.href = url;
+        }
+        $(".close-con a").click(function () {
+            // $(".ad-wrapper").hide();
+            location.href = url;
+        });
+    }
+    window.onload = closeWindow;
+</script>
+</body>
+
+</html>

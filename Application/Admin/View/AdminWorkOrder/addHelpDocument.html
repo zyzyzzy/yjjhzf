@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加帮助文档</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/ueditor/ueditor.config.js"></script>
+    <script src="/Public/ueditor/ueditor.all.min.js"></script>
+    <script src="/Public/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <style>
+        .edui-editor{
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="workorder_id" value="<{$info.id}>" class="layui-input addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 120px;">标题(关键词)</label>
+            <div class="layui-input-block" style="margin-left: 120px;">
+                <input type="text" name="title" value="<{$info.title}>" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">问题内容</label>
+            <div class="layui-input-block">
+                <textarea id="editor" name="content" placeholder="请输入内容" style="height: 100px; display: block;padding: 0;"
+                          class="layui-textarea addeditinput"><{$info.content}></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("helpDocumentAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //实例化编辑器
+    var ue = UE.getEditor('editor',{
+        toolbars: [
+            [
+                'undo', //撤销
+                'redo', //重做
+                'bold', //加粗
+                'indent', //首行缩进
+                // 'snapscreen', //截图
+                'italic', //斜体
+                'underline', //下划线
+                'strikethrough', //删除线
+                'subscript', //下标
+                'fontborder', //字符边框
+                'superscript', //上标
+                'formatmatch', //格式刷
+                'horizontal', //分隔线
+                'removeformat', //清除格式
+                'fontfamily', //字体
+                'fontsize', //字号
+                'paragraph', //段落格式
+                'simpleupload', //单图上传
+                'insertimage', //多图上传
+                'link', //超链接
+                'emotion', //表情
+                'help', //帮助
+                'justifyleft', //居左对齐
+                'justifyright', //居右对齐
+                'justifycenter', //居中对齐
+                'justifyjustify', //两端对齐
+                'forecolor', //字体颜色
+                'backcolor', //背景色
+                'lineheight' //行间距
+            ]
+        ]
+        ,elementPathEnabled : false　　//是否启用元素路径，默认是true显示
+        ,wordCount:false          //是否开启字数统计
+        ,autoHeightEnabled:false　　// 编辑器内容，是否自动长高,默认true
+    });
+
+</script>

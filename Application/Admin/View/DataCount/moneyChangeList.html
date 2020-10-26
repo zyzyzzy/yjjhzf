@@ -1,0 +1,123 @@
+<extend name="BaseTemplate:List"/>
+<block name="nav">
+    <a href="">数据统计</a>
+    <a><cite>资金变动记录</cite></a>
+</block>
+<block name="search">
+    <!--2019-03-04汪桂芳:去掉用户名-->
+    <!--<input type="text" name="username" id="username" placeholder="用户名" autocomplete="off" class="layui-input searchstr">-->
+    <!--2019-2-21 任梦龙：将用户名和商户号分开，便于提高查询效率-->
+    <input type="text" name="memberid" id="memberid" placeholder="商户号" autocomplete="off" class="layui-input searchstr">
+    <input type="text" name="transid" id="transid" placeholder="系统订单号" autocomplete="off" class="layui-input searchstr">
+    <div class="layui-input-inline">
+        <select lay-filter="type" name="type" id="type" class="layui-select searchstr" lay-search>
+            <option value="">请选择类型</option>
+            <volist name="types" id="vo">
+                <option value="<{$key}>"><{$vo}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline" id="payapi_div">
+        <select name="payapiid" id="payapiid" class="layui-select searchstr" lay-search>
+            <option value="">请选择交易通道</option>
+            <volist name="payapis" id="vo">
+                <option value="<{$vo.id}>"><{$vo.zh_payname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline" id="daifu_div">
+        <select name="daifuid" id="daifuid" class="layui-select searchstr" lay-search>
+            <option value="">请选择代付通道</option>
+            <volist name="daifus" id="vo">
+                <option value="<{$vo.id}>"><{$vo.zh_payname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline" id="account_div">
+        <select name="accountid" id="accountid" class="layui-select searchstr" lay-search>
+            <option value="">请选择账号</option>
+            <volist name="accounts" id="vo">
+                <option value="<{$vo.id}>"><{$vo.bieming}></option>
+            </volist>
+        </select>
+    </div>
+    <script>
+        //2019-03-18汪桂芳添加
+        layui.use('table', function() {
+            $('#payapi_div').hide();
+            $('#daifu_div').hide();
+            $('#account_div').hide();
+            var form = layui.form;
+            form.on('select(type)',function (obj) {
+                var type = obj.elem.value;  //通道id
+                if(type==0 || type==1){
+                    $('#payapi_div').hide();
+                    $('#daifu_div').hide();
+                    $('#account_div').hide();
+                }
+                if(type==2 || type==3 || type==4 || type==7){
+                    $('#payapi_div').show();
+                    $('#daifu_div').hide();
+                    $('#account_div').show();
+                }
+                if(type==5 || type==6 || type==8){
+                    $('#daifu_div').show();
+                    $('#payapi_div').hide();
+                    $('#account_div').show();
+                }
+            });
+        });
+    </script>
+    <input class="layui-input searchstr" placeholder="开始时间" name="start" id="start" value="" autocomplete="off">
+    <input class="layui-input searchstr" placeholder="结束时间" name="end" id="end" value="" autocomplete="off">
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="moneyChangeList" layui-data="{id:'moneyChangeList'}" dataurl="<{:U("loadMoneyChangeList")}>"></table>
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" onclick="changelistdownload()" id="changelistdownload" url='<{:U("DataCount/downloadChangeList")}>'><i class="layui-icon">&#xe62d;</i>导出资金变动记录</button>
+        </div>
+    </script>
+    <script type="text/html" id="orderid">
+        {{# if(d.transid){ }}
+            {{d.transid}}
+        {{# }else{ }}
+            -
+        {{# } }}
+    </script>
+    <script type="text/html" id="payapiname">
+        {{# if(d.payapiname){ }}
+        {{d.payapiname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="accountname">
+        {{# if(d.accountname){ }}
+        {{d.accountname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="tcusername">
+        {{# if(d.tcusername){ }}
+        {{d.tcusername}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="tcdengji">
+        {{# if(d.tcdengji){ }}
+        {{d.tcdengji}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="remarks">
+        {{# if(d.remarks){ }}
+        {{d.remarks}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</block>

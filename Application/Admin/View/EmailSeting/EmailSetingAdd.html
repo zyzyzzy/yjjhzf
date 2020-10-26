@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮箱添加</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">SMTP地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="smtp" id="smtp" placeholder="SMTP地址" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">端口</label>
+            <div class="layui-input-block">
+                <input type="text" name="dk" id="dk" placeholder="端口" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱授权码</label>
+            <div class="layui-input-block">
+                <input type="text" name="em_code" id="emCode" placeholder="邮箱授权码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" id="username" placeholder="用户名" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Email账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" id="email" placeholder="Email账号" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="empw" id="empw" placeholder="用户邮箱密码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收件人邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="receive_email" id="receiveEmail" placeholder="收件人邮箱" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("EmailSeting/emailcreate")}>');" lay-submit lay-filter="formDemo">确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

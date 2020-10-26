@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/Public/css/bootstrap.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            background:#f8f8f8;
+            height: 60px;
+            line-height: 60px;
+        }
+        ul li{
+            list-style:none;
+            text-align: center;
+            padding: 30px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+        /*ul li img{
+            height: 300px;
+        }*/
+        ul li p{
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .myImg_normal{
+            position: relative;
+            box-shadow: 0 0 10px #fff;
+        }
+        .myImg_active{
+            position: relative;
+            box-shadow: 0 0 10px #00a2ea;
+        }
+        ul li .myImg02{
+            position: absolute;
+            height: 100px;
+            bottom: -28px;
+            right: -27px;
+            display:none;
+        }
+        button{
+            width: 100px;
+        }
+        .btn-lg{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" id="admin_id" value="<{$admin_id}>">
+    <ul class="col-md-12 text-center myUl">
+        <volist name="all_imgs" id="vo">
+            <li class="col-md-4">
+                <p><{$vo.title}></p>
+                <if condition="$count gt 0">
+                    <if condition="$vo['select'] eq 1">
+                        <div class="myImg_active" data-id="<{$vo.id}>">
+                            <img src="<{$vo.src}>" alt="" class="img" style="width: 100%;">
+                            <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02" style="display: inline-block">
+                        </div>
+                        <else/>
+                        <div class="myImg_normal" data-id="<{$vo.id}>">
+                            <img src="<{$vo.src}>" alt="" class="img" style="width: 100%;">
+                            <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02">
+                        </div>
+                    </if>
+                    <else/>
+                    <div class="myImg_normal" data-id="<{$vo.id}>">
+                        <img src="<{$vo.src}>" alt="" class="img" style="width: 100%;">
+                        <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02">
+                    </div>
+                </if>
+            </li>
+        </volist>
+    </ul>
+    <ul class="col-md-12 text-center">
+        <button onclick="select(this)" ajaxurl="<{:U('confirmTeplate')}>" class="btn btn-primary btn-lg">确定</button>
+    </ul>
+</div>
+<script>
+    var oUl = document.getElementsByClassName("myUl")[0];
+    var aImg = oUl.getElementsByTagName("div");
+    var aImg02 = document.getElementsByClassName("myImg02");
+    var oBtn = document.getElementsByTagName("button")[0];
+    // oBtn.setAttribute("disabled", true);
+    for(var i=0;i<aImg.length;i++){
+        aImg[i].id = i;
+        aImg[i].onclick = function () {
+            if(aImg[this.id].className=='myImg_normal'){
+                aImg[this.id].className = "myImg_active";
+                aImg02[this.id].style.display = "inline-block";
+            }else{
+                aImg[this.id].className = "myImg_normal";
+                aImg02[this.id].style.display = "none";
+            }
+
+        }
+    }
+</script>
+<script>
+    function select(obj) {
+        var templateid = '';
+            $('.myImg_active').each(function () {
+            templateid += $(this).attr('data-id')+',';
+        })
+        var admin_id = $('#admin_id').val();
+        var ajaxurl = $(obj).attr("ajaxurl");
+        $.ajax({
+            type:"POST",
+            url: ajaxurl,
+            dataType: "json",
+            data:{admin_id:admin_id,templateid:templateid},
+            success:function (data) {
+                if(data.status=='ok'){
+                    layer.msg(data.msg,{icon:6,time:1500},function () {
+                        location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg,{icon:5,time:1500});
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算申请</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .x-body{
+            padding-top: 10px;
+        }
+        .layui-form-item{
+            margin-bottom: 10px;
+        }
+        .layui-form-label{
+            width: 130px;
+        }
+        .input_value{
+            color: #f00;
+        }
+        .layui-form-pane .layui-form-label{
+            width: 130px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left: 130px;
+        }
+        .layui-form-item input_yzm {
+            position: relative;
+        }
+        .upload_icon{
+            position: absolute;
+            z-index: 10;
+            top: 25%;
+            right: 3%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <if condition="$type eq 1">
+
+    <div class="layui-form-item">
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">当日结算时间范围：</label>
+            <div class="layui-input-inline" style="width: 70px;">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_start']}>" class="layui-input" >
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 120px;">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_end']}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">单笔结算金额范围：</label>
+            <div class="layui-input-inline" style="width: 70px;">
+                <input style="width: 100%;border: none" readonly type="text" id="min_money" value="<{$settle_config['min_money']}>" class="layui-input" >
+            </div>
+            <div class="layui-form-mid">-</div>
+            <div class="layui-input-inline" style="width: 120px;">
+                <input style="width: 100%;border: none" readonly type="text" id="max_money" value="<{$settle_config['max_money']}>" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">当日结算金额上限：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_maxmoney']}>" id="day_maxmoney" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">当日结算次数上限：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_maxnum']}>" id="day_maxnum" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">手续费扣款方式：</label>
+            <div class="layui-input-inline">
+                <if condition="$settle_config['deduction_type'] eq 1">
+                    <input style="width: 100%;border: none" readonly type="text" value="外扣" class="layui-input">
+                    <else/>
+                    <input style="width: 100%;border: none" readonly type="text" value="内扣" class="layui-input">
+                </if>
+            </div>
+        </div>
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">结算费率：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['settle_feilv_info']}>" class="layui-input input_value">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">当前代付通道：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none" readonly type="text" value="<{$daifu_name}>" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline  layui-col-md5">
+            <label class="layui-form-label">单笔最低手续费：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none;" readonly type="text" id="settle_min_feilv"  value="<{$settle_config['settle_min_feilv']}>" class="layui-input input_value">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">可用余额：</label>
+            <div class="layui-input-inline">
+                <input style="width: 100%;border: none;font-size: 20px;" readonly type="text" id="money" value="<{$money}>" class="layui-input input_value">
+            </div>
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false" id="form">
+        <input type="hidden" name="prev" value="">
+        <input type="hidden" name="daifu_id" value="<{$settle_config['daifu_id']}>">
+        <input type="hidden" name="account_id" value="<{$settle_config['account_id']}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上传Excel文件</label>
+            <div class="layui-input-block" style="width: 30%;margin-left: 140px;">
+                <button type="button" class="layui-btn upload">
+                    <i class="layui-icon">&#xe67c;</i>选择文件
+                </button>
+                <a href="/Public/Uploads/model.xls" target="_blank" type="button" class="layui-btn" style="background-color: #5bc0de;">
+                    <i class="layui-icon">&#xe656;</i>下载模板
+                </a>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left: 130px;">
+                <p style="color: #f00;"><i class="layui-icon layui-icon-about"></i> 上传文件类型需为xls后缀,大小不超过2M</p>
+            </div>
+        </div>
+        <input type="hidden" name="code_type" value="<{$code_type}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">验证码</label>
+            <div class="layui-input-block input_yzm">
+                <if condition="$code_type eq 1">
+                    <input type="text" name="upload_code" placeholder="管理密码" autocomplete="off"
+                           class="layui-input">
+                    <else/>
+                    <input type="text" name="upload_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                           class="layui-input">
+                </if>
+                <i id="uploadIcon" class="layui-icon upload_icon">&#xe673;</i>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn">提交</button>
+                <!--<button class="layui-btn userBtn" onclick="history.back();"> <i class="layui-icon">&#xe65a;</i> 返回</button>-->
+            </div>
+        </div>
+    </form>
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>还未设置结算配置,请联系管理员处理</span>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+<script>
+    $('#btn').click(function(){
+        var str = $("input[name=prev]").val();
+        if (str == '') {
+            layer.msg("请先上传文件", {icon: 5, time: 2000});
+            return false;
+        }
+    });
+        layui.use('upload', function(){
+            var upload = layui.upload;
+            //执行实例
+            upload.render({
+                elem: '.upload'
+                ,url: '<{:U("User/UserSettle/manyApplyConfirm")}>'	//后台接收地址
+                ,auto: false				//不自动上传设置
+                ,accept: 'file'				 //允许上传的文件类型
+                ,acceptMime: 'xls'				 //打开文件选择框时，筛选出的文件类型
+                ,size: 2097152				 //允许上传的文件大小 2M
+                ,exts: 'xls' 			//设置智能上传图片格式文件
+                ,bindAction: '#btn'			//“上传”按钮的ID
+                ,choose: function(obj){ //文件选择后的回调
+                    obj.preview(function (index, file, result) {
+                        $("input[name=prev]").val(''); //添加到预览区域
+                        var imgobj = new Image(); //创建新img对象
+                        imgobj.src = result; //指定数据源
+                        imgobj.className = 'thumb';
+                        $("input[name=prev]").val(imgobj); //添加到隐藏的预览区域
+                    });
+                }
+                ,before: function(obj){
+                    var upload_code = $('input[name=upload_code]').val();
+                    var code_type = $('input[name=code_type]').val();
+                    var daifu_id = $('input[name=daifu_id]').val();
+                    var account_id = $('input[name=account_id]').val();
+                    this.data = {
+                        upload_code: upload_code,
+                        code_type: code_type,
+                        daifu_id: daifu_id,
+                        account_id: account_id,
+                    };
+                }
+                ,done: function(res, index, upload){ //文件提交后的回调
+                    layer.closeAll('loading'); //关闭loading
+                    if(res.status=='ok'){
+                        layer.msg(res.msg,{icon:6,time:2000},function () {
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg(res.msg,{icon:5,time:2000});
+                    }
+                }
+            })
+        });
+    $('#uploadIcon').click(function(){
+        var type=$('input[name=upload_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=upload_code]').attr('type','text');
+        }else {
+            $('input[name=upload_code]').attr('type','password');
+        }
+    });
+
+
+</script>

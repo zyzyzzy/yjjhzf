@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/*div,ul,li,p,span,em{ padding: 0; margin: 0;}*/
+/*li{ list-style: none;}*/
+body{ min-width: 1200px;}
+em,i,cite{ font-style: normal;}
+
+.fl{ float: left;}
+.fr{ float: right;}
+.clearfix:after{ content: " "; display: block; height: 0px; clear: both; visibility: hidden;}
+
+.account-wrapper{}
+.account-wrapper .acc-title{ height: 40px; line-height: 40px; color: #5b5b5b; font-size: 16px; background: #f2f2f2; padding-left: 21px;}
+.account-wrapper .acc-title:before{ content: ""; display: inline-block; width: 22px; height: 22px; background: url('/Public/images/computer.png'); vertical-align: middle; margin-right: 12px;}
+
+.account-wrapper .acc-content{ height: 140px; border: 1px solid #e5e5e5; background: #fff;}
+.acc-content .amount-type{ width: 70%; height: 140px; border-right: 1px solid #e5e5e5; box-sizing: border-box;}
+.acc-content .amount-type li{ float: left; width: 20%; color: #6e6e6e; font-size: 16px; text-align: center; padding: 40px 20px 0 20px; box-sizing: border-box;}
+.acc-content .amount-type li span{ display: block; font-size: 22px; padding-top: 12px;}
+.acc-content .amount-type .txt-blue{ color: #3091fb;}
+.acc-content .amount-type .txt-red{ color: #e94141;}
+.acc-content .amount-type .txt-yellow{ color: #f79d00;}
+.acc-content .amount-type .txt-green{ color: #24b24c;}
+
+.acc-content  .succeed-rate{ width: 30%; padding: 0 2%; box-sizing: border-box;}
+.acc-content  .succeed-rate .circleProgress_wrapper{ width: 116px; height: 116px;  margin-top: 14px; position: relative;}
+.circleProgress_wrapper .wrapper-box{ width: 58px; height: 116px; position: absolute; top:0; overflow: hidden;}
+.circleProgress_wrapper .wrapper-right{ right:0;}
+.circleProgress_wrapper .wrapper-left{ left:0;}
+.circleProgress_wrapper .wrapper-box .circleProgress{ width: 88px; height: 88px; border:14px solid transparent; border-radius: 50%; position: absolute; top:0; -webkit-transform: rotate(45deg);}
+.circleProgress_wrapper .wrapper-box .rightcircle{ border-top:14px solid #ccc; border-right:14px solid #ccc; border-left:14px solid #ccc; border-bottom:14px solid #ccc; right:0;}
+.circleProgress_wrapper .wrapper-box .leftcircle{ border-bottom:14px solid #ccc; border-left:14px solid #ccc; border-top:14px solid #ccc; border-right:14px solid #ccc; left:0;}
+.circleProgress_wrapper .percent-con{ padding-top: 37px; line-height: 20px; text-align: center; font-size: 12px; color: #656565;}
+.circleProgress_wrapper .percent { display: block; font-size: 16px;}
+
+
+
+
+.succeed-rate .suc-number{ padding-left: 8%; padding-top: 12px;}
+.succeed-rate .suc-number p{ color: #6e6e6e; font-size: 14px; margin-top: 15px;}
+.succeed-rate .suc-number p:before{ content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 25px;}
+.succeed-rate .suc-number .green:before{ background: #5fb878;}
+.succeed-rate .suc-number .red:before{ background: #e94141;}
+.succeed-rate .suc-number .yellow:before{ background: #f79d00;}
+

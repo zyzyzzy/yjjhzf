@@ -1,0 +1,322 @@
+/*用户后台:首页样式。公共样式*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+body {
+    font-family: tahoma, arial, "Hiragino Sans GB", "Microsoft Yahei", \5b8b\4f53, sans-serif;
+    font-size: 12px;
+    color: #000;
+    background-color: #f3f3f3;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+input, select, textarea {
+    vertical-align: middle;
+    width: auto;
+    outline: none;
+    border: 0;
+}
+
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+    outline: none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 0;
+}
+
+/*最外面的首页样式*/
+.x-body {
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+}
+/*用户信息列表开始*/
+.user_area  {
+    clear: both;
+    width: 101%;
+    height: 100px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.user_area li {
+    float: left;
+    width: 24%;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid #01988c;
+    border-radius: 10px;
+    margin-right: 1%;
+}
+.user_area li p {
+    display: block;
+    clear: both;
+    width: auto;
+    line-height: 300%;
+    height: 50%;
+    overflow: hidden;
+    padding-left:20%;
+    font-size: 16px;
+}
+.user_area li p.top {
+    border-bottom: 0.5px solid #d2d2d2;
+}
+.user_area li p.bot {
+    border-top: 0.5px solid #d2d2d2;
+}
+/*点击查看样式*/
+.user_area li p span.view {
+    display: block;
+    float: right;
+    width: 90px;
+    line-height: 35px;
+    height: 35px;
+    overflow: hidden;
+    border: 1px solid #01988c;
+    border-radius: 50px;
+    color: #01988c;
+    text-align: center;
+    margin-right: 55%;
+    margin-top: 2%;
+    cursor: pointer;
+}
+/*用户信息列表结束*/
+/*通道费率列表开始*/
+.payapi_area {
+    clear: both;
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+.payapi_area h3 {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #01988c;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 20px;
+}
+.payapi_area ul {
+    clear: both;
+    width: 105%;
+    overflow: hidden;
+    padding: 10px 20px;
+}
+.payapi_area ul li {
+    float: left;
+    width: 15%;
+    line-height: 80px;
+    height: 80px;
+    overflow: hidden;
+    border: 1px solid #01988c;
+    border-radius: 5px;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    /*text-align: center;*/
+    font-size: 18px;
+    color: red;
+    padding: 0% 1%;
+}
+/*通道图标样式*/
+.payapi_area ul li img.payapi_icon {
+    /*width: auto\9;*/
+    height: 50px;
+    width:60%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    /*display: block;*/
+    /*float: left;*/
+    /*width: 55%;*/
+    /*height: 50%;*/
+    /*overflow: hidden;*/
+    /*!*margin: auto 1%;*!*/
+    /*margin: auto;*/
+}
+.payapi_area ul li span {
+    display: block;
+    float: right;
+    width: 20%;
+    height: auto;
+    overflow: hidden;
+    font-size: 28px;
+    color: #01988c;
+}
+
+/*通道费率列表结束*/
+
+/*交易记录列表开始*/
+.pay_area {
+    clear: both;
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+.pay_area h3 {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #01988c;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 20px;
+}
+/*表格开始*/
+.pay_area .table_area {
+    clear: both;
+    width: 103%;
+    overflow: hidden;
+    padding: 1% 1.5%;
+}
+
+
+.pay_area .pay {
+    display: block;
+    float: left;
+    width: 48%;
+    overflow: hidden;
+    margin-right: 1%;
+}
+.pay_area .daifu {
+    display: block;
+    float: left;
+    width: 48%;
+    overflow: hidden;
+}
+.pay_area table tr {
+    width: 100%;
+}
+.pay_area table th {
+    width: 120px;
+    height: 40px;
+    background-color: #f3f3f3;
+}
+.pay_area table th.pay_time {
+    width: 30px;
+    text-align: center;
+    padding: 0px 5px;
+}
+.pay_area table th.pay_payapi {
+    width: 50px;
+}
+
+.pay_area table th.order_num {
+    width: 150px;
+}
+.pay_area table th.pay_money {
+    width: 50px;
+}
+.pay_area table th.status {
+    width: 50px;
+}
+.pay_area table th.seeinfo {
+    width: 70px;
+}
+
+.pay_area table td {
+    height: 30px;
+    text-align: center;
+    padding: 0px 19px;
+}
+
+.pay_area table td a {
+    display: block;
+    clear: both;
+    width:80px;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #01988c;
+    color: #fff;
+    text-align: center;
+    margin: auto;
+    cursor: pointer;
+}
+
+
+/*交易记录列表结束*/
+/*统计图开始*/
+.count_area {
+    clear: both;
+    width: 100%;
+    height: 60%;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #fff;
+}
+.count_area h3 {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #01988c;
+    color: #fff;
+    font-size: 14px;
+    padding-left: 20px;
+}
+
+
+
+/*统计图结束*/
+
+
+
+
+
+
+

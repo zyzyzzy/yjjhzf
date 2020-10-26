@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算申请</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .x-body{
+            padding-top: 10px;
+        }
+        .layui-form-item{
+            margin-bottom: 10px;
+        }
+        .layui-form-label{
+            width: 130px;
+        }
+        .input_value{
+            color: #f00;
+        }
+        .layui-form-pane .layui-form-label{
+            width: 120px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <if condition="$type eq 1">
+
+        <div class="layui-form-item">
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">当日结算时间范围：</label>
+                <div class="layui-input-inline" style="width: 70px;">
+                    <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_start']}>" class="layui-input" >
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_end']}>" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">单笔结算金额范围：</label>
+                <div class="layui-input-inline" style="width: 70px;">
+                    <input style="width: 100%;border: none" readonly type="text" id="min_money" value="<{$settle_config['min_money']}>" class="layui-input" >
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input style="width: 100%;border: none" readonly type="text" id="max_money" value="<{$settle_config['max_money']}>" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">当日结算金额上限：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_maxmoney']}>" id="day_maxmoney" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">当日结算次数上限：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none" readonly type="text" value="<{$settle_config['day_maxnum']}>" id="day_maxnum" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">手续费扣款方式：</label>
+                <input readonly type="hidden" name="deduction_type" id="deduction_type" value="<{$settle_config['deduction_type']}>" class="layui-input" >
+                <div class="layui-input-inline">
+                    <if condition="$settle_config['deduction_type'] eq 1">
+                        <input style="width: 100%;border: none" readonly type="text" value="外扣" class="layui-input">
+                        <else/>
+                        <input style="width: 100%;border: none" readonly type="text" value="内扣" class="layui-input">
+                    </if>
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">结算费率：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none" readonly type="text" id="settle_feilv_info" value="<{$settle_config['settle_feilv_info']}>" class="layui-input input_value">
+                    <input style="width: 100%;border: none" readonly type="hidden" id="settle_feilv" value="<{$settle_config['settle_feilv']}>" class="layui-input input_value">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">当前代付通道：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none" readonly type="text" value="<{$daifu_name}>" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md5">
+                <label class="layui-form-label">单笔最低手续费：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none;" readonly type="text" id="settle_min_feilv"  value="<{$settle_config['settle_min_feilv']}>" class="layui-input input_value">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">可用余额：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none;font-size: 20px;" readonly type="text" id="money" value="<{$money}>" class="layui-input input_value">
+                </div>
+            </div>
+        </div>
+
+        <!--2019-5-7 rml:可用的当日结算金额剩余上限，当日结算剩余次数-->
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">当日结算剩余金额：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none;font-size: 20px;" readonly type="text" value="<{$can_settle_money}>" class="layui-input input_value">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">当日结算剩余次数：</label>
+                <div class="layui-input-inline">
+                    <input style="width: 100%;border: none;font-size: 20px;" readonly type="text" value="<{$can_settle_count}>" class="layui-input input_value">
+                </div>
+            </div>
+        </div>
+
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input readonly type="hidden" name="can_settle_money" id="can_settle_money" value="<{$can_settle_money}>" class="layui-input addeditinput" >
+        <input readonly type="hidden" name="can_settle_count" id="can_settle_count" value="<{$can_settle_count}>" class="layui-input addeditinput" >
+        <input readonly type="hidden" name="daifu_id" id="daifu_id" value="<{$settle_config['daifu_id']}>" class="layui-input addeditinput" >
+        <input readonly type="hidden" name="account_id" id="account_id" value="<{$settle_config['account_id']}>" class="layui-input addeditinput" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">结算金额</label>
+            <div class="layui-input-inline" style="width: 30%;">
+                <input type="text" name="ordermoney" id="ordermoney" placeholder="请输入结算金额" autocomplete="off" class="layui-input addeditinput" onKeyUp="amount(this)"  onBlur="overFormat(this)">
+            </div>
+            <div class="layui-input-inline">
+                <button style="background-color: #5bc0de;" id="calculation" class="layui-btn" onclick="calculationFee()" ajaxurl="<{:U('calculationFee')}>">计算手续费</button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手续费</label>
+            <div class="layui-input-block" style="width: 30%;">
+                <input type="text" readonly name="fee" id="fee" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">预计到账金额</label>
+            <div class="layui-input-block" style="width: 30%;">
+                <input type="text" readonly name="arrival_money" id="arrival_money" placeholder="" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结算银行</label>
+            <div class="layui-input-block" style="width: 30%;">
+                <select name="bankcard_id" id="bankcard_id" class="layui-input addeditinput" lay-search="">
+                    <volist name="bankcard" id="vo">
+                        <option value="<{$vo['id']}>" <if condition="$vo['mr'] eq 1">selected</if>><{$vo['bankname']}>(<{$vo['banknumber']}>)</option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn" onclick="javascript: FormSumit('<{:U("applyConfirm")}>','',true,false,this); ">申请结算</button>
+                <!--<button class="layui-btn userBtn" onclick="history.back();"> <i class="layui-icon">&#xe65a;</i> 返回</button>-->
+            </div>
+        </div>
+    </form>
+        <else />
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>还未设置结算配置,请联系管理员处理</span>
+        </div>
+
+    </if>
+</div>
+</body>
+</html>
+<script>
+    function calculationFee() {
+        //先判断是否输入了结算金额
+        var ordermoney = parseFloat($('#ordermoney').val());//输入结算金额
+        if(!ordermoney){
+            layer.msg('请先输入结算金额',{icon:5,time:3000});
+            return false;
+        }
+
+        //判断单笔结算金额
+        var min_money = parseFloat($('#min_money').val());//单笔最小金额
+        if(ordermoney<min_money){
+            layer.msg('申请结算金额不能小于单笔最小结算金额',{icon:5,time:3000});
+            return false;
+        }
+        var max_money = parseFloat($('#max_money').val());//单笔最大金额
+        if(ordermoney>max_money){
+            layer.msg('申请结算金额不能大于单笔最大结算金额',{icon:5,time:3000});
+            return false;
+        }
+
+        //判断结算金额是否大于可用余额
+        var money = parseFloat($('#money').val());//用户余额
+        if(ordermoney>money){
+            layer.msg('结算金额超过可用余额',{icon:5,time:3000});
+            return false;
+        }
+
+        //判断结算金额是否大于今日结算剩余额度
+        var can_settle_money = parseFloat($('#can_settle_money').val());//今日结算剩余额度
+        if(ordermoney>can_settle_money){
+            layer.msg('结算金额超过今日结算剩余额度',{icon:5,time:3000});
+            return false;
+        }
+
+        //判断结算次数是否大于0
+        var can_settle_count = $('#can_settle_count').val();//今日结算剩余次数
+        if(can_settle_count<=0){
+            layer.msg('今日结算总次数已达上限,请明日再试',{icon:5,time:3000});
+            return false;
+        }
+
+        //计算手续费
+        var ajaxurl = $('#calculation').attr('ajaxurl');
+        var deduction_type = $('#deduction_type').val();
+        var settle_feilv = $('#settle_feilv').val();
+        var settle_min_feilv = $('#settle_min_feilv').val();
+        $.ajax({
+            type:'POST',
+            url:ajaxurl,
+            data:{
+                ordermoney:ordermoney,
+                money:money,
+                deduction_type:deduction_type,
+                settle_feilv:settle_feilv,
+                settle_min_feilv:settle_min_feilv
+            },
+            dataType:'json',
+            success:function(data){
+                if(data.status=='ok'){
+                    $('#fee').val(data.fee);
+                    $('#arrival_money').val(data.arrival_money);
+                }else{
+                    layer.msg(data.msg,{icon:5,time:3000});
+                    //$('#btn').removeClass('layui-btn-disabled');
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("系统错误,请联系管理员");
+            }
+        });
+    }
+</script>
+<script>
+
+    /**
+     * 实时动态强制更改用户录入
+     * arg1 inputObject
+     **/
+    function amount(th) {
+        var regStrs = [
+            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+        ];
+        for (var i = 0; i < regStrs.length; i++) {
+            var reg = new RegExp(regStrs[i][0]);
+            th.value = th.value.replace(reg, regStrs[i][1]);
+        }
+    }
+    /**
+     * 录入完成后，输入模式失去焦点后对录入进行判断并强制更改，并对小数点进行0补全
+     * arg1 inputObject
+     **/
+    function overFormat(th) {
+        var v = th.value;
+        if (v === '') {
+            v = '0.00';
+        } else if (v === '0') {
+            v = '0.00';
+        } else if (v === '0.') {
+            v = '0.00';
+        } else if (/^0+\d+\.?\d*.*$/.test(v)) {
+            v = v.replace(/^0+(\d+\.?\d*).*$/, '$1');
+            v = inp.getRightPriceFormat(v).val;
+        } else if (/^0\.\d$/.test(v)) {
+            v = v + '0';
+        } else if (!/^\d+\.\d{2}$/.test(v)) {
+            if (/^\d+\.\d{2}.+/.test(v)) {
+                v = v.replace(/^(\d+\.\d{2}).*$/, '$1');
+            } else if (/^\d+$/.test(v)) {
+                v = v + '.00';
+            } else if (/^\d+\.$/.test(v)) {
+                v = v + '00';
+            } else if (/^\d+\.\d$/.test(v)) {
+                v = v + '0';
+            } else if (/^[^\d]+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^[^\d]+(\d+\.?\d*)$/, '$1');
+            } else if (/\d+/.test(v)) {
+                v = v.replace(/^[^\d]*(\d+\.?\d*).*$/, '$1');
+                ty = false;
+            } else if (/^0+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^0+(\d+\.?\d*)$/, '$1');
+                ty = false;
+            } else {
+                v = '0.00';
+            }
+        }
+        th.value = v;
+    }
+</script>

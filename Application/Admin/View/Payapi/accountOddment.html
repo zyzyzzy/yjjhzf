@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户结算设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .x-body{
+            padding-top: 10px;
+        }
+        .layui-form-item{
+            margin-bottom: 10px;
+        }
+        .layui-form-label{
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form"  method="post" action="">
+        <div>
+            <input type="hidden" name="account_id" value="<{$oddment['id']}>" class="layui-input addeditinput">
+            <input type="hidden" name="oddment" value="<{$oddment['oddment']}>" class="layui-input addeditinput oddment">
+            <div class="layui-form-item">
+                <label class="layui-form-label">充值零头</label>
+                <label style="width: 5px;" id="settleSet"></label>
+                <div class="layui-input-block">
+                    <input dataurl="<{:U('accountOddmentEdit')}>?account_id=<{$oddment['id']}>&oddment=0" class="layui-input <if condition="$oddment['oddment'] eq 0">addeditinput</if>" lay-filter="type" type="radio" name="oddment" value="0" title="禁用" <if condition="$oddment['oddment'] eq 0">checked</if>>
+                    <input dataurl="<{:U('accountOddmentEdit')}>?account_id=<{$oddment['id']}>&oddment=1" class="layui-input <if condition="$oddment['oddment'] eq 1">addeditinput</if>" lay-filter="type" type="radio" name="oddment" value="1" title="启用" <if condition="$oddment['oddment'] eq 1">checked</if>>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form class="layui-form set"  method="post" onsubmit="return false">
+        <input type="hidden" name="account_id" value="<{$oddment['id']}>" class="layui-input addeditinput">
+        <div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">零头范围</label>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input style="width: 100%;" type="number" value="<{$oddment['min_oddment']}>" name="min_oddment" placeholder="￥" autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 120px;">
+                    <input style="width: 100%;" type="number" value="<{$oddment['max_oddment']}>" name="max_oddment" placeholder="￥" autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid">分</div>
+            </div>
+        </div>
+        <div class="layui-input-block">
+            <button onclick="javascript: FormSumit('<{:U("accountOddmentRangeEdit")}>','',false);" class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var v = $('.oddment').val();
+    if(v == 1){
+        $('.set').show();
+    }else{
+        $('.set').hide();
+    }
+    layui.use('form',function(){
+        var form=layui.form;
+        form.on('radio(type)',function(data){
+            var val = this.value;
+            var dataurl = $(this).attr('dataurl');
+            //修改数据库
+            $.ajax({
+                type:'POST',
+                url:dataurl,
+                dataType:'json',
+                success:function(data){
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:2000})
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000})
+                    }
+                }
+            });
+            if(val == 1){
+                $('.set').show();
+            }else{
+                $('.set').hide();
+            }
+        });
+    });
+
+</script>

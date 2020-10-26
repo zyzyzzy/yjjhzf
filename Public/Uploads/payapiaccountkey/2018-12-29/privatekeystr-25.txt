@@ -1,0 +1,25 @@
+﻿git checkout 分支名   切换分支
+
+git branch             查看分支
+
+git branch 分支名    创建分支
+
+
+
+
+git add . 获取修改内容
+
+git commit -m "修改说明" 
+
+git push origin  rml  提交
+
+
+
+
+
+git pull origin rml 拉取
+
+
+1.权限流程图，（一个大概的流程，详细到具体哪个方法控制器还没画）
+2.Pay模块中关于域名限制的流程(域名限制逻辑有点问题，还得完善)
+3.判断支付通道状态还没做，只是想了哈流程

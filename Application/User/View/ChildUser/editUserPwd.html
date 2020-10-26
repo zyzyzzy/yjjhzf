@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            <li class="layui-this">登录密码</li>
+            <li>管理密码</li>
+        </ul>
+        <div class="layui-tab-content" style="height:auto;">
+            <div class="layui-tab-item layui-show">
+                <iframe src="<{:U('editLoginPwd')}>?childid=<{$child_id}>" style="width: 100%; height: 200px; border: 0px;"></iframe>
+            </div>
+            <div class="layui-tab-item">
+                <iframe src="<{:U('editManagePwd')}>?childid=<{$child_id}>" style="width: 100%; height: 200px; border: 0px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

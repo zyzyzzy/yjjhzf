@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加费率</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <input type="hidden" name="userid" value="<{$user['id']}>" class="addeditinput">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text"  value="<{$user['username']}>" required  lay-verify="required"  autocomplete="off"  readonly="readonly"  class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道</label>
+            <div class="layui-input-block">
+                <select name="payapiid" id="payapiid" class="layui-input addeditinput">
+                    <volist name="payapis" id="payapi">
+                        <option value="<{$payapi['id']}>"><{$payapi["zh_payname"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手续费费率</label>
+            <div class="layui-input-block">
+                <input type="text" name="rate" placeholder="请输入手续费费率" required  lay-verify="required"  autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("Fee/addFee")}>');" lay-submit lay-filter="formDemo">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>

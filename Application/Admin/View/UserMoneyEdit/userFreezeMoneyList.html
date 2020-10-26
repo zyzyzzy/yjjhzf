@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>冻结金额明细</title>
+    <include file="BaseTemplate:includecssjs" />
+    <!--<style>
+        .layui-table-cell{
+            display:table-cell;
+            vertical-align: middle;
+        }
+    </style>-->
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+
+    <table class="layui-hide" id="userFreezeMoneyList" layui-data="{id:'userFreezeMoneyList'}" dataurl="<{:U("loadUserFreezeMoneyList")}>?userid=<{$id}>"></table>
+
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container" style="font-size: 15px;color: #f00;">
+            <p>冻结总金额：<{$ordermoney.freezemoney}>元</p>
+        </div>
+    </script>
+
+    <script type="text/html" id="freeze_type">
+        {{#  if(d.freeze_type==0){ }}
+        交易冻结
+        {{#  } }}
+        {{#  if(d.freeze_type==1){ }}
+        手动冻结
+        {{#  } }}
+        {{#  if(d.freeze_type==2){ }}
+        投诉冻结
+        {{#  } }}
+    </script>
+
+    <!--2019-02-18汪桂芳修改-->
+    <script type="text/html" id="caozuo">
+        <p style="color: #009688">
+            <a href="javascript:;" onclick="manualUnfreeze(this,'{{d.id}}')" ajaxurl="<{:U('manualUnfreeze')}>" parenturl="<{:U('User/UserList')}>" style="color: #009688">手动解冻</a>
+            {{#  if(d.freeze_type==0){ }}
+            | <a href="javascript:;" onclick="y_admin_show('交易冻结金额延期','<{:U("delayUnfreeze")}>?id={{d.id}}&delay_type=0&old_expect_time={{d.expect_time}}',800,400)" style="color: #009688">延期</a>
+            {{#  }else{ }}
+            | <a href="javascript:;" onclick="y_admin_show('手动冻结金额设置自动解冻','<{:U("delayUnfreeze")}>?id={{d.id}}&delay_type=1&old_expect_time={{d.expect_time}}',800,400)" style="color: #009688">自动解冻</a>
+            {{#  } }}
+            {{#  if(d.task==1 && d.send==0 && d.unfreeze==0){ }}
+            | <a href="javascript:;" onclick="sendTask(this,'{{d.id}}')" ajaxurl="<{:U('sendTask')}>" style="color: #009688">任务补发</a>
+            {{#  } }}
+            | <a href="javascript:;" onclick="y_admin_show('查看延期明细','<{:U("seeUnfreezeInfo")}>?id={{d.id}}',1100,500)" style="color: #009688">查看</a>
+        </p>
+    </script>
+</div>
+<script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>

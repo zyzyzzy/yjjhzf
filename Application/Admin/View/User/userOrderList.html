@@ -1,0 +1,51 @@
+<extend name="BaseTemplate:List"/>
+<block name="nav">
+    <a href="">用户管理</a>
+    <a href="">会员管理</a>
+    <a><cite>用户交易记录</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="sysordernumber" id="sysordernumber" placeholder="系统订单号" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="shangjiaid" id="shangjiaid" class="layui-select" lay-search>
+            <option value="">请选择商家</option>
+            <volist name="shangjias" id="vo">
+                <option value="<{$vo.id}>"><{$vo.shangjianame}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="payapiid" id="payapiid" class="layui-select" lay-search>
+            <option value="">请选择通道</option>
+            <volist name="payapis" id="vo">
+                <option value="<{$vo.id}>"><{$vo.zh_payname}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="accountid" id="accountid" class="layui-select" lay-search>
+            <option value="">请选择账号</option>
+            <volist name="accounts" id="vo">
+                <option value="<{$vo.id}>"><{$vo.bieming}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="layui-select">
+            <option value="">请选择状态</option>
+            <volist name="statustype" id="vo">
+                <option value="<{$key}>"><{$vo}></option>
+            </volist>
+        </select>
+    </div>
+    <input class="layui-input" placeholder="订单开始日" name="start" id="start">
+    <input class="layui-input" placeholder="订单截止日" name="end" id="end">
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="userOrderList" layui-data="{id:'userOrderList'}" dataurl="<{:U("loadUserOrderList")}>?userid=<{$userid}>"></table>
+    <script type="text/html" id="caozuo">
+        <a style="color: #009688" onclick="y_admin_show('查看订单详细信息','<{:U("seeOrderInfo")}>?orderid={{d.orderid}}',600,500)" title="查看订单详细信息" href="javascript:;">
+        查看
+        </a>
+    </script>
+</block>

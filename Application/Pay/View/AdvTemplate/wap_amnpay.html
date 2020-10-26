@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>广告页面</title>
+    <style>
+        body {
+            margin: 0;
+            color: #111;
+            font-size: 12px;
+            font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+            position: relative
+        }
+        * {
+            -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+        }
+        input, textarea, button, select, a {
+            -webkit-tap-highlight-color: transparent
+        }
+        input, textarea,button,select{ outline: none;}
+        h1, h2, h3 {
+            font-weight: normal
+        }
+        h1 {
+            font-size: 24px;
+            line-height: 32px;
+            word-break: break-all
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+        cite,em,i{ font-style: normal;}
+        .ad-wrapper{ position: relative;}
+        .ad-wrapper .bg-img{ display: block; max-width: 100%; margin: 0 auto;}
+        .close-con{ height: 45px; line-height: 45px; position: absolute; right: 1.5rem; top: 1rem;}
+        .close-con .countdown{ display: block; color: #fff; font-size: 1.25rem; height: 1.875rem; line-height: 1.875rem; padding-right: 1rem;}
+        .close-con .countdown,.close-con a{ float: left;}
+        .close-con a{ display: block; width: 1.875rem; height: 1.875rem; overflow: hidden;}
+        .close-con a img{ width: 100%; height: 100%;}
+        .close-con a:hover img{ opacity: .7;}
+    </style>
+</head>
+
+<body>
+<div class="ad-wrapper">
+    <img src="/Public/images/adv/amnpay/wap.png" class="bg-img" />
+    <div class="close-con">
+        <span class="countdown"></span>
+        <a href="JavaScript:;" title="关闭"><img src="/Public/images/adv/amnpay/close.png" /></a>
+    </div>
+</div>
+
+
+<script src="/Public/js/jquery.min.js"></script>
+<script>
+    var time = 5;
+    var url = '<{$jump_url}>?code=<{$code}>';
+    function closeWindow() {
+        window.setTimeout('closeWindow()', 1000);
+        if (time > 0) {
+            $(".countdown").html(time + "s");
+            time--;
+        }
+        else {
+            /* window.opener = null; */
+            location.href = url;
+        }
+        $(".close-con a").click(function(){
+            // $(".ad-wrapper").hide();
+            location.href = url;
+        });
+    }
+
+    window.onload = closeWindow;
+</script>
+
+</body>
+
+</html>

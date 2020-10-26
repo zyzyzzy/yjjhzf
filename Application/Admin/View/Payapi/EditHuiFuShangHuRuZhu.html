@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汇付进件</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post">
+        <input type="hidden" id="jj_id" name="jj_id" value="<{$id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block" style="font-size: 25px; color:#000000">
+                <{$mer_name}>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">请求ID:</label>
+            <div class="layui-input-block" style="font-size: 25px; color:#01AAED">
+                <{$request_id}>
+            </div>
+            <input type="hidden" id="request_id" name="request_id" value="<{$request_id}>" class="addeditinput">
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">API_KEY:</label>
+            <div class="layui-input-block" style="font-size: 25px; color:#01AAED">
+                <{$sub_api_key}>
+            </div>
+            <input type="hidden" id="sub_api_key" name="sub_api_key" value="<{$sub_api_key}>" class="addeditinput">
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">APP_ID:</label>
+            <div class="layui-input-block" style="font-size: 25px; color:#01AAED">
+                <{$app_id}>
+            </div>
+            <input type="hidden" id="app_id" name="app_id" value="<{$app_id}>" class="addeditinput">
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">渠道号:</label>
+            <div class="layui-input-block" style="font-size: 25px; color:#01AAED">
+                00000613
+            </div>
+            <input type="hidden" id="bank_channel_no" name="bank_channel_no" value="00000613" class="addeditinput">
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">入驻模式:</label>
+            <div class="layui-input-block" style="font-size: 25px; color:#01AAED">
+                服务商模式
+            </div>
+            <input type="hidden" id="model_type" name="model_type" value="1" class="addeditinput">
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">费率类型</label>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="fee_type" id="fee_type"  autocomplete="off" lay-verify="required">
+                        <option value="01">标准费率线上</option>
+                        <option value="02">标准费率线下</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择行业</label>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="classname1" id="classname1" lay-filter="classname1_select"  autocomplete="off" lay-verify="required">
+                    <option value="">请选择一级分类</option>
+                    <foreach name="classname1_list" item="vo">
+                        <option value="<{$vo.classname1}>"><{$vo.classname1}></option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+            <select class="addeditinput" name="classname2" id="classname2" lay-filter="classname2_select"   autocomplete="off" lay-verify="required">
+                <option value="">请选择二级分类</option>
+            </select>
+        </div>
+
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="classname3" id="classname3" lay-filter="classname3_select"  autocomplete="off" lay-verify="required">
+                    <option value="">请选择三级分类</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">行业分类</label>
+            <div class="layui-input-inline">
+                <input type="text" name="cls_id" id="cls_id" placeholder="选择行业后自动生成" autocomplete="off"
+                       class="layui-input addeditinput"  lay-verify="required" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">微信类目</label>
+            <div class="layui-input-inline">
+            <select class="addeditinput" name="wxlm_type" id="wxlm_type" lay-filter="wxlmtype_select"  autocomplete="off" lay-verify="required" disabled>
+                <option value="01">企业</option>
+                <option value="02">个人</option>
+            </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="wx_category" id="wx_category" placeholder="选择行业后自动生成" autocomplete="off"
+                       class="layui-input addeditinput"  lay-verify="required" disabled>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">支付宝类目</label>
+            <div class="layui-input-inline">
+                <input type="text" name="alipay_category" id="alipay_category" placeholder="选择行业后自动生成" autocomplete="off"
+                       class="layui-input addeditinput"  lay-verify="required" disabled>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商户种类</label>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="mer_type" id="mer_type"  autocomplete="off" lay-verify="required">
+                    <option value="">请选择商户种类</option>
+                    <option value="1">政府机构</option>
+                    <option value="2">国营企业</option>
+                    <option value="3">私营企业</option>
+                    <option value="4">外资企业</option>
+                    <option value="5">个体工商户</option>
+                    <option value="7">事业单位</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">省/市</label>
+            <div class="layui-input-inline" >
+                <select class="addeditinput" name="province_code" id="province_code" lay-filter="province_select"  autocomplete="off" lay-search   lay-verify="required">
+                    <option value="">请选择省</option>
+                    <foreach name="province" item="vo">
+                        <option value="<{$vo.value}>"><{$vo.title}></option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="city_code" id="city_code" lay-filter="city_select"  autocomplete="off"  lay-verify="required">
+                    <option value="">请选择市</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="district_code" id="district_code"  autocomplete="off"  lay-verify="required">
+                    <option value="">请选择区</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">微信APPID</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wxappid" id="wxappid" placeholder="微信APPID" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>
+<!--
+        <div class="layui-form-item">
+            <label class="layui-form-label">WX授权目录</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wxpath" id="wxpath" placeholder="WX授权目录" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>-->
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">确认商户入驻</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate
+        ,form = layui.form;
+        form.on('submit(*)', function(data){
+            FormSumit('<{:U("RuZhuHuiFuShangHu")}>');
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        form.on('select(province_select)', function(data){
+            var value= $("#province_code").val();
+            $("#city_code").html("<option value=''>正在加载中...</option>");
+            $.ajax({
+                type: 'POST',
+                url: '<{:U("LoadHuiFuCityl")}>',
+                data: "value="+value,
+                dataType:  'json',
+                success: function(data){
+
+                    $("#city_code").html('<option value="">请选择市</option>');
+                    $.each(data, function(key, val) {
+                        var option1 = $("<option>").val(val.value).text(val.title);
+                        $("#city_code").append(option1);
+                        form.render('select');
+                    });
+                    $("#city_code").get(0).selectedIndex=0;
+                }
+            });
+        });
+
+        form.on('select(city_select)', function(data){
+            var value= $("#city_code").val();
+            $("#district_code").html("<option value=''>正在加载中...</option>");
+            $.ajax({
+                type: 'POST',
+                url: '<{:U("LoadHuiFuCityl")}>',
+                data: "value="+value,
+                dataType:  'json',
+                success: function(data){
+
+                    $("#district_code").html('<option value="">请选择区</option>');
+                    $.each(data, function(key, val) {
+                        var option1 = $("<option>").val(val.value).text(val.title);
+                        $("#district_code").append(option1);
+                        form.render('select');
+                    });
+                    $("#district_code").get(0).selectedIndex=0;
+                }
+            });
+        });
+
+        form.on('select(classname1_select)', function(data){
+            var value= $("#classname1").val();
+            $("#classname2").html("<option value=''>正在加载中...</option>");
+            $.ajax({
+                type: 'POST',
+                url: '<{:U("LoadHuiFuHangYeClassName2")}>',
+                data: "value="+value,
+                dataType:  'json',
+                success: function(data){
+
+                    $("#classname2").html('<option value="">请选择二级分类</option>');
+                    $.each(data, function(key, val) {
+                        var option1 = $("<option>").val(val.classname2).text(val.classname2);
+                        $("#classname2").append(option1);
+                        form.render('select');
+                    });
+                    $("#classname2").get(0).selectedIndex=0;
+                    $('#cls_id').val("");
+                    $('#alipay_category').val("");
+                    $('#wx_category').val("");
+                    $("#wxlm_type").attr('disabled',true);
+                    form.render('select');
+                }
+            });
+        });
+
+
+        form.on('select(classname2_select)', function(data){
+            var value= $("#classname2").val();
+            $("#classname3").html("<option value=''>正在加载中...</option>");
+            $.ajax({
+                type: 'POST',
+                url: '<{:U("LoadHuiFuHangYeClassName3")}>',
+                data: "value="+value,
+                dataType:  'json',
+                success: function(data){
+
+                    $("#classname3").html('<option value="">请选择三级分类</option>');
+                    $.each(data, function(key, val) {
+                        var option1 = $("<option>").val(val.wx_qy+"|"+val.wx_gr+"|"+val.cls_id+"|"+val.zfb).text(val.classname3);
+                        $("#classname3").append(option1);
+                        form.render('select');
+                    });
+                    $("#classname3").get(0).selectedIndex=0;
+                    $('#cls_id').val("");
+                    $('#alipay_category').val("");
+                    $('#wx_category').val("");
+                    $("#wxlm_type").attr('disabled',true);
+                    form.render('select');
+                }
+            });
+        });
+
+
+        form.on('select(classname3_select)', function(data){
+            var value= $("#classname3").val();
+            var arr = value.split('|');
+            var option1;
+            $('#cls_id').val(arr[2]);
+            $('#alipay_category').val(arr[3]);
+            $("#wxlm_type").html('');
+            option1 = $("<option>").val(arr[0]).text('企业');
+            $("#wxlm_type").append(option1);
+            option1 = $("<option>").val(arr[1]).text('个人');
+            $("#wxlm_type").append(option1);
+            $("#wxlm_type").removeAttr('disabled',false);
+            form.render('select');
+            $('#wx_category').val(arr[0]);
+        });
+
+        form.on('select(wxlmtype_select)',function () {
+            var value = $("#wxlm_type").val();
+            $('#wx_category').val(value);
+        });
+
+
+        $('#fee_type').val('<{$find["fee_type"]}>');
+        $('#fee_type').val('<{$find["fee_type"]}>');
+        $('#fee_type').val('<{$find["fee_type"]}>');
+        form.render('select'); //刷新select选择框渲染
+
+    });
+</script>
+</html>

@@ -1,0 +1,29 @@
+<extend name="BaseTemplate:List"/>
+<block name="nav">
+    <a href="">交易管理</a>
+    <a><cite>交易日志</cite></a>
+</block>
+<block name="search">
+    <input class="layui-input searchstr" placeholder="系统订单号" name="sys_order_num" id="sys_order_num">
+    <input class="layui-input searchstr" placeholder="用户订单号" name="user_order_num" id="user_order_num">
+    <input class="layui-input searchstr" placeholder="用户名" name="username" id="username">
+    <input class="layui-input searchstr" placeholder="记录开始时间" name="start" id="start" autocomplete="off">
+    <input class="layui-input searchstr" placeholder="记录结束时间" name="end" id="end" autocomplete="off">
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="orderLog" layui-data="{id:'orderLog'}" dataurl="<{:U("loadOrderLog")}>"></table>
+
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" onclick="changelistdownload()" id="changelistdownload" url='<{:U("Order/downloadChangeList")}>'><i class="layui-icon">&#xe62d;</i>导出交易订单日志</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="userordernum">
+        {{# if(d.user_order_num){ }}
+        {{d.user_order_num}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</block>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>到账方案使用明细</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">管理后台</a>
+          <block name="nav">
+              <a href="">到账设置</a>
+              <a><cite>到账方案使用明细</cite></a>
+          </block>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <block name="table_script">
+        <table class="layui-hide" id="seeMoneyClassInfo" layui-data="{id:'seeMoneyClassInfo'}" dataurl="<{:U('loadMoneyClassInfo')}>?money_class_id=<{$money_class_id}>"></table>
+    </block>
+</div>
+<script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+</html>

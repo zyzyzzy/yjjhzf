@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汇付进件</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post">
+<input type="hidden" id="id" name="id" class="addeditinput" value="<{$find['id']}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属代理商</label>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="dls_id" id="dls_id"  autocomplete="off" lay-verify="required">
+                    <option value="">请选择代理商</option>
+                    <foreach name="dls_list" item="vo">
+                        <option value="<{$vo.id}>"><{$vo.dls_name}></option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！所属代理商。选择代理商后会应用此代理商的APIKEY和密钥调用进件接口</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">请求ID</label>
+            <div class="layui-input-block">
+                <input type="text" name="request_id" id="request_id" placeholder="请求ID" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['request_id']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！请求ID,已经自动生成，可以不用修改直接用。接口字段名：【request_id】</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">注册手机号</label>
+            <div class="layui-input-block">
+                <input type="text" name="usr_phone" id="usr_phone" placeholder="商户注册手机号" autocomplete="off"
+                       class="layui-input addeditinput"  value="<{$find['usr_phone']}>" lay-verify="required|phone">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！商户注册手机号,例如：13334445555。接口字段名：【usr_phone】</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="cont_name" id="cont_name" placeholder="联系人姓名" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['cont_name']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！联系人姓名。接口字段名：【cont_name】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系人手机</label>
+            <div class="layui-input-block">
+                <input type="text" name="cont_phone" id="cont_phone" placeholder="联系人手机号码" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['cont_phone']}>"  lay-verify="required|phone">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！联系人手机号码,例如：13334445555。接口字段名：【cont_phone】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="customer_email" id="customer_email" placeholder="电子邮箱" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['customer_email']}>"  lay-verify="required|email">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！电子邮箱,例如：zyzyzzy@vip.qq.com。接口字段名：【customer_email】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业全称</label>
+            <div class="layui-input-block">
+                <input type="text" name="mer_name" id="mer_name" placeholder="企业全称" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['mer_name']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！企业全称,例如：河南通达电缆股份有限公司。接口字段名：【mer_name】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业简称</label>
+            <div class="layui-input-block">
+                <input type="text" name="mer_short_name" id="mer_short_name" placeholder="企业简称" autocomplete="off"
+                       class="layui-input addeditinput"  value="<{$find['mer_short_name']}>" lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！企业简称,例如：通达电缆。接口字段名：【mer_short_name】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">营业执照号</label>
+            <div class="layui-input-block">
+                <input type="text" name="license_code" id="license_code" placeholder="营业执照编码，如三证合一传三证合一码" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['license_code']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！营业执照编码，如三证合一传三证合一码。接口字段名：【license_code】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">注册地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="reg_addr" id="reg_addr" placeholder="公司注册地址" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['reg_addr']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！公司营业执照上的注册地址。接口字段名：【reg_addr】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">经营地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="cust_addr" id="cust_addr" placeholder="公司经营地址" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['cust_addr']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！公司实际经营地址。接口字段名：【cust_addr】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">有效期开始</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mer_start_valid_date" id="mer_start_valid_date" placeholder="营业执照有效期开始" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['mer_start_valid_date']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！营业执照有效期（始），格式 YYYYMMDD。接口字段名：【mer_start_valid_date】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">有效期结束</label>
+            <div class="layui-input-inline">
+                <input type="text" name="mer_valid_date" id="mer_valid_date" placeholder="营业执照有效期结束" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['mer_valid_date']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！营业执照有效期（至），格式 YYYYMMDD。接口字段名：【mer_valid_date】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商户电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="cust_tel" id="cust_tel" placeholder="商户电话" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['cust_tel']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！商户电话。接口字段名：【cust_tel】</div>
+        </div>
+
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">法人姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="legal_name" id="legal_name" placeholder="法人/负责人 姓名" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['legal_name']}>" lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人/负责人 姓名。接口字段名：【legal_name】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">证件类型</label>
+            <div class="layui-input-inline">
+                    <select class="addeditinput" name="legal_type" id="legal_type"  autocomplete="off"  lay-verify="required">
+                        <option value="0">身份证</option>
+                        <option value="1">其它</option>
+                    </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人/负责人 证件类型。接口字段名：【legal_type】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">证件号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="legal_idno" id="legal_idno" placeholder="法人/负责人 证件号码" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['legal_idno']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人/负责人 证件号码。接口字段名：【legal_idno】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">法人手号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="legal_mp" id="legal_mp" placeholder="法人/负责人 手机号码" autocomplete="off"
+                       class="layui-input addeditinput"  value="<{$find['legal_mp']}>" lay-verify="required|phone">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人/负责人 手机号码。接口字段名：【legal_mp】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">证件有效期S</label>
+            <div class="layui-input-inline">
+                <input type="text" name="legal_start_cert_id_expires" id="legal_start_cert_id_expires" placeholder="法人身份证有效期（始）" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['legal_start_cert_id_expires']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人身份证有效期（始），格式 YYYYMMDD。接口字段名：【legal_start_cert_id_expires】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">证件有效期E</label>
+            <div class="layui-input-inline">
+                <input type="text" name="legal_id_expires" id="legal_id_expires" placeholder="法人身份证有效期（至）" autocomplete="off"
+                       class="layui-input addeditinput" value="<{$find['legal_id_expires']}>"  lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！法人身份证有效期（至），格式 YYYYMMDD。接口字段名：【legal_id_expires】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行卡号</label>
+            <div class="layui-input-block">
+                <input type="text" name="card_id_mask" id="card_id_mask" placeholder="结算银行卡号" autocomplete="off"
+                       class="layui-input addeditinput"  value="<{$find['card_id_mask']}>" lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！结算银行卡号。接口字段名：【card_id_mask】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">银行code</label>
+            <div class="layui-input-block">
+                <select class="addeditinput" name="bank_code" id="bank_code"  autocomplete="off" lay-search   lay-verify="required">
+                    <option value="">请选择银行</option>
+                    <foreach name="bankcode_list" item="vo">
+                        <option value="<{$vo.bankcode}>"><{$vo.bankname}></option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！结算银行卡所属银行code。接口字段名：【bank_code】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">开户姓名</label>
+            <div class="layui-input-block">
+                <input type="text" name="card_name" id="card_name" placeholder="结算银行卡开户姓名" autocomplete="off"
+                       class="layui-input addeditinput"  value="<{$find['card_name']}>" lay-verify="required">
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！结算银行卡开户姓名。接口字段名：【card_name】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">账户类型</label>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="bank_acct_type" id="bank_acct_type"  autocomplete="off"  lay-verify="required">
+                    <option value="1">对公</option>
+                    <option value="2">对私</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！结算银行账户类型。接口字段名：【bank_acct_type】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">省/市</label>
+            <div class="layui-input-inline" >
+                <select class="addeditinput" name="prov_code" id="prov_code" lay-filter="province_select"  autocomplete="off" lay-search   lay-verify="required">
+                    <option value="">请选择省</option>
+                    <foreach name="province" item="vo">
+                        <option value="<{$vo.value}>"><{$vo.title}></option>
+                    </foreach>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select class="addeditinput" name="area_code" id="area_code"  autocomplete="off"  lay-verify="required">
+                    <option value="">请选择市</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！结算银行卡省份/市区编码。接口字段名：【prov_code】【area_code】</div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商户私钥</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入商户私钥" class="layui-textarea addeditinput" id="rsa_private_key" name="rsa_private_key"  lay-verify="required"><{$find['rsa_private_key']}></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">商户公钥</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入用户公钥" class="layui-textarea addeditinput" id="rsa_public_key" name="rsa_public_key"  lay-verify="required"><{$find['rsa_public_key']}></textarea>
+            </div>
+            <div class="layui-form-mid layui-word-aux" style="margin-left:110px;">必填！！<a href="http://web.chacuo.net/netrsakeypair" target="_blank">点击生成密钥</a> 后去掉头尾和转行空格后输入。接口字段名：【rsa_public_key】</div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate
+        ,form = layui.form;
+        laydate.render({
+            elem: '#mer_start_valid_date' //指定元素
+            ,format:'yyyyMMdd'
+        });
+
+        laydate.render({
+            elem: '#mer_valid_date' //指定元素
+            ,format:'yyyyMMdd'
+        });
+
+        laydate.render({
+            elem: '#legal_start_cert_id_expires' //指定元素
+            ,format:'yyyyMMdd'
+        });
+
+        laydate.render({
+            elem: '#legal_id_expires' //指定元素
+            ,format:'yyyyMMdd'
+        });
+
+
+        form.on('submit(*)', function(data){
+            FormSumit('<{:U("HuiFuJingJianEdit")}>');
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        form.on('select(province_select)', function(data){
+            var value= $("#prov_code").val();
+            $("#area_code").html("<option value=''>正在加载中...</option>");
+            $.ajax({
+                type: 'POST',
+                url: '<{:U("LoadHuiFuCity")}>',
+                data: "value="+value,
+                dataType:  'json',
+                success: function(data){
+
+                    $("#area_code").html('<option value="">请选择市</option>');
+                    $.each(data, function(key, val) {
+                        var option1 = $("<option>").val(val.value).text(val.title);
+                        $("#area_code").append(option1);
+                        form.render('select');
+                    });
+                    $("#area_code").get(0).selectedIndex=0;
+                    if('<{$find["area_code"]}>' != ''){
+                        $('#area_code').val("<{$find["area_code"]}>");
+                        form.render('select'); //刷新select选择框渲染
+                    }
+                }
+            });
+        });
+
+        $('#dls_id').val('<{$find["dls_id"]}>');
+        $('#legal_type').val('<{$find["legal_type"]}>');
+        $('#bank_code').val('<{$find["bank_code"]}>');
+        $('#bank_acct_type').val('<{$find["bank_acct_type"]}>');
+        $('#prov_code').val('<{$find["prov_code"]}>');
+        form.render('select'); //刷新select选择框渲染
+        $('.layui-form-select dl dd.layui-this').trigger('click');
+
+    });
+</script>
+</html>

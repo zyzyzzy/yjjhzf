@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><block name="title">身份证黑名单</block></title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <input class="layui-input addeditinput" placeholder="请输入身份证号" name="idcard" id="idcard" style="width: auto;">
+            <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+        </form>
+    </div>
+    <block name="xblock">
+        <xblock>
+            <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'blackIdCard')" ajaxurl="<{:U('delAllIdCard')}>">
+                <i class="layui-icon"></i>批量删除
+            </button>
+            <button class="layui-btn" onclick="y_admin_show('添加身份证黑名单','<{:U("addBlackIdCard")}>',600,300)">
+                <i class="layui-icon"></i>添加
+            </button>
+            <span class="x-right" style="line-height:40px"></span>
+        </xblock>
+    </block>
+    <table class="layui-hide" id="blackIdCard" layui-data="{id:'blackIdCard'}" dataurl="<{:U('loadBlackIdCard')}>"></table>
+    <script type="text/html" id="caozuo">
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('delBlackIdCard')}>">
+            <i class="layui-icon">
+                     <span class="layui-badge layui-bg-danger" >
+                          <i class="layui-icon">&#xe640;</i>
+                     </span>
+            </i>
+        </a>
+    </script>
+</div>
+<script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>
+

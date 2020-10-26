@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改用户子账号</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <!--2019-3-7 任梦龙：子账号的名称可以修改-->
+        <!--2019-1-25 任梦龙：在编辑时子账号名称不能修改-->
+        <input type="hidden" name="id" value="<{$id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">子账号名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="child_name" id="childName" value="<{$info.child_name}>"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-1-21 任梦龙：添加子账号的别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">子账号别名</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming" value="<{$info.bieming}>" placeholder="请输入子账号别名"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-3-7 任梦龙：将登录密码和管理密码的修改移除-->
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("childUserEdit")}>');">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

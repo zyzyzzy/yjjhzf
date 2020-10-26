@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MD5密钥</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<!--2019-3-12 任梦龙：如果session('code_switch') = 1,表示有验证遮罩层,否则就是显示正常的页面-->
+<if condition="$_SESSION['code_switch'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+<div class="x-body">
+    <form class="layui-form" action="" method="post" onsubmit="return false">
+        <input type="hidden" name="account_id" value="<{$account_id}>" class="addeditinput">
+        <input type="hidden" name="id" value="<{$key_id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">md5密钥</label>
+            <div class="layui-input-block">
+                <!--2019-3-5 任梦龙：MD5密钥可以为空-->
+                <input type="text" name="md5keystr" value="<{$md5keystr}>"  id="websitename"
+                       placeholder="md5密钥" autocomplete="off" class="layui-input addeditinput" >
+            </div>
+        </div>
+        <!--2019-3-11 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <!--2019-3-5 任梦龙：去掉重新生成-->
+                <!--<button type="button"  id="rel" url="<{:U('Payapi/updateAccountMd5key')}>" onclick="rela()"-->
+                        <!--class="layui-btn layui-btn layui-btn-normal">重新生成MD5密钥-->
+                <!--</button>-->
+                <button onclick="javascript: FormSumit('<{:U("Payapi/editAccountMd5key")}>','',true,false);"
+                class="layui-btn" lay-submit lay-filter="formDemo">确认修改
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+</if>
+<script>
+    function rela(){
+        var url=$('#rel').attr('url');
+        $.ajax({
+            url:url,
+            success:function(data){
+                $('#websitename').attr('value',data.code);
+            }
+        })
+    }
+</script>
+</body>
+</html>
+
+
+
+
+
+

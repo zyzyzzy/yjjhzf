@@ -1,0 +1,42 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">短信设置</block>
+<block name="nav">
+    <a href="">信息设置</a>
+    <a><cite>短信设置</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="app_name" id="app_name" placeholder="短信接口名" autocomplete="off" class="layui-input">
+</block>
+<block name="searchbutton">
+    <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+    <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加短信模板','<{:U("SmsSetingAdd")}>',600,500)">
+        <i class="layui-icon"></i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="SmsSeting" layui-data="{id:'SmsSeting'}" dataurl="<{:U("SmsSeting/LoadSmsSeting")}>">
+    </table>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("SmsSeting/SmsEdit")}>?id={{ d.id }}',600,500)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">
+            &#xe642;</i></span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('SmsSeting/DelSmsSeting')}>">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>
+    </script>
+</block>
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加菜单</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="icon" id="menuIcon" placeholder="请参考layui官网输入菜单图标"
+                       class="layui-input addeditinput" autocomplete="off" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="menu_title" id="menuTitle" placeholder="请输入菜单名称"
+                       class="layui-input addeditinput" autocomplete="off" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addmenu">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+        var form = layui.form,
+            $ = layui.jquery
+        //监听提交
+        form.on('submit(addmenu)', function (data) {
+            var userInfo = data.field;
+            var url = "<{:U('AdminAuthRule/createMenu')}>";
+            $.post(url, userInfo, function (data) {
+                if (data.status == 'ok') {
+                    layer.msg(data.msg, {
+                        icon: 6,
+                        time: 1500
+                    }, function () {
+                        parent.location.reload();
+                    });
+                } else {
+                    layer.msg(data.msg, {icon: 5});//失败的表情
+                    return false;
+                }
+            });
+            return false;//阻止表单跳转
+        });
+    });
+</script>

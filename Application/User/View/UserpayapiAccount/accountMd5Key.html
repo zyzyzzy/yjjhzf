@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户自助账号的MD5密钥</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<!--2019-3-12 任梦龙：如果session('code_switch') = 1,表示有验证遮罩层,否则就是显示正常的页面-->
+<if condition="$_SESSION['switch_code'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <form class="layui-form" action="" method="post" onsubmit="return false">
+            <input type="hidden" name="id" value="<{$find.id}>" class="addeditinput">
+            <div class="layui-form-item">
+                <!--2019-4-4 任梦龙：账号密钥不得修改-->
+                <label class="layui-form-label">md5密钥</label>
+                <div class="layui-input-block">
+                    <input type="text" name="md5keystr" value="<{$find.md5keystr}>"  id="websitename"
+                           placeholder="md5密钥" autocomplete="off" class="layui-input addeditinput" >
+                </div>
+            </div>
+            <include file="BaseTemplate:verifycode"/>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button onclick="javascript: FormSumit('<{:U("editUserAccountMd5key")}>','',true,false);"
+                    class="layui-btn" lay-submit lay-filter="formDemo">确认修改
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</if>
+</body>
+</html>
+
+
+
+
+
+

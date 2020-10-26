@@ -1,0 +1,37 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">到账设置</block>
+<block name="nav">
+    <a href="">到账设置</a>
+    <a><cite>到账方案</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="moneyclassname" id="moneyclassname" placeholder="到账方案名称" autocomplete="off" class="layui-input">
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'moneyClassList')"
+                ajaxurl="<{:U('delAllMoneyClass')}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加到账方案','<{:U("MoneySeting/addMoneyTypeClassName")}>',700,300)">
+            <i class="layui-icon"></i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="moneyClassList" layui-data="{id:'moneyClassList'}" dataurl="<{:U('MoneySeting/loadMoneyClassList')}>">
+    </table>
+    <script type="text/html" id="caozuo">
+        <a title="编辑"  onclick="y_admin_show('编辑','<{:U("MoneySeting/editMoneyTypeClassName")}>?id={{ d.id }}',700,300)" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe642;</i></span></i>
+        </a>
+        <a title="冻结方案管理"  onclick="y_admin_show('冻结方案管理','<{:U("MoneySeting/MoneyTypeList")}>?id={{ d.id }}')" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe608;</i></span></i>
+        </a>
+        <a title="查看使用账号"  onclick="y_admin_show('查看通道账号使用信息','<{:U("seeMoneyClassInfo")}>?money_class_id={{d.id}}',700,450)" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe674;</i></span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('MoneySeting/delMoneyTypeClass')}>">
+            <i class="layui-icon"><span class="layui-badge layui-bg-danger" style="font-size: 15px;"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+    </script>
+</block>

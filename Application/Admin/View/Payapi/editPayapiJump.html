@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通道跳转设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-item{
+            margin-bottom: 25px;
+        }
+        .layui-form-label{
+            width: 85px;
+        }
+        .layui-input-block{
+            width: 20%;
+        }
+        .layui-input{
+            width: 95%;
+        }
+        .date_div{
+            height: 50px;
+            width: 270px;
+            display: inline-block;
+        }
+        .delete{
+            color: #000;
+            background-color: #fff;
+            padding: 0 8px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #e6e6e6;
+            margin-left: 2%;
+        }
+        .delete:hover{
+            color: #000;
+        }
+        .date{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+
+    <div>
+        <form class="layui-form"  method="post" action="">
+            <div>
+                <input type="hidden" name="payapi_id" value="<{$payapi_id}>" class="layui-input addeditinput" id="payapi_id">
+                <input type="hidden" name="jump_type" value="<{$jump_type}>" class="layui-input addeditinput jump_type">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">广告页面</label>
+                    <label style="width: 5px;" id="settleSet"></label>
+                    <div class="layui-input-block">
+                        <input dataurl="<{:U('payapiJumpEdit')}>?payapi_id=<{$payapi_id}>&jump_type=0" class="layui-input <if condition="$jump_type eq 0">addeditinput</if>" lay-filter="type" type="radio" name="jump_type" value="0" title="关闭" <if condition="$jump_type eq 0">checked</if>>
+                        <input dataurl="<{:U('payapiJumpEdit')}>?payapi_id=<{$payapi_id}>&jump_type=1" class="layui-input <if condition="$jump_type eq 1">addeditinput</if>" lay-filter="type" type="radio" name="jump_type" value="1" title="开启" <if condition="$jump_type eq 1">checked</if>>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div style="margin-top: 3%;" class="set">
+        <form class="layui-form" method="post" onsubmit="return false">
+            <input type="hidden" name="payapi_id" value="<{$payapi_id}>" class="layui-input addeditinput">
+            <div class="layui-form-item">
+                <label class="layui-form-label">广告模板</label>
+                <div class="layui-input-block layui-inline" style="width: 20%;margin-left: 0;margin-right: 0;">
+                    <select name="adv_templateid" id="adv_templateid" lay-filter="adv_templateid" class="addeditinput">
+                        <option value="">请选择广告模板</option>
+                        <volist name="all_template" id="vo">
+                            <option value="<{$vo['id']}>" <if condition="$template eq $vo['id']">selected</if>><{$vo['title']}></option>
+                        </volist>
+                    </select>
+                </div>
+                <div class="layui-input-block layui-inline" style="width: 10%;margin-left: 0;">
+                    <button class="layui-btn" onclick="javascript: FormSumit('<{:U("selectPayapiAdv")}>','',false);">确定</button>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item">
+            <h3><span style="color: #006DCC;font-weight: bold;font-size: 15px;">已排除用户</span><span style="color: #F32043;font-size: 13px;">(排除的用户应用此通道支付成功后直接跳转到同步地址中,不用经过广告页面)</span></h3>
+        </div>
+        <div class="layui-form-item" id="removes">
+            <volist name="remove_users" id="val">
+                <div class="date_div" id="user_<{$val.id}>">
+                    <div class="layui-input-inline" style="width: 260px;">
+                        <span class="date"><{$val.user_name}><span style="color: #1AA093;">(<{$val.member_id}>)</span></span><button onclick="javascript: DeleteSubmit('<{:U("jumpUserDelete")}>?id=<{$val.id}>',<{$val.id}>);" class="layui-btn delete">删除</button>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <form class="layui-form"  method="post" onsubmit="return false" id="search_form">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">添加排除用户</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                        <input style="width: 100%;" type="text" placeholder="请输入用户名或商户号" name="user_name" id="user_name" autocomplete="off" class="layui-input addeditinput"/>
+                    </div>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <button onclick="javascript: SearchSubmit('<{:U("jumpUserSearch")}>');" class="layui-btn" lay-submit lay-filter="formDemo">搜索</button>
+                        <button onclick="javascript: location.reload()" class="layui-btn" lay-submit lay-filter="formDemo">刷新</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="search_res">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    var v = $('.jump_type').val();
+    if(v == 1){
+        $('.set').show();
+    }else{
+        $('.set').hide();
+    }
+    layui.use('form',function(){
+        var form=layui.form;
+        form.on('radio(type)',function(data){
+            var val = this.value;
+            var dataurl = $(this).attr('dataurl');
+            //修改数据库
+            $.ajax({
+                type:'POST',
+                url:dataurl,
+                dataType:'json',
+                success:function(data){
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:2000},function () {
+                            location.reload();
+                        })
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000})
+                    }
+                }
+            });
+            if(val == 1){
+                $('.set').show();
+            }else{
+                $('.set').hide();
+            }
+        });
+    });
+
+</script>
+<script>
+    function SearchSubmit(ajaxurl) {
+        var user_name = $('#user_name').val();
+        var payapi_id = $('#payapi_id').val();
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {user_name:user_name,payapi_id:payapi_id},
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    var str = '';
+                    $('#search_res').html(str);
+                    str = '<div class="layui-form-item">';
+                    var data = obj.data;
+                    for(var i=0;i<data.length;i++){
+                        str += '<div class="date_div" id="search_'+data[i]['userid']+'">';
+                        str += '<div class="layui-input-inline" style="width: 260px;">';
+                        if(data[i]['jump']==1){
+                            str += '<span class="date">'+data[i]['username']+'<span style="color: #1AA093;">('+data[i]['memberid']+' 已添加)</span></span>';
+                        }else{
+                            var url = '<{:U("jumpUserAdd")}>?user_id='+data[i]['userid']+'&payapi_id='+data[i]['payapi_id'];
+                            str += '<span class="date">'+data[i]['username']+'<span style="color: #1AA093;">('+data[i]['memberid']+')</span></span><button onclick="javascript: AddSubmit('+"'"+url+"'"+');" class="layui-btn delete">添加</button>';
+                        }
+                        str += '</div>';
+                        str += '</div>';
+                    }
+                    str += '</div>';
+                    $('#search_res').html(str);
+                    layer.render();
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+    function AddSubmit(ajaxurl) {
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500},function () {
+                        var data = obj.data;
+                        var url = '<{:U("jumpUserDelete")}>?id='+data.id;
+                        var str ='<div class="date_div" id="user_'+data.id+'">' +
+                            '<div class="layui-input-inline" style="width: 260px;">' +
+                            '<span class="date">'+data.user_name+'<span style="color: #1AA093;">('+data.member_id+')</span></span><button onclick="javascript: DeleteSubmit('+"'"+url+"'"+','+data.id+');" class="layui-btn delete">删除</button>' +
+                            '</div>' +
+                            '</div>';
+                        $('#removes').prepend(str);
+                        $('#search_'+data.user_id).remove();
+                        layer.render();
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+    function DeleteSubmit(ajaxurl,id) {
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500},function () {
+                        $('#user_'+id).remove();
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>

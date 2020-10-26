@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>减少金额</title>
+    <include file="BaseTemplate:includecssjs"/>
+
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-tab-content" style="height:auto;">
+        <div class="layui-tab-item layui-show">
+            <form name="addMoney" id="addMoney" class="layui-form" method="post" onsubmit="return false">
+                <input type="hidden" name="userid" value="<{$id}>" class="addeditinput">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">原金额</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="old_money" value="<{$old_money}>" lay-verify="title"
+                               autocomplete="off" class="layui-input addeditinput" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">减少金额</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="cut_money" lay-verify="title" autocomplete="off"
+                               placeholder="请输入要减少的金额" class="layui-input addeditinput">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="remarks" lay-verify="title" autocomplete="off"
+                               placeholder="请输入备注信息" class="layui-input addeditinput">
+                    </div>
+                </div>
+                <include file="BaseTemplate:verifycode"/>
+                <div class="layui-form-item">
+                    <div class="layui-input-block"style="margin-left: 130px">
+                        <button onclick="javascript: FormSumit('<{:U("UserMoneyEdit/userMoneyCut")}>','',true,true);" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加域名黑名单</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .x-so input.layui-input {
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">域名地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="domain" id="domain" placeholder="例如：http://www.baidu.com"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("blackDomainAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

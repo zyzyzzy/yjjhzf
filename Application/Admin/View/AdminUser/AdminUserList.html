@@ -1,0 +1,109 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">管理员列表</block>
+<block name="nav">
+    <a href="">管理员管理</a>
+    <a><cite>管理员列表</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="user_name" id="userName" value="" placeholder="请输入管理员名称" autocomplete="off" class="layui-input">
+    <input type="text" name="bieming" id="bieming" value="" placeholder="请输入管理员别名" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="allStatus" class="layui-select">
+            <option value="">状态</option>
+            <option value="1">启用</option>
+            <option value="2">禁用</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加管理员','<{:U("AdminUserAdd")}>',700,400)"><i class="layui-icon">&#xe61f;</i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+        <button style="float: right;" class="layui-btn layui-btn-primary"
+                onclick="y_admin_show('回收列表','<{:U("recoveryAdminUser")}>',1000,750)">
+        <i class="layui-icon"></i>回收站</button>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="AdminUserList" layui-data="{id:'AdminUserList'}" dataurl="<{:U('AdminUser/LoadAdminUserList')}>"></table>
+
+    <script type="text/html" id="showsameadmin">
+        <a href="javascript:y_admin_show('设置账号登录','<{:U("setSameAdmin")}>?id={{d.id}}',500,300)" style="text-decoration: underline">设置</a>
+    </script>
+
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('UpdateStatus')}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="showsgoogle">
+        {{# if(d.google==0){ }}
+            <a style="color: #1e9fff;text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.user_name}}】','<{:U("editGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">开通未开启</a>
+        {{# }else if(d.google==1){ }}
+            <a style="text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.user_name}}】','<{:U("editGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">已开启</a>
+        {{# }else{ }}
+            <a style="color: #ff0101;text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.user_name}}】','<{:U("editGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">未开通</a>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showsmanagestatus">
+        <input type="checkbox" name="manage" ajaxurl="<{:U('editManageStatus')}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="开启|关闭" lay-filter="managestatuscheckbox" {{ d.manage_status == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="showmanagepwd">
+        <a href="javascript:y_admin_show('修改密码','<{:U("editAdminPwd")}>?id={{d.id}}',700,400)" style="text-decoration: underline">修改密码</a>
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("AdminUser/AdminUserEdit")}>?id={{d.id}}',700,300)">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+            </i>
+        </a>
+
+        <a title="分配角色" href="javascript:;" onclick="y_admin_show('分配角色','<{:U("AdminAuthGroup/GiveRole")}>?id={{d.id}}',700,500)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                     <i class="layui-icon">&#xe61f;</i>
+                </span>
+        </i>
+        </a>
+
+        <a title="分配隐私" href="javascript:;" onclick="y_admin_show('分配隐私','<{:U("AdminUser/GivePrivacy")}>?id={{d.id}}',700,500)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-blue">
+                     <i class="layui-icon">&#xe61f;</i>
+                </span>
+        </i>
+        </a>
+
+        <!--2019-4-25 rml:将删除按钮放在最后面,由于统计模板功能被暂时注释,所以将统计按钮注释-->
+        <!--<a title="选择统计模板"  onclick="y_admin_show('选择统计模板','<{:U("AdminUser/selectTemplate")}>?id={{ d.id }}',1400,750)" href="javascript:;">-->
+        <!--<img height = "18px" src="/Public/icon/selectTemplate.png" style="background:#5bc0de;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;" / >-->
+        <!--</a>-->
+
+        {{#  if(d.super_admin==1){ }}
+        <a title="删除">
+            <i class="layui-icon">
+                     <span class="layui-btn layui-btn-xs layui-btn-disabled" >
+                          <i class="layui-icon">&#xe640;</i>
+                     </span>
+            </i>
+        </a>
+        {{#  } else { }}
+
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('AdminUser/AdminUserDel')}>">
+            <i class="layui-icon">
+                     <span class="layui-badge layui-bg-danger" >
+                          <i class="layui-icon">&#xe640;</i>
+                     </span>
+            </i>
+        </a>
+        {{#  } }}
+
+
+    </script>
+</block>

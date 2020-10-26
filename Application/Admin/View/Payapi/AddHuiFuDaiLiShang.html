@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>汇付进件</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">代理商名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="dls_name" id="dls_name" placeholder="请输入代理商名称" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">apikey(moch)</label>
+            <div class="layui-input-block">
+                <input type="text" name="apikey_mock" id="apikey_mock" placeholder="请输入测试用API_KEY" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">apikey(prod)</label>
+            <div class="layui-input-block">
+                <input type="text" name="apikey_prod" id="apikey_prod" placeholder="请输入生产用API_KEY" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">用户私钥</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入用户私钥" class="layui-textarea addeditinput" id="user_private_rsa" name="user_private_rsa"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">Adapay公钥</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入Adapay公钥" class="layui-textarea addeditinput" id="adapay_public_rsa" name="adapay_public_rsa"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("HuiFuDaiLiShangAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+body {
+    font-family: tahoma, arial, "Hiragino Sans GB", "Microsoft Yahei", \5b8b\4f53, sans-serif;
+    font-size: 12px;
+    color: #000;
+    overflow-y: hidden;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+input, select, textarea {
+    vertical-align: middle;
+    width: auto;
+    outline: none;
+    border: 0;
+}
+
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+    outline: none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 0;
+}
+.box {
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px;
+}
+/*说明文字*/
+.box .text_area {
+    float: left;
+    width: 40%;
+    overflow: hidden;
+    margin-right: 30px;
+}
+.box .text_area h1 {
+    clear: both;
+    width: auto;
+    line-height: 40px;
+    height: 40px;
+    overflow: hidden;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.box .text_area p {
+    clear: both;
+    width: auto;
+    overflow: hidden;
+    font-size: 16px;
+    color: #000;
+    text-indent:20px;
+    margin-bottom: 10px;
+}
+/*证书图片*/
+.box .pic_area {
+    float: left;
+    width: 40%;
+    overflow: hidden;
+}
+.box .pic_area img {
+    width: 100%;
+}

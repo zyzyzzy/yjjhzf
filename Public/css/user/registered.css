@@ -1,0 +1,170 @@
+@charset "utf-8";
+/* CSS Document */
+
+html { color: #111; background: #fff}
+
+body, div, dl, dt, dd, ul, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, blockquote { margin: 0; padding: 0}
+
+table { border-collapse: collapse; border-spacing: 0}
+
+fieldset, img { border: 0}
+
+address, caption, cite, code, dfn, em, i, strong, th, var, optgroup { font-style: normal; font-weight: normal}
+
+ul, ol { list-style: none}
+
+caption, th { text-align: left}
+
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal}
+
+input, button, select, textarea { outline: none; /* -webkit-appearance: none; border-radius: 0; */}
+
+a{ text-decoration: none;}
+
+body{ min-width: 1200px; background: #fff;}
+
+.fl{ float: left;}
+.fr{ float: right;}
+.clearfix:after{ content: " "; display: block; height: 0px; font-size: 0; clear: both; visibility: hidden;}
+
+.system-main{ width: 1200px; margin: 0 auto;}
+
+/* 注册部分 */
+.yiji-regis-wrapper{ background: url(/Public/css/user/images/reg-bg.png) center top no-repeat; height: 1080px;}
+/* .yiji-system-wrapper:after{ content: ""; display: block; background: url(/Public/css/user/images/pic2.png) center bottom no-repeat; height: 138px;} */
+
+.system-head{ background: #fff; height: 46px; padding: 17px 0;}
+.system-head span{ display: block; width: 156px; height: 46px; overflow: hidden; margin-right: 16px;}
+.system-head cite{ height: 46px; line-height: 46px; color: #05589b; font-size: 26px; letter-spacing: 2px;}
+.system-head cite:before{ float: left; content: ""; display: block; width: 3px; height: 30px; background: #05589b; margin: 8px 16px 0 0;}
+
+
+.yiji-regis-wrapper .regis-plane{ margin: 94px auto 0; position: relative;
+    -moz-box-shadow: 0px 0px 6px #8b8b8b;
+    -webkit-box-shadow: 0px 0px 6px #8b8b8b;
+    box-shadow: 0px 0px 6px #8b8b8b}
+.yiji-regis-wrapper .regis-plane,
+.yiji-regis-wrapper .regis-plane .masks-box{ width: 417px; height: 503px; border-radius: 10px;}
+
+.yiji-regis-wrapper .regis-plane .zhuce-box{ position: relative; z-index: 10;}
+.yiji-regis-wrapper .regis-plane .zhuce-box h2{ color: #064168; font-size: 26px; text-align: center; padding-top: 20px;}
+
+
+.regis-plane form{ width: 316px; margin: 0 auto;}
+
+.regis-plane .form-ul li,
+.regis-plane .form-ul input{ width: 311px; height: 40px; line-height: 40px; overflow: hidden; border-radius: 10px;}
+.regis-plane .form-ul li{ margin-top: 22px; position: relative; border-left: 5px solid #099;}
+.regis-plane .form-ul li:before{ content: ""; display: block; background: url(/Public/css/user/images/registered-icon.png) no-repeat; width: 20px; height: 20px; position: absolute; left: 16px; top: 10px; z-index: 10;}
+
+
+.regis-plane .form-ul .sys-pwd{ border-left: 5px solid #f90;}
+
+/* .regis-plane .form-ul .sys-yzm{ margin: 22px 0 0 48px;} */
+
+.regis-plane .form-ul .sys-name:before{ background-position: 0 0;}
+.regis-plane .form-ul .sys-pwd:before{ background-position: 0 -38px;}
+.regis-plane .form-ul .sys-yzm:before{ background-position: 0 -76px;}
+.regis-plane .form-ul .sys-invite:before{ background-position: 0 -115px;}
+
+.regis-plane .form-ul input{ padding-left: 60px; background: none; border: 0 none; position: absolute; left: 0; top: 0; box-sizing: border-box; background: #fff;}
+.regis-plane .form-ul .sys-yzm input{ width: 186px;}
+.regis-plane .form-ul .sys-yzm .yzm-con{ margin-left: 206px; width: 100px; height: 42px; overflow: hidden;}
+
+.regis-plane .form-ul .btn-submit,.regis-plane .form-ul .btn-submit input{ width: 316px;}
+.regis-plane .form-ul .btn-submit{ border-left: 0 none;}
+.regis-plane .form-ul .btn-submit:before{ background: none;}
+.regis-plane .form-ul .btn-submit input{ background: #039688; color: #fff; text-align: center; font-size: 16px; padding-left: 0; cursor: pointer;}
+
+.regis-plane .zhuce-box .regis-agreement{ font-size: 14px; color: #fff; padding-top: 20px;}
+.regis-plane .zhuce-box .regis-agreement input{ width: 15px; height: 15px; background: #fff; cursor: pointer; border-radius: 2px; margin-right: 5px; position: relative; top: 3px;}
+.regis-plane .regis-agreement a{ color: #039688;}
+.regis-plane .regis-agreement a:hover{ text-decoration: underline;}
+.regis-plane .regis-agreement span a{ color: #064168;}
+
+.yiji-regis-wrapper .regis-plane .masks-box{ background: #fff; opacity: .4; position: absolute; left: 0; top: 0;}
+
+
+/* 登录部分 */
+.yiji-login-wrapper{ background: url(/Public/css/user/images/login-bg.png) center top no-repeat; height: 1060px;}
+
+.yiji-login-wrapper .login-plane{ position: relative; margin-top: 258px;
+    -moz-box-shadow: 0px 0px 6px #8b8b8b;
+    -webkit-box-shadow: 0px 0px 6px #8b8b8b;
+    box-shadow: 0px 0px 6px #8b8b8b}
+.yiji-login-wrapper .login-plane,
+.yiji-login-wrapper .login-plane .masks-box{ width: 511px; height: 512px; border-radius: 10px;}
+
+.yiji-login-wrapper .login-plane .zhuce-box{ position: relative; z-index: 10;}
+.yiji-login-wrapper .login-plane .zhuce-box h2{ color: #0797b5; font-size: 28px; text-align: center; padding-top: 33px;}
+
+.login-plane form{ width: 353px; margin: 0 auto;}
+
+.login-plane .form-ul li,
+.login-plane .form-ul input{ width: 353px; height: 54px; line-height: 54px; overflow: hidden; border-radius: 10px; font-size: 18px;}
+.login-plane .form-ul li{ margin-top: 30px; position: relative; /* border-left: 5px solid #099; */}
+.login-plane .form-ul li:before{ content: ""; display: block; background: url(/Public/css/user/images/login-icon.png) no-repeat; height: 24px; position: absolute; left: 16px; top: 15px; z-index: 10;}
+
+/* .login-plane .form-ul .sys-pwd{ border-left: 5px solid #f90;} */
+
+/* .regis-plane .form-ul .sys-yzm{ margin: 22px 0 0 48px;} */
+
+.login-plane .form-ul .sys-name:before{ background-position: 0 0; width: 21px;}
+.login-plane .form-ul .sys-pwd:before{ background-position: 0 -35px; width: 18px;}
+.login-plane .form-ul .sys-yzm:before{ background-position: 0 -70px; width: 20px;}
+
+.login-plane .form-ul input{ padding-left: 60px; background: none; border: 0 none; position: absolute; left: 0; top: 0; box-sizing: border-box; background: #fff;}
+.login-plane .form-ul .sys-yzm input{ width: 186px;}
+.login-plane .form-ul .sys-yzm .yzm-con{ margin-left: 206px; width: 157px; height: 54px; overflow: hidden;}
+
+.login-plane .form-ul .btn-login:before{ background: none;}
+.login-plane .form-ul .btn-login input{ background: #00a2e2; color: #fff; text-align: center; font-size: 24px; padding-left: 0; cursor: pointer;}
+
+
+.login-plane .zhuce-box .login-agreement{ font-size: 14px; color: #414141; padding-top: 18px;}
+.login-plane .zhuce-box .login-agreement input{ width: 15px; height: 15px; background: #fff; cursor: pointer; border-radius: 2px; margin-right: 5px; position: relative; top: 3px;}
+.login-plane .login-agreement a{ color: #414141;}
+.login-plane .login-agreement a:hover{ text-decoration: underline;}
+
+.yiji-login-wrapper .login-plane .masks-box{ background: #fff; opacity: .8; position: absolute; left: 0; top: 0;}
+
+
+
+/* 登录系统 */
+.yiji-juhe-wrapper{ background: url(/Public/css/user/images/login_bg_01.png) center top no-repeat;}
+
+.yiji-juhe-wrapper .logo{ width: 327px; height: 98px; margin: 0 auto; padding: 145px 0 30px; overflow: hidden;}
+
+.yiji-juhe-wrapper .juhe-plane,.yiji-juhe-wrapper .juhe-plane .zhuce-box{ width: 541px; height: 508px; margin: 0 auto; position: relative;}
+.yiji-juhe-wrapper .juhe-plane:after{ content: ""; display: block; background: url(/Public/css/user/images/ty.png) center no-repeat; width: 628px; height: 93px; position: absolute; bottom: -55px; left: 50%; margin-left: -314px;}
+
+.yiji-juhe-wrapper .juhe-plane .zhuce-box{ background: #fff; border-radius: 20px; position: relative; z-index: 10;}
+
+.yiji-juhe-wrapper .juhe-plane h2{ font-size: 30px; color: #039688; text-align: center; padding-top: 50px;}
+
+.juhe-plane form{ width: 441px; margin: 0 auto;}
+
+.juhe-plane .form-ul li,
+.juhe-plane .form-ul input{ width: 441px; height: 49px; line-height: 49px; overflow: hidden; border-radius: 10px; font-size: 18px;}
+.juhe-plane .form-ul li{ margin-top: 34px; position: relative; /* border-left: 5px solid #099; */}
+.juhe-plane .form-ul li:before{ content: ""; display: block; background: url(/Public/css/user/images/login.png) no-repeat; height: 23px; position: absolute; left: 16px; top: 13px; z-index: 10;}
+
+/* .login-plane .form-ul .sys-pwd{ border-left: 5px solid #f90;} */
+
+/* .regis-plane .form-ul .sys-yzm{ margin: 22px 0 0 48px;} */
+
+
+.juhe-plane .form-ul .sys-name:before{ background-position: 0 0; width: 24px;}
+.juhe-plane .form-ul .sys-pwd:before{ background-position: 0 -30px; width: 17px;}
+.juhe-plane .form-ul .sys-yzm:before{ background-position: 0 -60px; width: 18px;}
+
+.juhe-plane .form-ul input{ padding-left: 60px; background: none; border: 0 none; position: absolute; left: 0; top: 0; box-sizing: border-box; background: #f4f4f4; border: 1px solid #d3d4d2;}
+.juhe-plane .form-ul .sys-yzm input{ width: 262px;}
+.juhe-plane .form-ul .sys-yzm .yzm-con{ margin-left: 282px; width: 157px; height: 54px; overflow: hidden;}
+
+/* .juhe-plane .form-ul .btn-login,.juhe-plane .form-ul .btn-login input{ width: 441px; height: 49px;} */
+.juhe-plane .form-ul .btn-login{ margin-top: 47px;}
+.juhe-plane .form-ul .btn-login:before{ background: none;}
+.juhe-plane .form-ul .btn-login input{ background: #039688; color: #fff; text-align: center; font-size: 24px; padding-left: 0; cursor: pointer; border: 0 none;}
+
+.company-name{ color: #2081d6; font-size: 30px; padding: 70px 0 30px; text-align: center;}

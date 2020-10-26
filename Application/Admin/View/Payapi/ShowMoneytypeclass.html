@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>查看冻结金额分配方案</title>
+		<include file="BaseTemplate:includecssjs" />
+	</head>
+	<body>
+		<div class="x-body">
+			<div class="layui-collapse">
+				<volist name="list" id="vo">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title" style="font-weight: bold;"><{$vo.moneytypename}></h2>
+						<div class="layui-colla-content">
+							<div class="layui-form">
+								<table class="layui-table">
+									
+									<thead>
+										<tr style="color: #009688;">
+											<th>类型</th>
+											<th>到账天数</th>
+											<th>节假日</th>
+											<th>到账时间</th>
+											<th>到账百分比</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<span style="color: #FF0000;">暂时冻结</span>
+											</td>
+											<td>
+												<if condition="$vo.dzsj_day">
+													<{$vo.dzsj_day}> 天后
+													<else />
+													-
+												</if>
+											</td>
+											<td>
+													<if condition="$vo.jiejiar eq 1">
+														节假日到账
+														<elseif condition="$vo.jiejiar eq 2"/>
+														节假日顺延不到账
+														<else />
+														-
+													</if>
+											</td>
+											<td>
+												
+												<if condition="$vo.dzsj_time">
+													<{$vo.dzsj_time}> 
+													<else />
+													-
+												</if>
+												
+											</td>
+											<td>
+												
+												<{$vo["dzbl"]*100}> %
+												
+											</td>
+										</tr>
+										
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</volist>
+			</div>
+		</div>
+	</body>
+</html>

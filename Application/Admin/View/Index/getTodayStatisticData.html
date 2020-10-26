@@ -1,0 +1,125 @@
+<div class="add-up" id="today" loadUrl="<{:U('Index/getTodayStatisticData')}>"
+     style="width: 1000px;height: 400px;box-shadow:0 0 1px #000 inset;">
+</div>
+<div class="add-up" id="cake" style="width: 400px;height: 400px;box-shadow:0 0 1px #000 inset;">
+</div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ech = echarts;
+    var myChart = ech.init(document.getElementById('today'));
+    var cake = ech.init(document.getElementById('cake'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '今日数据统计(充值/提现)'
+        },
+        tooltip: {},
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                magicType: {show: true, type: ['line', 'bar']},
+                //saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            data: ['充值', '提现']
+        },
+        xAxis: {
+            type: 'category',
+            name: '时间'
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '充值',
+                type: 'line',
+                //data: [5, 20, 36, 10, 10, 20]
+            },
+            {
+                name: '提现',
+                type: 'line',
+                //  data: [3, 24, 22, 9, 5, 15]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    var cakeOption = {
+        title: {
+            text: '当日统计数据(充值/提现)',
+            y: 'top'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'bottom',
+            data: ['充值', '结算']
+        },
+        series: [
+            {
+                name: '详细数据',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                data: [
+                    {value: 335, name: '充值'},
+                    {value: 310, name: '结算'},
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+
+
+
+    cake.setOption(cakeOption);
+
+    var options = myChart.getOption();
+    var cakeOption = cake.getOption();
+
+    var url = $('#today').attr('loadUrl');
+    $.ajax({
+        type: "post",
+        async: false, //同步执行
+        url: url,
+        data: {},
+        dataType: "json", //返回数据形式为json
+        success: function (result) {
+            if (result.status == "success") {
+                options.series[0].data = result.data.recharge;
+                options.series[1].data = result.data.settlement;
+                options.xAxis[0].data = result.data.h;
+                cakeOption.series[0].data = [
+                    {value: result.data.sum_recharge, name: '充值'},
+                    {value: result.data.sum_settlement, name: '结算'},
+                ];
+                myChart.hideLoading();
+                myChart.setOption(options);
+                cake.hideLoading();
+                cake.setOption(cakeOption);
+            } else {
+
+            }
+        },
+        error: function (errorMsg) {
+
+            //alert("不好意思，大爷，图表请求数据失败啦!");
+            myChart.hideLoading();
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    //myChart.setOption(option);
+</script>

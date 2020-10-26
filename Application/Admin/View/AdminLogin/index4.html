@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>系统后台登陆界面</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link rel="stylesheet" href="/Public/css/logincss/adminLogin2.css">
+</head>
+<body>
+<!--外面的大盒子-->
+<div class="box">
+    <input type="hidden" id="indexUrl" value="<{:U('Index/index')}>">
+    <input type="hidden" id="loginUrl" value="<{:U('AdminLogin/doLogin')}>">
+    <!--logo区域-->
+    <div class="logo_area">
+        <!--logo-->
+        <div class="logo">
+            <img src="/Public/images/admin_logo.png">
+        </div>
+        <!--文字-->
+        <div class="text_area">
+            <img src="/Public/images/admin_text.png">
+        </div>
+    </div>
+
+    <!--输入区域-->
+    <div class="input_area">
+        <ul class="">
+            <li class="">
+                <span class="icons"><img src="/Public/images/admin_icon1.png"></span>
+                <input type="text" name="name" id="name" placeholder="请输入用户名" class="addeditinput">
+            </li>
+            <li>
+                <span class="icons"><img src="/Public/images/admin_icon2.png"></span>
+                <input type="password" name="pwd" id="pwd" placeholder="请输入密码" autocomplete="off" class="addeditinput">
+            </li>
+            <li class="code">
+                <span class="icons"><img src="/Public/images/admin_icon3.png"></span>
+                <input type="text" name="code" id="code" placeholder="请输入验证码" autocomplete="off" class="yzm addeditinput">
+                <!--2019-3-7 任梦龙：给验证码加id-->
+                <img id="verifyImg" class="verify_img" src="<{:U('AdminLogin/verify')}>"
+                     onclick="this.src=this.src + '?' + Math.random()">
+            </li>
+            <li class="login_btn" id="adminLogin">登&nbsp;录</li>
+        </ul>
+    </div>
+</div>
+<script src="/Public/Admin/js/adminLogin.js"></script>
+</body>
+</html>
+<!--2019-2-28 任梦龙：添加这个代码后，如果session过期，点击子菜单栏，就会直接跳到登录页面-->
+<script language="JavaScript">
+    if (window != top) {
+        top.location.href = location.href;
+    }
+</script>

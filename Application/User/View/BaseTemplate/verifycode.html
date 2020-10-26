@@ -1,0 +1,35 @@
+<!--用户后台:修改数据时的验证码输入框-->
+<input type="hidden" name="code_type" value="<{$code_type}>" class="addeditinput">
+<div class="layui-form-item layui-form-item-con">
+    <label class="layui-form-label">验证码</label>
+    <div class="layui-input-inline">
+        <if condition="$code_type eq 1">
+            <input type="password" name="verfiy_code" placeholder="管理密码" autocomplete="off"
+                   class="layui-input addeditinput">
+            <else/>
+            <input type="password" name="verfiy_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                   class="layui-input addeditinput">
+        </if>
+        <i id="icon" class="layui-icon click_icon">&#xe673;</i>
+    </div>
+
+</div>
+<style>
+    .click_icon{
+        position: absolute;
+        z-index: 10;
+        top: 10px;
+        left: 165px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    $('#icon').click(function(){
+        var type=$('input[name=verfiy_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=verfiy_code]').attr('type','text');
+        }else {
+            $('input[name=verfiy_code]').attr('type','password');
+        }
+    });
+</script>

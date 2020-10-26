@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提成等级设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form id="Form" class="layui-form"  method="post" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$website['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">提成等级</label>
+            <div class="layui-input-block">
+                <input type="number" name="commission_level" id="commission_level" value="<{$website['commission_level']}>"
+                       placeholder="提成等级需为大于0的正整数,范围在1-100之间" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <!--2019-3-13 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("SystemSeting/editLevel")}>','',true,false);"
+                class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

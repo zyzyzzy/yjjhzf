@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <title>设置成本费率</title>
+
+
+
+    <include file="BaseTemplate:includecssjs"/>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+
+<div class="x-body">
+
+
+
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+
+       <input type="hidden" name="id" id="id" value="<{$Think.get.id}>" class="addeditinput" />
+
+       
+
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">成本费率</label>
+
+            <div class="layui-input-block">
+
+               <input type="text" name="cbfeilv" id="cbfeilv" lay-verify="number" placeholder="请输入成本费率" autocomplete="off" value="<{$cbfeilv}>" class="layui-input addeditinput">
+
+            </div>
+
+            <div class="layui-form-mid layui-word-aux">如果设置2%，请输入0.02</div>
+
+        </div>
+
+       
+
+
+
+        <div class="layui-form-item">
+
+
+
+            <div class="layui-input-block">
+
+
+
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("CbfeilvEdit")}>');">修改成本费率</button>
+
+
+
+                
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+
+</div>
+
+
+
+</body>
+
+</html>

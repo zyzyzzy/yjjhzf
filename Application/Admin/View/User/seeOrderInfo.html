@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看订单信息</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-item{
+            border-bottom: 1px solid #f2f2f2;
+            margin-bottom: 0;
+        }
+        .layui-form-label{
+            width: 100px;
+        }
+        .layui-input-block{
+            margin-left: 130px;
+        }
+        .layui-input{
+            border: 0;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form"  method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">商户编号：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['memberid']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商户用户名：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['username']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+                <input type="text" value="" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单号：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['sysordernumber']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单金额：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['ordermoney']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">交易费率：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['traderate']*100}>%" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">交易手续费：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['moneytrade']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">成本费率：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['costrate']*100}>%" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">成本金额：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['moneycost']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">到账金额：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['money']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">冻结金额：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['freezemoney']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提交时间：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['datetime']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">商家名称：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['shangjianame']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">通道名称：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['payapiname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号名称：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['accountname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">同步回调地址：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['callbackurl']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">异步回调地址：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['notifyurl']}>" readonly autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <input type="text" value="<{$order_info['status']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

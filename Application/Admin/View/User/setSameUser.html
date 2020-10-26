@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同一账号登录设置</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false" lay-filter="switch">
+        <input type="hidden" name="id" value="<{$Think.get.userid}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号登录</label>
+            <div class="layui-input-block">
+                <input type="checkbox"  name="switch" id="switch" lay-text="开启|关闭"  value="<{$same_admin}>"
+                       lay-filter="switch" lay-skin="switch" class="addeditinput" <if condition="$same_admin eq 0">checked</if>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">是否允许同一账号同时登录</div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("editSameUser")}>','',true,false);" class="layui-btn"
+                lay-submit lay-filter="formDemo">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data){
+            if(data.elem.checked==true){
+                $('#switch').attr("value","0");
+            }else{
+                $('#switch').attr("value","1");
+            }
+        });
+    });
+</script>
+</body>
+</html>

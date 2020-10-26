@@ -1,0 +1,56 @@
+<extend name="BaseTemplate:List" />
+<block name="title">代付列表</block>
+<block name="nav">
+    <a href="">通道管理</a>
+    <a>
+        <cite>代付列表</cite>
+    </a>
+</block>
+<block name="search">
+    <input type="text" name="zh_payname" id="zh_payname"  placeholder="代付通道名称" autocomplete="off" class="layui-input addeditinput">
+    <input type="text" name="en_payname" id="en_payname"  placeholder="代付通道编码" autocomplete="off" class="layui-input addeditinput">
+    <div class="layui-input-inline">
+        <select name="payapishangjiaid" id="payapishangjiaid" class="addeditinput">
+            <option value="">通道商家</option>
+            <volist name="PayapishangjiaList" id="vo">
+                <option value="<{$vo.id}>"><{$vo.shangjianame}></option>
+            </volist>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="status" id="daidustatus" class="addeditinput">
+            <option value="">代付通道状态</option>
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'DaifuList')" ajaxurl="<{:U('Daifu/delAll')}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加代付通道','<{:U("Daifu/ShowCreateForm")}>',800,500)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="DaifuList" layui-data="{id:'DaifuList'}" dataurl="<{:U('Daifu/loadList')}>"></table>
+    <script type="text/html" id="shangjianame">
+        {{ d.shangjianame }}
+    </script>
+    <script type="text/html" id="settle_feilv">
+        {{ (d.settle_feilv * 100).toFixed(2) }}%
+    </script>
+
+    <script type="text/html" id="status">
+        <input type="checkbox" name="status" ajaxurl='<{:U("Daifu/daifuStatus")}>' value="{{ d.id }}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑"  onclick="y_admin_show('编辑代付通道','<{:U("Daifu/ShowEditForm")}>?id={{ d.id }}',800,500)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe642;</i> </span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Daifu/delDaifu')}>">
+        <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+    </script>
+</block>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/Public/css/bootstrap.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            background:#f8f8f8;
+            height: 60px;
+            line-height: 60px;
+        }
+        ul li{
+            list-style:none;
+            text-align: center;
+            padding: 30px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+        ul li img{
+            height: 200px;
+        }
+        ul li p{
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .myImg_normal{
+            position: relative;
+            box-shadow: 0 0 10px #fff;
+        }
+        .myImg_active{
+            position: relative;
+            box-shadow: 0 0 10px #00a2ea;
+        }
+        ul li .myImg02{
+            position: absolute;
+            height: 100px;
+            bottom: -28px;
+            right: -27px;
+            display:none;
+        }
+        button{
+            width: 100px;
+        }
+        .btn-lg{
+            margin-top: 20px;
+        }
+        .radio-group{
+            display: flex;
+        }
+        .ra-title{
+            font-size: 16px;
+            font-weight: normal;
+            margin-right: 20px;
+            margin-top: 10px;
+            line-height: 30px;
+        }
+        .radio-group .radio{
+            margin-right: 30px;
+            margin-top: 10px;
+            font-weight: normal;
+        }
+        .radio-group .radio input[type=radio] {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            outline:none;
+            display: none;
+        }
+        .radio-group .radio .as-radio + label {
+            -webkit-appearance: none;
+            background-color: #fff;
+            border: 1px solid #cacece;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+            padding: 9px;
+            border-radius: 50px;
+            display: inline-block;
+            position: relative;
+            top: 4px;
+            left: -6px;
+        }
+        .radio-group .radio .as-radio + label:hover{
+            box-shadow: 0 0 7px #5FB878;
+        }
+
+        .radio-group .radio .as-radio:checked + label:after {
+            content: ' ';
+            width: 10px;
+            height: 10px;
+            border-radius: 50px;
+            position: absolute;
+            top: 4px;
+            background: #5FB878;
+            box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+            left: 4px;
+            font-size: 32px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="radio-group" style="margin-top: 2%;">
+        <h3 class="ra-title">用户扫码设置</h3>
+        <label class="radio">
+            <span>
+                <input type="radio" id="a" name="user_type" class="as-radio" value="0" dataurl="<{:U('userQrcodeEdit')}>?userpayapiclass_id=<{$user_payapi['id']}>&type=0" <if condition="$user_payapi['qrcode'] eq 0">checked</if>>
+                <label for="a"></label>
+            </span>
+            <span class="word">应用扫码模板</span>
+        </label>
+        <label class="radio">
+            <span>
+                <input type="radio" id="b" name="user_type" class="as-radio" value="1" dataurl="<{:U('userQrcodeEdit')}>?userpayapiclass_id=<{$user_payapi['id']}>&type=1" <if condition="$user_payapi['qrcode'] eq 1">checked</if>>
+                <label for="b"></label>
+            </span>
+            <span class="word">返回二维码地址</span>
+        </label>
+    </div>
+    <div class="qrcode">
+        <input type="hidden" value="<{$user_payapi['id']}>" id="userpayapiclass_id">
+        <input type="hidden" value="<{$user_payapi['qrcode']}>" id="user_qrcode">
+        <ul class="myUl" style="width: 100%;">
+            <volist name="allImgs" id="vo">
+                <li style="width: 30%;margin-right:3%;display: inline-block">
+                    <if condition="$vo['id'] eq $user_payapi['qrcode_template_id']">
+                        <div class="myImg_active" data-id="<{$vo.id}>">
+                            <img src="/<{$vo.img_name}>" alt="" class="img">
+                            <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02" style="display: inline-block">
+                        </div>
+                    <else/>
+                        <div class="myImg_normal" data-id="<{$vo.id}>">
+                            <img src="/<{$vo.img_name}>" alt="" class="img">
+                            <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02">
+                        </div>
+                    </if>
+                </li>
+            </volist>
+        </ul>
+        <ul class="col-md-12 text-center">
+            <button onclick="select(this)" ajaxurl="<{:U('confirmTeplate')}>" class="btn btn-primary btn-lg">确定</button>
+        </ul>
+    </div>
+</div>
+<script>
+    var oUl = document.getElementsByClassName("myUl")[0];
+    var aImg = oUl.getElementsByTagName("div");
+    var aImg02 = document.getElementsByClassName("myImg02");
+    var oBtn = document.getElementsByTagName("button")[0];
+    // oBtn.setAttribute("disabled", true);
+    for(var i=0;i<aImg.length;i++){
+        aImg[i].id = i;
+        aImg[i].onclick = function () {
+            var now_class = aImg[this.id].className;
+            if(now_class=='myImg_normal'){
+                // oBtn.removeAttribute("disabled");
+                for(var j=0;j<aImg.length;j++){
+                    aImg[j].className = "myImg_normal";
+                    aImg02[j].style.display = "none";
+                }
+                aImg[this.id].className = "myImg_active";
+                aImg02[this.id].style.display = "inline-block";
+            }else{
+                aImg[this.id].className = "myImg_normal";
+                aImg02[this.id].style.display = "none";
+            }
+
+            console.log(this.id);
+        }
+    }
+</script>
+<script>
+    var v = $('#user_qrcode').val();
+    if(v != 1){
+        $('.qrcode').show();
+    }else{
+        $('.qrcode').hide();
+    }
+    $(".as-radio").click(function(){
+        var radio = $("input[name='user_type']:checked").val();
+        if(radio!=null){
+            var dataurl = $(this).attr('dataurl');
+            //修改数据库
+            $.ajax({
+                type:'POST',
+                url:dataurl,
+                dataType:'json',
+                success:function(data){
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:2000})
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000})
+                    }
+                }
+            });
+            if(radio != 1){
+                $('.qrcode').show();
+            }else{
+                $('.qrcode').hide();
+            }
+        }
+    })
+</script>
+<script>
+    function select(obj) {
+        var templateid = $('.myImg_active').attr('data-id');
+        if(!templateid){
+            templateid = '';
+        }
+        var userpayapiclass_id = $('#userpayapiclass_id').val();
+        var ajaxurl = $(obj).attr("ajaxurl");
+        $.ajax({
+            type:"POST",
+            url: ajaxurl,
+            dataType: "json",
+            data:{userpayapiclass_id:userpayapiclass_id,templateid:templateid},
+            success:function (data) {
+                if(data.status=='ok'){
+                    layer.msg(data.msg,{icon:6,time:1500});
+                }else{
+                    layer.msg(data.msg,{icon:5,time:1500});
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title><block name="title">无标题</block></title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+
+<body class="layui-anim layui-anim-up">
+
+<div class="x-body">
+
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <!--2019-3-25 任梦龙：子账号的搜索条件-->
+            <div class="layui-input-inline">
+                <select name="child_id" id="child_id" class="layui-select addeditinput" lay-search>
+                    <option value="">请选择子账号</option>
+                    <volist name="child_list" id="vo">
+                        <option value="<{$vo.id}>"><{$vo.child_name}></option>
+                    </volist>
+                </select>
+            </div>
+            <input class="layui-input addeditinput" placeholder="请输入ip" name="userip" id="userip">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="操作开始时间" name="start" id="start">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="操作结束时间" name="end" id="end">
+            <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+        </form>
+    </div>
+    <table class="layui-hide" id="operateRecordList" layui-data="{id:'operateRecordList'}" dataurl="<{:U("loadOperateRecordList")}>?userid=<{$userid}>"></table>
+    <script type="text/html" id="user_ip">
+        {{# if(d.userip){ }}
+        {{d.userip}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="content">
+        {{# if(d.content){ }}
+        {{d.content}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</div>
+<script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>

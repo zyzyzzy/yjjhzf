@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加冻结方案</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+    	<input type="hidden" name="moneytypeclassid" value="<{$moneytypeclassid}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">方案名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="moneytypename" id="moneytypename"   lay-verify="required" placeholder="请输入冻结方案名称" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">到账天数：</label>
+		    <div class="layui-input-block">
+		      <select name="dzsj_day" id="dzsj_day"  lay-search class="addeditinput">
+		        <option value=""></option>
+		        <for start="1" end="365">
+				<option value="<{$i}>"><{$i}>天后</option>
+				</for>
+		      
+		      </select>
+		    </div>
+		  </div>
+		  
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">节假日：</label>
+		    <div class="layui-input-block">
+		      <select name="jiejiar" id="jiejiar"  lay-search class="addeditinput">
+		        <option value=""></option>
+		        <option value="1">节假日到账</option>
+		        <option value="2">节假日顺延不到账</option>
+		      </select>
+		    </div>
+		  </div>
+	  
+	  <div class="layui-form-item">
+            <label class="layui-form-label">到账时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="dzsj_time" id="dzsj_time" placeholder="到账时间" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        
+         <div class="layui-form-item">
+		    <label class="layui-form-label">到账比例：</label>
+		    <div class="layui-input-block">
+				<input type="text" name="dzbl" id="dzbl" placeholder="如需设置1%,请输入0.01,以此类推" autocomplete="off" class="layui-input addeditinput">
+		    </div>
+		  </div>
+	  
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("MoneyTypeAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+	layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#dzsj_time' //指定元素
+          ,type: 'time'
+        });
+        
+      });
+	layui.use('form',function(){
+	  	var form = layui.form;
+	  	
+	  	form.on('select(typetype)',function(obj){
+	  		if(obj.elem.value == 1){
+	  			$("#dzsj_day").attr("lay-verify","required").removeAttr("disabled");
+	  			$("#jiejiar").attr("lay-verify","required").removeAttr("disabled");
+	  			$("#dzsj_time").attr("lay-verify","required").removeAttr("disabled");
+	  			form.render();
+	  		}else{
+	  			$("#dzsj_day").removeAttr("lay-verify").val("").attr("disabled",true);
+	  			$("#jiejiar").removeAttr("lay-verify").val("").attr("disabled",true);
+	  			$("#dzsj_time").removeAttr("lay-verify").val("").attr("disabled",true);
+	  			form.render();
+	  		}
+	  	});
+	  	
+	  });
+</script>
+</body>
+</html>

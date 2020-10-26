@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二次验证页面</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">验证码</label>
+
+            <div class="layui-input-block">
+
+                <input type="text" name="googlecode" id="googlecode" placeholder="请输入验证码" autocomplete="off" class="layui-input addeditinput">
+
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+
+            <div class="layui-input-block">
+
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("Index/verifyGoogle")}>');">确认验证</button>
+
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

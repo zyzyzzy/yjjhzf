@@ -1,0 +1,114 @@
+@charset "utf-8";
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; } 
+body { color:#333; font-family: 'pingfang SC','helvetica neue',arial,'hiragino sans gb','microsoft yahei ui','microsoft yahei',simsun,sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+a { text-decoration:none; }
+img { border:none; }
+ol,ul,li { list-style:none; }
+input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; outline: none; }
+table { border-collapse:collapse; }
+
+
+.clearfix:after {content: " "; display: block; height:0; font-size: 0; clear:both; visibility: hidden;}
+.clearfix { *zoom:1; }
+.fl { float: left;}
+.fr { float: right;}
+.main{ width: 1200px; margin: 0 auto;}
+
+.top{ height: 86px;}
+.top .logo{ padding-top: 20px;}
+.top-right{ font-size: 14px;}
+.top-right a{ color: #444547;}
+.top-right .nav{ height: 78px; line-height: 78px;}
+.top-right .nav a{ margin: 0 32px;}
+.top-right .nav .on,.top-right .nav a:hover{ color: #3e6ced;}
+.top-right .login-box{ height: 30px; line-height: 30px; margin: 24px 0 0 70px;}
+.top-right .login-box a{ display: inline-block;}
+.login-box .registered-btn{ width: 80px; height: 34px; line-height: 34px; background: #3e6ced; text-align: center; border-radius: 16px; margin-right: 32px; color: #fff;}
+.login-box .registered-btn:hover{ opacity: .8;}
+.login-box .login-btn:hover{ text-decoration: underline;}
+
+.banner{ background: url(/Public/home/images2/banner.jpg) center no-repeat; height: 574px;}
+.banner .main{ padding-top: 374px;}
+.banner .login-btn{ display: block; width: 240px; height: 52px; text-align: center; line-height: 52px; background: #fff; color: #3e6ced; border-radius: 40px; font-size: 18px; margin: 0 auto;}
+.banner .login-btn img{ vertical-align: middle; margin-right: 19px;}
+.banner .login-btn:hover{ opacity: .8;}
+
+
+.our-advantage,.process-wrap{ padding: 87px 0;}
+.main-title,.subtitle{ text-align: center;}
+.main-title{ color: #333; font-size: 40px;}
+.main-title img{ vertical-align: middle; margin-right: 33px; position: relative; top: -3px;}
+.subtitle{ color: #666; font-size: 16px; padding-top: 17px;}
+
+/* 产品特色 */
+.our-advantage ul{ display: flex; justify-content: center; padding-top: 82px;}
+.our-advantage li{ margin: 0 45px; text-align: center;}
+.our-advantage li cite{ display: block; width: 73px; height: 73px; border: 1px solid #e5e5e5; border-radius: 3px; margin: 0 auto 44px; position: relative; transition: all .2s linear;}
+.our-advantage li cite img{ position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);}
+.our-advantage li span{ color: #1f1f1f; font-size: 16px; font-weight: bold;}
+.our-advantage li span::after{ content: ""; display: block; width: 41px; height: 1px; background: #888; border-bottom: 1px solid #e1e1e1; margin: 30px auto 0;}
+.our-advantage li p{ color: #333; font-size: 14px; line-height: 30px; padding-top: 25px;}
+.our-advantage li:hover span{ color: #3e6ced;}
+.our-advantage li:hover cite{ transform: rotate(-135deg) ; border-color: #3e6ced;}
+
+
+/* 关于我们 */
+.about-us{ background: url(/Public/home/images2/pic1.jpg) center no-repeat; height: 738px; position: relative; text-align: center;}
+.about-us .main{ padding-top: 90px;}
+.about-us .main-title{ color: #fff;}
+.info,.info .mask{ position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 1200px; height: 308px;}
+.info{ border: 28px solid transparent; box-shadow: 0 0 0 8px rgba(62, 108, 237, .62); top: 52%; /* box-sizing: border-box; */}
+.content-box{ position: relative; z-index: 10;}
+.content-box span{ display: block; color: #010101; font-size: 20px; padding-top: 65px;}
+.content-box span::after{ content: ""; display: block; width: 55px; height: 4px; background: #3e6ced; margin: 28px auto;}
+.content-box p{ color: #4b4b4b; line-height: 30px; text-align: justify; padding: 0 185px;}
+.info .mask{ background: #fff; opacity: .8;}
+
+
+/* 快速接入流程 */
+.process{ padding-top: 85px;}
+.process span{ display: inline-block; width: 240px; height: 90px; text-align: center; line-height: 90px; background: #3e6ced; -webkit-box-shadow: rgba(55,99,223,.64) 8px 0 16px; box-shadow: rgba(55,99,223,.64) 0 4px 8px; color: #fff; font-size: 18px; margin-left: 75px; border-radius: 4px;}
+.process span:first-child{ margin-left: 0;}
+
+
+/* 支持各种场景 */
+.scenes-wrap{ background: #f5f5f5; padding: 60px 0 50px;}
+.scenes-wrap ul{ background: url(/Public/home/images2/map.png) center bottom no-repeat; height: 433px; margin-top: 70px;}
+.scenes-wrap li{ width: 258px; height: 295px; display: inline-block; border: 1px solid #d6d6d6; background: #fff; text-align: center; margin-left: 48px; color: #484848;}
+.scenes-wrap li:first-child{ margin-left: 0;}
+.scenes-wrap span,.scenes-wrap cite{ display: block;}
+.scenes-wrap span{ font-size: 20px; margin: 33px 0 10px;}
+.scenes-wrap cite{ font-size: 18px; margin-bottom: 20px;}
+.scenes-wrap li:hover{ border-color: #3e6ced; color: #3e6ced;}
+
+
+
+.cooperation{ padding: 48px 0; height: 54px; text-align: center;}
+.cooperation span,.cooperation img{ display: inline-block; vertical-align: middle;}
+.cooperation span{ color: #484848; font-size: 30px;}
+.cooperation img{ margin-left: 76px;}
+
+
+
+
+
+.footer{ background: #333; padding: 65px 0 20px; color: #fff; text-align: center;}
+.link-wrap{}
+.link-wrap ul{ border-right: 1px solid #e8e8e8;}
+.link-wrap li{ float: left; color: #fff; text-align: left; margin-right: 100px;}
+.link-wrap li span{ display: block; font-size: 18px; padding-bottom: 23px;}
+.link-wrap li a{ display: block; color: #d1d1d1; font-size: 14px; margin-bottom: 12px;}
+.link-wrap li a:hover{ text-decoration: underline;}
+
+.link-wrap .tel{ padding-left: 100px;}
+.tel span{ display: inline-block;}
+.tel span cite{ display: block;}
+.tel span cite:first-child{ margin-left: -64px; margin-bottom: 26px;}
+.tel span cite img{ vertical-align: middle; margin-right: 14px;}
+.tel .code{ margin-left: 40px;}
+.tel .code img{ width: 84px; height: 84px; position: relative; top: 15px;}
+
+.copyright{ color: #aeaeae; font-size: 12px; padding-top: 60px;}

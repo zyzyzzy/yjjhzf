@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户自助账号密钥</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <!--2019-3-29 任梦龙：修改样式-->
+    <style>
+        .x-body .box1 {
+            display: block;
+            width: 45%;
+        }
+
+        .x-body .box2 {
+            float: left;
+            width: 40%;
+            overflow: hidden;
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 13%;
+        }
+        #box4 {
+            position: relative;
+        }
+        .upload_icon{
+            position: absolute;
+            z-index: 10;
+            top: 25%;
+            right: 3%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!--2019-3-12 任梦龙：修改验证码遮罩层-->
+<if condition="$_SESSION['switch_code'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <div class="box1">
+            <div>
+                <span>方式一：通过输入密钥内容保存</span>
+            </div>
+            <form name="form1" class="layui-form" method="post" onsubmit="return false">
+                <input type="hidden" name="id" id="key_id" value="<{$key_id}>" class="addeditinput">
+                <input type="hidden" name="account_id" id="account_id" value="<{$account_id}>" class="addeditinput">
+                <input type="hidden" name="<{$filename}>" data-id="<{$filename}>" value="<{$filename}>" id="Name" class="addeditinput">
+                <input type="hidden" name="zh_name" value="<{$alertstr}>" id="zhName" class="addeditinput">
+                <div class="layui-form-item">
+                    <!--2019-3-1 任梦龙：修改-->
+                    <textarea name="<{$filename}>" id="<{$filename}>"
+                              placeholder="请先去掉'-----BEGIN *******-----' 和 '-----END *******-----'，然后输入密钥内容"
+                              class="layui-textarea addeditinput" style="height: 300px;"><{$keystr}></textarea>
+                </div>
+                <span>请先去掉'-----BEGIN *******-----' 和 '-----END *******-----'，然后输入密钥内容</span>
+                <!--2019-3-12 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+                <include file="BaseTemplate:verifycode"/>
+                <div class="layui-form-item">
+                    <div style="margin-left: 80px;" class="layui-input-block">
+                        <button class="layui-btn" onclick="javascript: FormSumit1('<{:U("userkeystrEdit")}>?alertstr=<{$alertstr}>');">
+                        修改<{$alertstr}>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--2019-3-12 任梦龙：在上传文件时判断验证码的类型-->
+        <div class="box2">
+            <div>
+                <span>方式二：通过上传文件保存</span>
+                <div>
+                    <button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传文件</button>
+                    <input type="hidden" name="prev" value="">
+                    <span>支持pem,txt格式，小于3M,文件名需为英文格式</span>
+                    <br/><br/>
+                    <div id="box4">
+                        <if condition="$code_type eq 1">
+                            <input type="text" name="upload_code" placeholder="管理密码" autocomplete="off"
+                                   class="layui-input">
+                            <else/>
+                            <input type="text" name="upload_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                                   class="layui-input">
+                        </if>
+                        <!--2019-3-15 任梦龙：添加可点击的小图标-->
+                        <i id="uploadIcon" class="layui-icon upload_icon">&#xe673;</i>
+                    </div>
+                    <br/><br/>
+                    <button type="button" class="layui-btn" id="set"><i class="layui-icon">&#xe67c;</i>确认上传</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</if>
+</body>
+</html>
+<script>
+    //2019-3-12 任梦龙：添加上传文件的判断.修改上传文件的方法
+    $('#set').click(function(){
+        var str = $("input[name=prev]").val();
+        if (str == '') {
+            layer.msg("请先上传文件", {icon: 5, time: 2000});
+            return false;
+        }
+    });
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        var ajax_url = '<{:U("UserpayapiAccount/uploadFile")}>';
+        var uploadInst = upload.render({
+            elem: '#upload' //绑定元素
+            , url: ajax_url //上传接口
+            , accept: 'file'  //上传类型--所有
+            // , exts: 'pem|txt'  //允许的后缀名
+            // , size: '5120'  //允许的文件大小：单位Kb 5 * 1024 =5M
+            , auto: false  //是否自动上传
+            , bindAction: '#set'  //指定一个元素来执行上传命令
+            , choose: function(obj){
+                obj.preview(function (index, file, result) {
+                    $("input[name=prev]").val(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    imgobj.className = 'thumb';
+                    $("input[name=prev]").val(imgobj); //添加到隐藏的预览区域
+                });
+            }
+            , before: function (obj) {              //obj参数包含的信息，跟 choose回调完全一致
+                var id = $('#key_id').val();   //当前账号密钥表id
+                var account_id = $('#account_id').val();   //当前账号id
+                var file_name = $('#Name').val();   //对应的密钥字段名称
+                var zh_name = $('#zhName').val();   //对应的密钥字段中文名称
+                var upload_code = $('input[name=upload_code]').val();  //获取验证码
+                var code_type = $('input[name=code_type]').val();  //获取验证码类型
+                this.data = {
+                    id: id,
+                    account_id: account_id,
+                    file_name: file_name,
+                    zh_name: zh_name,
+                    upload_code: upload_code,
+                    code_type: code_type,
+                };//传递到后台的数据
+            }
+            , done: function (res) {
+                if (res.status == 'ok') {
+                    $('.layui-textarea').val(res.file_contents);   //重新赋值给textarea
+                    layer.msg(res.msg, {icon: 6, time: 1500},
+                        function(){
+                            location.reload();  //刷新本页面
+                        });
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+            , error: function (index, upload) {
+                layer.msg('请勿非法操作',{icon: 5,time: 2000});
+            }
+        });
+    });
+
+    //2019-3-1 任梦龙：从textarea中提取的密钥会将+转换为空格，所以需要利用js提前将数据进行过滤
+    function FormSumit1(ajaxurl) {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        //将字符串中的"+"进行转换
+        datastr = datastr.replace(/\+/g, "%2B");
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg,{icon: 6,time: 1500},function(){
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5, time: 1500});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+
+    //2019-3-15 任梦龙：点击小图标时，改变输入框的type类型
+    $('#uploadIcon').click(function(){
+        var type=$('input[name=upload_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=upload_code]').attr('type','text');
+        }else {
+            $('input[name=upload_code]').attr('type','password');
+        }
+    });
+</script>

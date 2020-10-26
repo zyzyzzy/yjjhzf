@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.all.js"></script>
+    <link rel="stylesheet" href="/Public/css/bootstrap.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        header{
+            background:#f8f8f8;
+            height: 60px;
+            line-height: 60px;
+        }
+        ul li{
+            list-style:none;
+            text-align: center;
+            padding: 30px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+        ul li img{
+            height: 300px;
+        }
+        ul li p{
+            line-height: 50px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .myImg_normal{
+            position: relative;
+            box-shadow: 0 0 10px #fff;
+        }
+        .myImg_active{
+            position: relative;
+            box-shadow: 0 0 10px #00a2ea;
+        }
+        ul li .myImg02{
+            position: absolute;
+            height: 100px;
+            bottom: -28px;
+            right: -27px;
+            display:none;
+        }
+        button{
+            width: 100px;
+        }
+        .btn-lg{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input type="hidden" value="<{$payapiid}>" id="payapiid">
+    <ul class="col-md-12 text-center myUl">
+        <volist name="allImgs" id="vo">
+            <li class="col-md-4">
+                <if condition="$qrcodeid eq $vo['id']">
+                    <div class="myImg_active" data-id="<{$vo.id}>">
+                        <img src="/<{$vo.img_name}>" alt="" class="img">
+                        <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02" style="display: inline-block">
+                    </div>
+                <else/>
+                    <div class="myImg_normal" data-id="<{$vo.id}>">
+                        <img src="/<{$vo.img_name}>" alt="" class="img">
+                        <img src="/Public/Uploads/qrcodeimgs/duigou.png" alt="" class="myImg02">
+                    </div>
+                </if>
+            </li>
+        </volist>
+    </ul>
+    <ul class="col-md-12 text-center">
+        <button onclick="select(this)" ajaxurl="<{:U('confirmTeplate')}>" class="btn btn-primary btn-lg">确定</button>
+    </ul>
+</div>
+<script>
+    var oUl = document.getElementsByClassName("myUl")[0];
+    var aImg = oUl.getElementsByTagName("div");
+    var aImg02 = document.getElementsByClassName("myImg02");
+    var oBtn = document.getElementsByTagName("button")[0];
+    // oBtn.setAttribute("disabled", true);
+    for(var i=0;i<aImg.length;i++){
+        aImg[i].id = i;
+        aImg[i].onclick = function () {
+            var now_class = aImg[this.id].className;
+            if(now_class=='myImg_normal'){
+                // oBtn.removeAttribute("disabled");
+                for(var j=0;j<aImg.length;j++){
+                    aImg[j].className = "myImg_normal";
+                    aImg02[j].style.display = "none";
+                }
+                aImg[this.id].className = "myImg_active";
+                aImg02[this.id].style.display = "inline-block";
+            }else{
+                aImg[this.id].className = "myImg_normal";
+                aImg02[this.id].style.display = "none";
+            }
+
+            console.log(this.id);
+        }
+    }
+</script>
+<script>
+    function select(obj) {
+        var templateid = $('.myImg_active').attr('data-id');
+        if(!templateid){
+            templateid = '';
+        }
+        var payapiid = $('#payapiid').val();
+        var ajaxurl = $(obj).attr("ajaxurl");
+        $.ajax({
+            type:"POST",
+            url: ajaxurl,
+            dataType: "json",
+            data:{payapiid:payapiid,templateid:templateid},
+            success:function (data) {
+                ////2019-2-18 任梦龙：将提示信息在后端写入
+                if(data.status=='ok'){
+                    layer.msg(data.msg,{icon:6,time:1500});
+                }else{
+                    layer.msg(data.msg,{icon:5,time:1500});
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

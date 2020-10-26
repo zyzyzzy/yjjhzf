@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改登录密码</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div id="yemian" class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$Think.get.childid}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-inline">
+                <input type="text" name="child_pwd" value="123456" placeholder="请输入登录密码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+            <div class="layui-form-mid layui-word-aux">默认初始密码:123456</div>
+        </div>
+        <!--2019-3-12 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+        <include file="BaseTemplate:verifycode"/>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("loginPwdEdit")}>');">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

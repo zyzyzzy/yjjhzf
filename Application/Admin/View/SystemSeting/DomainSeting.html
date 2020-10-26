@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网站设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .domain {
+            width: 400%;
+        }
+        .select_style .layui-input-inline {
+            width: 90px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form"  method="post" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$website['id']}>" class="addeditinput">
+        <div class="layui-form-item select_style">
+            <label class="layui-form-label">前台域名</label>
+            <div class="layui-input-inline">
+                <select name="home_http" class="addeditinput">
+                    <option value=""></option>
+                    <option value="1" <if condition="$website['home_http'] eq 1">selected</if> >http://</option>
+                    <option value="2" <if condition="$website['home_http'] eq 2">selected</if> >https://</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="home_domain" id="homeDomain" value="<{$website['home_domain']}>"
+                       placeholder="前台域名" autocomplete="off" class="layui-input addeditinput domain">
+            </div>
+        </div>
+        <div class="layui-form-item select_style">
+            <label class="layui-form-label">后台域名</label>
+            <div class="layui-input-inline">
+                <select name="admin_http" class="addeditinput">
+                    <option value=""></option>
+                    <option value="1" <if condition="$website['admin_http'] eq 1">selected</if> >http://</option>
+                    <option value="2" <if condition="$website['admin_http'] eq 2">selected</if> >https://</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="admin_domain" id="adminDomain" value="<{$website['admin_domain']}>"
+                       placeholder="后台域名" autocomplete="off" class="layui-input addeditinput domain">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+        <div class="layui-form-item select_style">
+            <label class="layui-form-label">支付域名</label>
+            <div class="layui-input-inline">
+                <select name="pay_http" class="addeditinput">
+                    <option value=""></option>
+                    <option value="1" <if condition="$website['pay_http'] eq 1">selected</if> >http://</option>
+                    <option value="2" <if condition="$website['pay_http'] eq 2">selected</if> >https://</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="pay_domain" id="payDomain" value="<{$website['pay_domain']}>"
+                       placeholder="支付域名" autocomplete="off" class="layui-input addeditinput domain">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+
+        <!--2019-2-25 任梦龙：在每一个域名框前加一个选择http或者HTTPS的下拉框，并且添加回调域名-->
+        <div class="layui-form-item select_style">
+            <label class="layui-form-label">回调域名</label>
+            <div class="layui-input-inline">
+                <select name="back_http" class="addeditinput">
+                    <option value=""></option>
+                    <option value="1" <if condition="$website['back_http'] eq 1">selected</if> >http://</option>
+                    <option value="2" <if condition="$website['back_http'] eq 2">selected</if> >https://</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="back_domain" id="backDomain" value="<{$website['back_domain']}>"
+                       placeholder="回调域名" autocomplete="off" class="layui-input addeditinput domain">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+
+        <!--2019-3-13 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("SystemSeting/editDomainSet")}>','',true,false);"
+                class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

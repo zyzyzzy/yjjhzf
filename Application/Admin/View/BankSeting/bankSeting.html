@@ -1,0 +1,77 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">银行设置</block>
+<block name="nav">
+    <a href="">系统设置</a>
+    <a>
+        <cite>银行设置</cite>
+    </a>
+</block>
+<block name="search">
+    <input type="text" name="bankname" id="bankname" placeholder="银行名称" autocomplete="off" class="layui-input" value="">
+    <input type="text" name="bankcode" id="bankcode" placeholder="银行编码" autocomplete="off" class="layui-input" value="">
+    <div class="layui-input-inline">
+        <select name="jiaoyisearch" id="jiaoyisearch" class="layui-select">
+            <option value="">交易应用</option>
+            <option value="1">开启</option>
+            <option value="0">关闭</option>
+        </select>
+    </div>
+    <div class="layui-input-inline">
+        <select name="jiesuansearch" id="jiesuansearch" class="layui-select">
+            <option value="">结算应用</option>
+            <option value="1">开启</option>
+            <option value="0">关闭</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-normal" onclick="javascript:window.open('<{:U("DownloadBank","tablename=jybank")}>')"><i class="layui-icon">&#xe62d;</i>导出交易银行</button>
+        <button class="layui-btn layui-btn-normal"  onclick="javascript:window.open('<{:U("DownloadBank","tablename=jsbank")}>')"><i class="layui-icon">&#xe62d;</i>导出结算银行</button>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'Banklist')" ajaxurl="<{:U('DelAllBankCard')}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加银行卡','<{:U("AddBankCard")}>',800,500)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+        <button style="float: right;" class="layui-btn layui-btn-primary" onclick="y_admin_show('回收列表','<{:U("BankSeting/recoveryBank")}>',1000,750)"><i class="layui-icon"></i>回收站</button>
+    </xblock>
+</block>
+
+<block name="table_script">
+    <table class="layui-hide" id="Banklist" layui-data="{id:'Banklist'}" dataurl="<{:U('LoadBankList')}>"></table>
+    <!--图片显示-->
+    <script type="text/html" id="img">
+        <a onclick="javascript:enlarge('/{{d.img_url}}')"><img src="/{{d.img_url}}" alt="" style="width: 100%;"></a>
+    </script>
+    <script type="text/html" id="jiaoyicheckbox">
+        <input type="checkbox" name="jiaoyi" ajaxurl="<{:U('jiaoyiedit')}>" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="jiaoyicheckbox" {{ d.jiaoyi == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="jiesuancheckbox">
+        <input type="checkbox" name="jiesuan" ajaxurl="<{:U('jiesuanedit')}>"  value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="jiesuancheckbox" {{ d.jiesuan == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="caozuo">
+        <a title="编辑"  onclick="y_admin_show('编辑银行','<{:U(editBankCard)}>?id={{ d.id }}',600,500)" href="javascript:;">
+            <i class="layui-icon"><span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe642;</i> </span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('DelBankCard')}>">
+            <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+    </script>
+    <script>
+        //图片放大
+        function enlarge(src) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type:1,
+                    area: ['700px', '300px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '模板图片',
+                    shadeClose:true,
+                    content: '<div style="text-align: center;width: 100%;"><img src="'+src+'" alt="" style="width: 96%;margin-left: 2%;"></div>'
+                });
+            });
+        }
+    </script>
+</block>

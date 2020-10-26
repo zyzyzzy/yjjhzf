@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用户收银台</title>
+    <script>
+        // 适配用的rem
+        (function(){
+            var html = document.documentElement;
+            var hWidth = html.getBoundingClientRect().width
+            html.style.fontSize = hWidth/15 + "px"
+        })()
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .top {
+            width: 15rem;
+            height: 1.94rem;
+            font-size: 0.64rem;
+            font-weight: 600;
+            font-family: "Microsoft YaHei", Arial;
+            line-height: 1.94rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .top img {
+            width: 1.56rem;
+            height: 1.56rem;
+            margin: 0.16rem 0.2rem 0 2rem;
+        }
+        .liuhai {
+            width: 15rem;
+            height: 0.3rem;
+            background: url('/Public/images/userpay/bg1.png');
+            background-size: 15rem 0.3rem;
+        }
+        .input-money {
+            width: 15rem;
+            height: 1.76rem;
+            padding-top: 0.44rem;
+            background: #ebf2ff;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .input-money .money-num {
+            width: 9.6rem;
+            height: 2.2rem;
+            font-size: 0.6rem;
+            margin: 0 auto;
+        }
+        .input-money .money-num .money-text {
+            width: 5.48rem;
+            height: 1.16rem;
+            border: 1px solid #acacac;
+            border-radius: 0.08rem;
+        }
+        .hengxian {
+            width: 15rem;
+            height: 0.16rem;
+            background: url('/Public/images/userpay/bg2.png');
+            background-size: 15rem 0.16rem;
+            margin-bottom: 0.16rem;
+        }
+        .pay {
+            width: 15rem;
+            background: #ebf2ff;
+            padding-top: 0.36rem;
+            padding-left: 0.5rem;
+            box-sizing: border-box;
+        }
+        .pay .payment {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .pay .payment .payment-child {
+            width: 4.68rem;
+            position: relative;
+        }
+        .pay .payment .payment-child img {
+            margin-top: 0.24rem;
+            margin-left: 0.18rem;
+            width: 4.3rem;
+            height: 1.56rem;
+        }
+        .pay .payment .payment-child img:nth-child(2) {
+            position: absolute;
+            left: 0.02rem;
+            top: 0.02rem;
+            display: none;
+        }
+        .pay .submit-btn {
+            width: 14.5rem;
+            height: 2.04rem;
+        }
+        .pay .submit-btn div {
+            margin: 0 auto;
+            padding-top: 0.2rem;
+            width: 3.16rem;
+            height: 1.36rem;
+        }
+        .pay .submit-btn div img {
+            width: 3.16rem;
+            height: 1.36rem;
+        }
+        .pay .henxian {
+            width: 14.5rem;
+            height: 0.16rem;
+            background: url('/Public/images/userpay/bg2.png');
+            background-size: 15rem 0.16rem;
+        }
+
+    </style>
+</head>
+<body>
+<div class="top">
+    <if condition="$user_cashier['logo']">
+        <img src="/<{$user_cashier['logo']}>">
+        <else/>
+        <img src="/Public/images/userpay/amnlogo.png">
+    </if>
+    <if condition="$user_cashier['company']">
+        <div><{$user_cashier['company']}></div>
+        <else/>
+        <div>武汉爱码农网络科技有限公司</div>
+    </if>
+</div>
+<div class="liuhai"></div>
+<div class="input-money">
+    <div class="money-num">充值金额：<input type="text" class="money-text" id="money" onKeyUp="amount(this)"  onBlur="overFormat(this)"> 元</div>
+</div>
+<div class="hengxian"></div>
+<div class="pay">
+    <if condition="$true_userpayapiclass">
+    <div class="payment">
+        <volist name="true_userpayapiclass" id="val">
+            <if condition="$val['sys'] neq 1">
+                <div class="payment-child" data-payapiclassid="<{$val['payapiclassid']}>" data-bankcode="">
+                    <img src="/<{$val['img_url']}>">
+                    <img src="/Public/images/userpay/hovar.png">
+                </div>
+            </if>
+        </volist>
+    </div>
+    <div class="payment">
+        <volist name="true_userpayapiclass" id="va">
+            <if condition="$va['sys'] eq 1">
+                <volist name="va['banks']" id="v">
+                    <div class="payment-child" data-payapiclassid="<{$va['payapiclassid']}>" data-bankcode="<{$v['bankcode']}>">
+                        <img src="/<{$v['img_url']}>">
+                        <img src="/Public/images/userpay/hovar.png">
+                    </div>
+                </volist>
+            </if>
+        </volist>
+    </div>
+        <if condition="$true_userpayapiclass">
+            <form action="<{:U('payConfirm')}>" id="form" method="post">
+                <input type="hidden" value="<{$Think.get.usercode}>" id="usercode" name="usercode">
+                <input type="hidden" id="payapiclassid" name="payapiclassid">
+                <input type="hidden" id="trans_bankcode" name="trans_bankcode">
+                <input type="hidden" id="order_money" name="order_money">
+                <div class="submit-btn">
+                    <div id="submit"><img src="/Public/images/userpay/tjan.png"></div>
+                </div>
+            </form>
+        </if>
+        <else/>
+        <h3 style="text-align: center;padding-bottom: 0.36rem;">暂无可用的支付方式</h3>
+    </if>
+    <div class="henxian"></div>
+</div>
+<script type="text/javascript" src="/Public/js/jquery-3.2.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.payment').on('click','.payment-child',function(){
+            $(this).find("img:nth-child(2)").show();
+            $(this).siblings().find("img:nth-child(2)").hide();
+            $(this).parent().siblings().children().find("img:nth-child(2)").hide();
+            var payapiclassid = $(this).attr('data-payapiclassid');
+            var trans_bankcode = $(this).attr('data-bankcode');
+            $('#payapiclassid').val(payapiclassid);
+            $('#trans_bankcode').val(trans_bankcode);
+        })
+    });
+
+    $('#submit').click(function () {
+        var order_money = $('#money').val();
+        if(order_money==''){
+            alert('请输入充值金额');
+            return false;
+        }
+        $('#order_money').val(order_money);
+        var payapiclassid = $('#payapiclassid').val();
+        if(payapiclassid==''){
+            alert('请选择支付方式');
+            return false;
+        }
+        $('#form').submit();
+    })
+</script>
+<script>
+
+    /**
+     * 实时动态强制更改用户录入
+     * arg1 inputObject
+     **/
+    function amount(th) {
+        var regStrs = [
+            ['^0(\\d+)$', '$1'], //禁止录入整数部分两位以上，但首位为0
+            ['[^\\d\\.]+$', ''], //禁止录入任何非数字和点
+            ['\\.(\\d?)\\.+', '.$1'], //禁止录入两个以上的点
+            ['^(\\d+\\.\\d{2}).+', '$1'] //禁止录入小数点后两位以上
+        ];
+        for (var i = 0; i < regStrs.length; i++) {
+            var reg = new RegExp(regStrs[i][0]);
+            th.value = th.value.replace(reg, regStrs[i][1]);
+        }
+    }
+    /**
+     * 录入完成后，输入模式失去焦点后对录入进行判断并强制更改，并对小数点进行0补全
+     * arg1 inputObject
+     **/
+    function overFormat(th) {
+        var v = th.value;
+        if (v === '') {
+            v = '0.00';
+        } else if (v === '0') {
+            v = '0.00';
+        } else if (v === '0.') {
+            v = '0.00';
+        } else if (/^0+\d+\.?\d*.*$/.test(v)) {
+            v = v.replace(/^0+(\d+\.?\d*).*$/, '$1');
+            v = inp.getRightPriceFormat(v).val;
+        } else if (/^0\.\d$/.test(v)) {
+            v = v + '0';
+        } else if (!/^\d+\.\d{2}$/.test(v)) {
+            if (/^\d+\.\d{2}.+/.test(v)) {
+                v = v.replace(/^(\d+\.\d{2}).*$/, '$1');
+            } else if (/^\d+$/.test(v)) {
+                v = v + '.00';
+            } else if (/^\d+\.$/.test(v)) {
+                v = v + '00';
+            } else if (/^\d+\.\d$/.test(v)) {
+                v = v + '0';
+            } else if (/^[^\d]+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^[^\d]+(\d+\.?\d*)$/, '$1');
+            } else if (/\d+/.test(v)) {
+                v = v.replace(/^[^\d]*(\d+\.?\d*).*$/, '$1');
+                ty = false;
+            } else if (/^0+\d+\.?\d*$/.test(v)) {
+                v = v.replace(/^0+(\d+\.?\d*)$/, '$1');
+                ty = false;
+            } else {
+                v = '0.00';
+            }
+        }
+        th.value = v;
+    }
+</script>
+</body>
+</html>

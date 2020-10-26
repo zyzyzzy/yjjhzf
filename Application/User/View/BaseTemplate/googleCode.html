@@ -1,0 +1,45 @@
+<!--2019-2-27 任梦龙：给用户后台添加二次验证模板-->
+<form id="google_form" name="google_form" class="layui-form" method="post" onsubmit="return false" style="margin-top: 20px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-block">
+            <input type="text" name="googlecode" id="googlecode" placeholder="请输入验证码" autocomplete="off"
+                   class="layui-input addeditinput">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="javascript: verifyGoogle();">确认验证</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    //2019-2-22 任梦龙：修改方法
+    function verifyGoogle() {
+        var googlecode = $('#googlecode').val();
+        var ajaxurl = "<{:U('Index/verifyGoogleCode')}>";
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {googlecode: googlecode},
+            dataType: 'json',
+            success: function (obj) {
+                console.log(obj);
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1000}, function () {
+                        $('#google_form').hide();  //二次验证页面隐藏
+                        $('#yemian').show();  //真实页面显示，一旦刷新页面，重新回到二次验证页面
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加用户</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="username" id="username"
+                       placeholder="请输入用户名" autocomplete="off" class="layui-input addeditinput">
+                <input type="hidden" name="superiorid" id="superiorid"
+                       value="<{$user_id}>" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户别名
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming"
+                       placeholder="请输入用户别名" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-block">
+                <select name="usertype" id="usertype" class="layui-input addeditinput">
+                    <option value=""></option>
+                    <volist name="types" id="type">
+                        <option value="<{$type['id']}>"><{$type["usertypename"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="loginpassword" value="<{$loginpassword}>"  required lay-verify="required" placeholder="请输入密码"
+                       autocomplete="off" class="layui-input addeditinput">
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">支付密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="paypassword" value="<{$paypassword}>" required lay-verify="required" placeholder="请输入密码"
+                       autocomplete="off" class="layui-input addeditinput">
+            </div>
+            <div class="layui-form-mid layui-word-aux">登录密码默认设置为:<{$loginpassword}>;支付密码默认设置为:<{$paypassword}></div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("childUserAdd")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

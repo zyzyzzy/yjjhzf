@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>用户编辑</title>
+    <div class="crumbs">
+        <span class="layui-breadcrumb" lay-separator="/">
+          <a href="">管理后台</a>
+          <a href="">用户管理</a>
+          <a href="">用户列表</a>
+          <a href="">
+            <cite>用户编辑</cite>
+          </a>
+        </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+    </div>
+    <include file="BaseTemplate:includecssjs" />
+  </head>
+  <body class="layui-anim layui-anim-up">
+    <div class="x-body">
+      <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+          <li class="layui-this">用户信息</li>
+          <li>基本信息</li>
+          <li>认证信息</li>
+          <!--<li>谷歌验证</li>-->
+          <li>通道设置</li>
+          <li>结算设置</li>
+          <li>提成设置</li>
+          <li>提成记录</li>
+          <li>登录记录</li>
+          <li>操作记录</li>
+          <li>交易版本</li>
+          <li>结算版本</li>
+          <li>收银台设置</li>
+          <li>自助收银设置</li>
+          <li>自助通道设置</li>
+        </ul>
+        <div class="layui-tab-content" style="height:auto;">
+          <div class="layui-tab-item layui-show">
+            <iframe src="<{:U('UserInformation')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('EssentialInformation')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('verifyInformation')}>?userid=<{$userid}>" style="width: 100%; height: 450px; border: 0px;"></iframe>
+          </div>
+          <!--<div class="layui-tab-item">-->
+            <!--<iframe src="<{:U('googleInformation')}>?userid=<{$userid}>" style="width: 100%; height: 450px; border: 0px;"></iframe>-->
+          <!--</div>-->
+          <div class="layui-tab-item">
+            <iframe src="<{:U('UserTongdaoSettings/userTongdaoSetting')}>?userid=<{$userid}>" style="width: 100%; height:550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('UserSettle/userSettleSet')}>?userid=<{$userid}>" style="width: 100%; height:550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('UserCommission/commissionSet')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('UserCommission/commissionList')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('loginRecordList')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('operateRecordList')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('versionList')}>?userid=<{$userid}>" style="width: 60%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('settleVersion')}>?userid=<{$userid}>" style="width: 60%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('Cashier/userCashier')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('Cashier/userSelfCash')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+          <div class="layui-tab-item">
+            <iframe src="<{:U('userAccountSet')}>?userid=<{$userid}>" style="width: 100%; height: 550px; border: 0px;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
+<style>
+  .userOperation{
+    height: 26px;
+    margin: 0px 20px 0 20px;
+    line-height: 55px;
+  }
+  .userBtn{
+    margin-left: 5px;
+  }
+  .crumbs{
+    height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom: 1px solid #e5e5e5
+  }
+</style>

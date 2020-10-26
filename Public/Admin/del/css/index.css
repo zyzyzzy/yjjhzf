@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+.operating-panel{ background: #fff; padding: 30px 0;}
+
+.date-select{ font-size: 16px;}
+.date-select .filter{ height: 30px; line-height: 30px; color: #525252;}
+.date-select .iptgroup{ height:30px; margin-right: 20px;}
+.date-select .iptgroup li{ float:left; height:30px; line-height:30px;}
+.date-select .iptgroup li:nth-child(2){ margin: 0 10px;}
+.date-select .iptgroup li .ipticon{ width: 142px; height: 30px; line-height: 30px; background:#fff url(../blue/date.png) 94% 49% no-repeat; border:1px #dbdbdb solid; padding:0 3px 0 10px; border-radius: 5px;}
+.date-select .reset-btn{ display:block; width: 76px; height: 30px; line-height: 30px; border: 1px solid #00aefd; border-radius: 6px; text-align: center; color: #00aefd; -webkit-transition: all .3s;}
+.date-select .reset-btn:hover{ background: #00aefd; color: #fff;}
+
+.btn-box{ height: 32px; font-size: 14px;}
+.btn-box label,.btn-box .delete-btn{ display: inline-block; width: 76px; text-align: center; border-radius: 6px; cursor: pointer;}
+.btn-box label{ height: 30px; line-height: 28px; border: 1px solid #f26464; color: #f26464; background: #fff; box-sizing: border-box; position: relative; top: 1px;}
+.btn-box label input{ vertical-align: middle; margin-right: 5px; position: relative; top: -1px;}
+.btn-box label:hover{ background: #f26464; color: #fff;}
+
+.btn-box .delete-btn{ height: 32px; line-height: 32px; background: #f26464; color: #fff; margin-left: 10px; border: 0 none;}
+.btn-box .delete-btn:hover{ opacity: .8;}
+
+.date-list{ display: flex; justify-content: space-between;}
+.date-list ul{ width: 48%;}
+.date-list li{ width: 100%; line-height: 57px;}
+.date-list li:nth-child(odd){ background: #f7f7f7;}
+.date-list li:nth-child(even){ background: #fff;}
+.date-list li label{ padding-left: 37px; cursor: pointer;}
+.date-list li input{ width: 16px; height: 16px; vertical-align: middle; margin-right: 40px;}
+
+.date-list .child-con{ width: auto; background: #f7f7f7; margin-left: 95px; padding-right: 20px; /* border-top: 1px solid #d4d4d4; */}
+.date-list .child-con:before{ content: ""; display: block; width: 95%; height: 1px; background: #d4d4d4;}
+.date-list .child-con li:nth-child(even){ background: #f7f7f7;}
+.date-list .child-con li label{ padding-left: 0;}

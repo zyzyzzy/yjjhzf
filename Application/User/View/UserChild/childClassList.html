@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>通道分类</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <table class="layui-hide" lay-filter="demo" id="childClassList" layui-data="{id:'childClassList'}" dataurl="<{:U('loadChildClassList')}>?user_id=<{$user_id}>"></table>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="user_id" value="<{$Think.get.user_id}>" class="addeditinput">
+        <script type="text/html" id="feilv">
+            <div>
+                <input style="height: 28px!important" type="text" name="{{d.id}}" id="order_feilv" lay-verify="number"
+                       placeholder="请输入交易费率" autocomplete="off" value="{{d.order_feilv}}" class="layui-input addeditinput">
+            </div>
+        </script>
+        <if condition="$status eq 1">
+        <div class="layui-form-item">
+            <div class="layui-form-mid layui-word-aux">
+                系统默认的代理商的提成费率为<{$system}>,即<{$b_system}>;费率为百分比，如果设置0.1%，请输入0.0010;
+                <!--<br>设置下级用户的交易费率不能低于本分类下您自己或系统默认的费率,不能高于自己的费率+系统的提成费率上限-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="google_show('谷歌验证');">确认修改</button>
+            </div>
+        </div>
+        </if>
+    </form>
+</div>
+<!--谷歌验证-->
+<div id="google" style="display: none;">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <include file="BaseTemplate:verifycode" />
+        <div class="layui-form-item" style="margin-top: 3%;">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("childFeilvEdit")}>','',true,false);">确认</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>
+<script>
+    function google_show(title) {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                area: ['600px', '200px'],
+                fix: false, //不固定
+                maxmin: false,//不显示最大最小化
+                // closeBtn: 0,//不显示关闭按钮
+                shade: 0.4,
+                title: title,
+                content: $('#google'),
+            });
+        });
+    }
+
+    function Submit(ajaxurl) {
+        var googlecode = $('#googlecode').val();
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {googlecode:googlecode},
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.close();
+                    FormSumit('<{:U("childFeilvEdit")}>','',true,false)
+                } else {
+                    layer.msg(obj.msg, {icon: 5, time: 3000});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 3000});
+                return false;
+            }
+        });
+    }
+</script>

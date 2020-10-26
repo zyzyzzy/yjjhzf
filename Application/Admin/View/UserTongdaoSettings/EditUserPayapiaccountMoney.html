@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置用户每日交易总额</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="userpayapiaccountid" id="userpayapiaccountid" value="<{$userpayapiaccountid}>" class="addeditinput" />
+        <input type="hidden" name="userxianeid" id="userxianeid" value="<{$userxianeid}>" class="addeditinput" />
+        <input type="hidden" name="leave" id="leave" value="<{$leave}>" class="addeditinput" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">日交易总额</label>
+            <div class="layui-input-block">
+                <input type="text" name="money" id="money" lay-verify="number" placeholder="请输入每日交易总额" autocomplete="off" value="<{$money}>" class="layui-input addeditinput">
+            </div>
+
+            <div class="layui-form-mid layui-word-aux">当前账号还剩额度为：<{$leave}></div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("UserPayapiaccountMoneyEdit")}>','',true,true);">修改每日交易总额</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+

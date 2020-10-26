@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录系统 - 易吉聚合支付系统</title>
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.all.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/Public/css/user/registered.css">
+</head>
+
+<body>
+<div class="yiji-juhe-wrapper">
+    <div class="system-main clearfix">
+        <div class="logo"><img src="/Public/css/user/images/logo_03.png" /></div>
+        <div class="juhe-plane">
+            <div class="zhuce-box">
+                <h2>易吉聚合支付系统</h2>
+                <input type="hidden" id="indexUrl" value="<{:U('Index/index')}>">
+                <input type="hidden" id="loginUrl" value="<{:U('AdminLogin/doLogin')}>">
+                <form method="post" class="layui-form">
+                    <ul class="form-ul">
+                        <li class="sys-name"><input name="name" id="name" placeholder="请输入用户名" type="text"
+                                                    lay-verify="required" class="layui-input addeditinput"></li>
+                        <li class="sys-pwd"><input name="pwd" id="pwd" lay-verify="required" placeholder="请输入密码"
+                                                   type="password" class="layui-input addeditinput"></li>
+                        <li class="sys-yzm"><input name="code" id="code" lay-verify="required" placeholder="请输入验证码" type="text"
+                                                   class="layui-input addeditinput">
+                            <div class="yzm-con" style="border-radius: 12px;"><img style="width: 157px;height: 54px" id="verifyImg" class="verify_img" src="<{:U('AdminLogin/verify')}>"
+                                                      onclick="this.src=this.src + '?' + Math.random()"></div>
+                        </li>
+                        <li class="btn-login"><input id="adminLogin" value="登录" lay-submit lay-filter="login"
+                                                     style="width:100%;" type="button" title="登录"></li>
+                    </ul>
+                </form>
+            </div>
+            <div class="company-name">武汉爱码农网络科技有限公司</div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    // 点击登录
+    $('#adminLogin').click(function () {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        var login_url = $('#loginUrl').val();
+        var index_url = $('#indexUrl').val();
+        $.ajax({
+            url: login_url,
+            type: 'post',
+            data: datastr,
+            dataType: 'json',
+            success: function (res) {
+                //2019-3-19 任梦龙：修改
+                if (res.status == 'ok') {
+                    layer.msg(res.msg, {
+                        icon: 6, time: 1500
+                    }, function () {
+                        //跳转到后台首页面
+                        window.location.href = index_url;
+                    });
+                }else {
+                    layer.msg(res.msg, {icon: 5, time: 1500});
+                    //2019-3-7 任梦龙：当报错时，自动刷新验证码
+                    var old_src = $('#verifyImg').attr('src');
+                    $('#verifyImg').attr('src', old_src + '?' + Math.random());
+                    return false;
+                }
+            }
+        });
+        return false;
+    });
+
+    if (window != top) {
+        top.location.href = location.href;
+    }
+</script>
+
+</html>

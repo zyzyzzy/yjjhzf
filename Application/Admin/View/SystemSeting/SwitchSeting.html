@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开关设置</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false" lay-filter="switch">
+        <input type="hidden" name="id" value="<{$website['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">全部功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox"  name="all_valve" id="all_valve" value="<{$website['all_valve']}>" lay-text="开启|关闭"
+                       lay-filter="all_valve" lay-skin="switch" class="addeditinput" <{:checkboxcheck($website["all_valve"])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">所有功能</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">前台功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="view_valve"  id="view_valve" value="<{$website['view_valve']}>" lay-text="开启|关闭"
+                       lay-filter="view_valve" lay-skin="switch" class="addeditinput" <{:checkboxcheck($website["view_valve"])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">用户登录前台</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">接口功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="api_valve" id="api_valve" value="<{$website['api_valve']}>" lay-text="开启|关闭"
+                       lay-filter="api_valve"  lay-skin="switch" class="addeditinput" <{:checkboxcheck($website["api_valve"])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">所有接口的调用</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结算功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="settle_valve" id="settle_valve" value="<{$website['settle_valve']}>" lay-text="开启|关闭"
+                       lay-filter="settle_valve"  lay-skin="switch" class="addeditinput" <{:checkboxOne($website['settle_valve'])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">结算的调用</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">退款功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="refund_valve" id="refund_valve" value="<{$website['refund_valve']}>" lay-text="开启|关闭"
+                       lay-filter="refund_valve" lay-skin="switch" class="addeditinput" <{:checkboxcheck($website["refund_valve"])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">结算退款功能的调用</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">注册功能</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="reg_valve" id="reg_valve" value="<{$website['reg_valve']}>" lay-text="开启|关闭"
+                       lay-filter="reg_valve" lay-skin="switch" class="addeditinput" <{:checkboxcheck($website["reg_valve"])}>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">注册新用户</div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("SystemSeting/editSwitchSet")}>','',true,false);"
+                class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+                ,layer = layui.layer
+
+        form.on('switch(all_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#all_valve').attr("value","0");
+            }else{
+                $('#all_valve').attr("value","1");
+            }
+        });
+
+        form.on('switch(view_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#view_valve').attr("value","0");
+            }else{
+                $('#view_valve').attr("value","1");
+            }
+        });
+
+        form.on('switch(api_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#api_valve').attr("value","0");
+            }else{
+                $('#api_valve').attr("value","1");
+            }
+        });
+
+        form.on('switch(settle_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#settle_valve').attr("value","1");
+            }else{
+                $('#settle_valve').attr("value","0");
+            }
+        });
+
+        form.on('switch(refund_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#refund_valve').attr("value","0");
+            }else{
+                $('#refund_valve').attr("value","1");
+            }
+        });
+
+        form.on('switch(reg_valve)', function(data){
+            if(data.elem.checked==true){
+                $('#reg_valve').attr("value","0");
+            }else{
+                $('#reg_valve').attr("value","1");
+            }
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

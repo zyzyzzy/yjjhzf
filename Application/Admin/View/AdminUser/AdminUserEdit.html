@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改管理员</title>
+    <include file="BaseTemplate:includecssjs"/> 
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" id="userName" value="<{$one_info['user_name']}>"
+                       placeholder="请输入管理员名称" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-1-21 任梦龙：添加管理员别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员别名</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming" value="<{$one_info['bieming']}>"
+                       placeholder="请输入管理员别名" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <input type="hidden" name="id" value="<{$one_info['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("AdminUserUpdate")}>');">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

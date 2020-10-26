@@ -1,0 +1,95 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">菜单列表</block>
+<block name="nav">
+    <a href="">菜单管理</a>
+    <a><cite>菜单列表</cite></a>
+</block>
+<block name="search"></block>
+<block name="searchbutton"></block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加一级菜单','<{:U("MenuAdd")}>',700,350)"><i class="layui-icon">&#xe61f;</i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="MenuList" layui-data="{id:'MenuList'}" dataurl="<{:U('LoadMenuList')}>"></table>
+    
+    <!--控制器名称-->
+    <script type="text/html" id="showcontroller">
+        {{#  if(d.controller){ }}
+            {{d.controller}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+    
+    <!--方法名称-->
+    <script type="text/html" id="showaction">
+        {{#  if(d.action){ }}
+            {{d.action}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+    
+    <!--菜单级别-->
+    <script type="text/html" id="showlevel">
+        {{#  if(d.level==0){ }}
+            一级菜单
+        {{#  } else if(d.level==1) { }}
+            二级菜单
+        {{#  } }}
+    </script>
+    
+    <!--操作-->
+    <script type="text/html" id="caozuo">
+
+        <a title="添加子菜单" href="javascript:;" onclick="y_admin_show('添加子菜单','<{:U("ChildMenuAdd")}>?id={{d.id}}',700,350)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe608;</i>
+                </span>
+        </i>
+        </a>
+
+        <!--编辑-->
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("MenuEdit")}>?id={{d.id}}',700,350)">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+            </i>
+        </a>
+        
+        <!--删除-->
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('MenuDel')}>">
+             <i class="layui-icon">
+                    <span class="layui-badge layui-bg-danger" >
+                        <i class="layui-icon">&#xe640;</i>
+                    </span>
+             </i>
+        </a>
+
+
+        <!--查看操作-->
+        {{#  if(d.level==1){ }}
+        <!--2019-1-14 任梦龙：修改样式-->
+        <a title="查看操作" href="javascript:;" onclick="y_admin_show('查看操作','<{:U("viewAdminOpt")}>?id={{d.id}}',1000,600)">
+        <i class="layui-icon">
+             <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe602;</i>
+             </span>
+        </i>
+        </a>
+        <!--<button class="layui-btn layui-btn-xs role" onclick="x_admin_show('查看操作','<{:U("ViewOpt")}>?id={{d.id}}',1000,600)">-->
+            <!--<i class="layui-icon">&#xe602;</i> 查看操作-->
+        <!--</button>-->
+        {{#  } else { }}
+
+        {{#  } }}
+
+    </script>
+</block>
+
+

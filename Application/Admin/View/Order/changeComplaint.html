@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改订单投诉状态</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/Admin/js/changeComplaint.js"></script>
+</head>
+<body>
+<div class="x-body">
+    <!--修改状态表单-->
+    <form class="layui-form" method="post" action="">
+        <input type="hidden" name="orderid" value="<{$orderid}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">投诉状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="complaint" value="0" title="正常" <if condition="$complaint eq 0">checked</if>>
+                <input type="radio" name="complaint" value="1" title="已投诉" <if condition="$complaint eq 1">checked</if>>
+                <input type="radio" name="complaint" value="2" title="已撤诉" <if condition="$complaint eq 2">checked</if>>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input type="text" name="remarks" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="change(this)" ajaxurl="<{:U('complaintChange')}>" class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function change(obj) {
+            var ajaxurl = $(obj).attr('ajaxurl');
+            var orderid = $("input[name='orderid']").val();
+            var complaint = $("input[name='complaint']:checked").val();
+            var remarks = $("input[name='remarks']").val();
+            $.ajax({
+                type:"POST",
+                url: ajaxurl,
+                dataType: "json",
+                data:{orderid:orderid,complaint:complaint,remarks:remarks},
+                success:function (data) {
+                    if(data.status=='ok'){
+                        layer.msg(data.msg,{icon:6,time:1500},function () {
+                            location.reload();
+                        });
+                        // parent.location.href="<{:U('seeSettleInfo')}>?settleid="+data.id;
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:1500});
+                    }
+                }
+            })
+        }
+    </script>
+
+    <!--显示修改过程表格-->
+    <table class="layui-hide" id="changeComplaint" layui-data="{id:'changeComplaint'}" dataurl="<{:U('loadComplaint')}>?orderid=<{$orderid}>"></table>
+    <script type="text/html" id="old_status">
+        {{# if(d.old_status == 0){ }}
+            正常
+        {{# } }}
+        {{# if(d.old_status == 1){ }}
+        已投诉
+        {{# } }}
+        {{# if(d.old_status == 2){ }}
+        已撤诉
+        {{# } }}
+    </script>
+    <script type="text/html" id="change_status">
+        {{# if(d.change_status == 0){ }}
+        正常
+        {{# } }}
+        {{# if(d.change_status == 1){ }}
+        已投诉
+        {{# } }}
+        {{# if(d.change_status == 2){ }}
+        已撤诉
+        {{# } }}
+    </script>
+    <script type="text/html" id="remarks">
+        {{# if(d.remarks){ }}
+        {{d.remarks}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="admin_name">
+        {{# if(d.admin_name){ }}
+        {{d.admin_name}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+</div>
+</body>
+</html>

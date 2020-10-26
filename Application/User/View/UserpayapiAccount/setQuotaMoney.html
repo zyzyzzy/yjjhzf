@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置单笔限额</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-pane .layui-form-label {
+            padding: 8px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="id" id="id" value="<{$Think.get.id}>" class="addeditinput" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">单笔最小金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="min_money" id="minMoney" placeholder="请输入单笔最小金额"
+                       autocomplete="off" value="<{$find.min_money}>" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单笔最大金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="max_money" id="maxMoney" placeholder="请输入单笔最大金额"
+                       autocomplete="off" value="<{$find.max_money}>" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("conformQuotaMoney")}>');">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

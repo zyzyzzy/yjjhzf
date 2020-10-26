@@ -1,0 +1,72 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family: "Microsoft YaHei",Arial;
+    color: #000;
+}
+i, cite, em, var{
+    font-style: normal;
+}
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+a, button, input,textarea{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+input,button {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+}
+ul, li {
+    list-style: none;
+}
+img{
+    vertical-align: middle;
+    border: none;
+}
+.fr{
+    float: right;
+}
+.fl{
+    float: left;
+}
+.clear {
+    clear: both;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    overflow: hidden;
+}
+.clearfix {
+    *zoom: 1;
+}
+
+.clearfix:after {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    height: 0;
+    visibility: hidden;
+    content: ".";
+}
+.flex{
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+}
+.bz{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+a{
+    color:#000;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>谷歌验证设置</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false" lay-filter="switch">
+        <input type="hidden" name="admin_id" value="<{$Think.get.id}>" class="addeditinput">
+        <input type="hidden" name="google" value="<{$Think.get.google}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">谷歌验证</label>
+            <div class="layui-input-block">
+                <input type="checkbox"  name="switch" id="switch" lay-text="开通|关闭"  value="<if condition='$Think.get.google neq 2' >1<else/>2</if>"
+                       lay-filter="switch" lay-skin="switch" class="addeditinput" <if condition="$Think.get.google neq 2">checked</if>>
+            </div>
+            <div class="layui-form-mid layui-word-aux">开通与关闭管理员的谷歌验证功能</div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button onclick="javascript: FormSumit('<{:U("googleEdit")}>','',true,true);" class="layui-btn"
+                lay-submit lay-filter="formDemo">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form;
+        form.on('switch(switch)', function(data){
+            if(data.elem.checked==true){
+                $('#switch').attr("value","1");
+            }else{
+                $('#switch').attr("value","2");
+            }
+        });
+    });
+</script>
+</body>
+</html>

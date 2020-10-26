@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加邀请码</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-pane .layui-form-label {
+            width: 100px;
+            padding:8px 20px;
+        }
+        .layui-form-pane .layui-input-block {
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="make_id" value="<{$make_id}>" class="addeditinput">
+        <input type="hidden" name="type" value="<{$type}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属上级</label>
+            <div class="layui-input-block">
+                <select name="pid" id="pid" class="layui-input addeditinput" lay-search>
+                    <option value="0"></option>
+                    <volist name="user_info" id="type">
+                        <option value="<{$type['id']}>"><{$type["username"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>       
+        <div class="layui-form-item">
+            <label class="layui-form-label">邀请码</label>
+            <div class="layui-input-block">
+                <span id="inviteCode" style="font-size:20px; font-weight:bold;line-height: 40px;margin-left: 10px;"><{$invite}></span>
+                <button style="float: right;" type="button" class="layui-btn" id="cxsc" data-loading-text="正在处理中..."
+                        onclick="javascript: getInviteCode();"><strong>重新生成</strong>
+                </button>
+                <input type='hidden' name='invite_code' value='<{$invite}>' class="addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">注册类型</label>
+            <div class="layui-input-block">
+                <select name="reg_type" id="regType" class="layui-input addeditinput">
+                    <option value="">注册类型</option>
+                    <volist name="user_type" id="type">
+                        <option value="<{$type['id']}>"><{$type["usertypename"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">使用状态</label>
+            <div class="layui-input-block">
+                <select name="status" id="inviteStatus" class="layui-input addeditinput">
+                    <option value="">使用状态</option>
+                    <volist name="invite_status" id="type">
+                        <option value="<{$type['id']}>"><{$type["status_name"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">过期时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="over_time" id="overTime1" placeholder="过期时间" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>       
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("createInvite")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    /*
+    * 时间选择器（常规：年月日时分秒）
+    */
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#overTime1'
+            ,type: 'datetime'
+        });
+    });
+    function getInviteCode() {
+        var loading = $(this).attr('data-loading-text');
+        $(this).html('<strong>' + loading + '</strong>');
+        var url = '<{:U("UserInviteCode/InviteCodeCreate")}>';
+        $.post(url, function (data) {
+            if (data.status == 'ok') {
+                $('#inviteCode').text(data.invite);
+                $("input[name=invite_code]").val(data.invite);
+                $('#cxsc').html('<strong>重新生成</strong>');
+            }else {
+                layer.tips(data.msg,this,{
+                    tips:[3, '#FF5722']
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

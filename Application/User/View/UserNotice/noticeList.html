@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公告列表</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+          <block name="nav">
+              <a href="">公告管理</a>
+              <a href="">
+                  <cate>公告列表</cate>
+              </a>
+          </block>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <block name="table_script">
+        <table class="layui-hide" id="noticeList" layui-data="{id:'noticeList'}" dataurl="<{:U("loadNoticeList")}>"></table>
+
+        <script type="text/html" id="caozuo">
+            <a title="查看" onclick="y_admin_show('查看公告内容','<{:U("seeNotice")}>?id={{d.id}}',800,400)">
+            <span class="layui-btn self-btn">查看</span>
+            </a>
+            <!--<a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U("delNotice")}>">-->
+            <!--<span class="layui-badge layui-bg-danger self-btn" style="vertical-align: -1px;">删除</span>-->
+            <!--</a>-->
+        </script>
+    </block>
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+</html>

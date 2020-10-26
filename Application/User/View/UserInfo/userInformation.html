@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .input_color{
+            background-color: #f2f2f2;
+        }
+        .img_container{
+            display: inline;
+            float: left;
+            width: 20%;
+        }
+        .img_div{
+            width: 100%;
+            height: 10%;
+            text-align: center;
+        }
+        .info_container{
+            display: inline;
+            float: left;
+            width: 60%;
+        }
+        .layui-p{
+            display: block;
+            width: 100%;
+            padding-left: 10px;
+            height: 38px;
+            line-height: 38px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div class="layui-col-md12">
+        <div class="img_container">
+            <div class="img_div">
+                <img style="height: 100%;" src="/Public/images/user_icon.png" alt="">
+            </div>
+        </div>
+        <div class="info_container" style="">
+            <form class="layui-form" method="post" onsubmit="return false">
+                <input type="hidden" name="id" value="<{$user['id']}>" class="addeditinput">
+                <div class="layui-form-item input_color">
+                    <label class="layui-form-label">用&nbsp;&nbsp;户&nbsp;&nbsp;名 ：</label>
+                    <div class="layui-input-block">
+                        <input style="border: none" readonly type="text" name="username" value="<{$userInfo['username']}>" class="layui-input input_color">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商&nbsp;&nbsp;户&nbsp;&nbsp;号 ：</label>
+                    <div class="layui-input-block">
+                        <input style="border: none" readonly type="text" name="memberid" value="<{$userInfo['memberid']}>" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item input_color">
+                    <label class="layui-form-label">用户类型 ：</label>
+                    <div class="layui-input-block">
+                        <input style="border: none" readonly type="text" name="usertype" value="<{$userInfo['usertype']}>" class="layui-input input_color">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户认证 ：</label>
+                    <div class="layui-input-block">
+                        <p class="layui-p">
+                            <if condition="$userInfo['authentication'] eq '未认证'">
+                                <img src="/Public/images/uncertified_icon.png" alt="">
+                            </if>
+                            <if condition="$userInfo['authentication'] eq '审核中'">
+                                <img src="/Public/images/verify_icon.png" alt="">
+                            </if>
+                            <if condition="$userInfo['authentication'] eq '已认证'">
+                                <img src="/Public/images/certified_icon.png" alt="">
+                            </if>
+                            <{$userInfo['authentication']}>
+                        </p>
+                    </div>
+                </div>
+                <div class="layui-form-item input_color">
+                    <label class="layui-form-label">上级用户 ：</label>
+                    <div class="layui-input-block">
+                        <input style="border: none" readonly type="text" name="superiorid" value="<{$userInfo['superiorid']}>" class="layui-input input_color">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态 ：</label>
+                    <div class="layui-input-block">
+                        <p class="layui-p">
+                            <if condition="$userInfo['statusname'] eq '正常'">
+                                <span style="color: #06be65;">正常</span>
+                            </if>
+                            <if condition="$userInfo['statusname'] eq '未激活'">
+                                <span style="color: #969696;">未激活</span>
+                            </if>
+                            <if condition="$userInfo['statusname'] eq '禁用'">
+                                <span style="color: #de0000;">禁用</span>
+                            </if>
+                            <if condition="$userInfo['statusname'] eq '限制使用'">
+                                <span style="color: #ff9000;">限制使用</span>
+                            </if>
+                        </p>
+                    </div>
+                </div>
+                <div class="layui-form-item input_color">
+                    <label class="layui-form-label">注册时间 ：</label>
+                    <div class="layui-input-block">
+                        <input style="border: none" readonly type="text" name="regdatetime" value="<{$userInfo['regdatetime']}>" class="layui-input input_color">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

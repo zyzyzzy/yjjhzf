@@ -1,0 +1,115 @@
+<div id="google">
+    <!--第一步先扫描下载APP-->
+    <div class="layui-form-item" style="margin-bottom: 10px;">
+        <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第一步:</label>
+        <div class="layui-input-block">
+            <input style="border: none" type="text" readonly value="扫码下载谷歌谷歌验证app:Eagle 2Fa" autocomplete="off"
+                   class="layui-input">
+            <img src="/Public/images/googlecode_download.png" alt="" style="width: 200px;">
+        </div>
+    </div>
+    <div class="layui-form-item none_class">
+        <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第二步:</label>
+        <div class="layui-input-block">
+            <input style="border: none" type="text" readonly value="请先验证密码，然后打开app,扫描下方二维码" autocomplete="off"
+                   class="layui-input">
+            <img id="qrCode" src="" alt="">
+        </div>
+    </div>
+    <!--第二步：验证登录密码,管理密码,验证成功才将二维码显示,扫秒二维码，注册成功-->
+    <form id="verPwd" class="layui-form layui-form-pane" method="post" onsubmit="return false" style="margin-left: 35px;">
+        <div class="layui-form-item" style="width: 80%;">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="login_pwd" placeholder="请输入登录密码" class="layui-input addeditinput"
+                       autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item" style="width: 80%;">
+            <label class="layui-form-label">管理密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="manage_pwd" placeholder="请输入管理密码" class="layui-input addeditinput"
+                           autocomplete="off"></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <!--2019-3-19 任梦龙：修改url-->
+                <button class="layui-btn" onclick="javascript: FormSumit2('<{:U("index/verifyPwd")}>');">验证密码</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+    <!--第三步：验证谷歌验证码，此时在数据库中将状态更改-->
+    <div class="layui-form-item" style="margin-bottom: 0;">
+        <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第三步:</label>
+        <div class="layui-input-block">
+            <input style="border: none" type="text" readonly value="请填写app上的验证码,点击完成验证" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false" style="margin-left: 100px;">
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="width: 30%;margin-top: 0.5%;">
+                <input type="text" name="code" value="" placeholder="请填写验证码" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-input-inline">
+                <button class="layui-btn" id="btn" onclick="javascript: FormSumit3('<{:U("index/verifyCode")}>');">验证</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //点击发送验证密码
+    function FormSumit2(ajaxurl) {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            datatype: 'json',
+            success: function (obj) {
+                //如果密码验证成功，则才会显示二维码去扫码。防止恶意绑定
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500}, function () {
+                        $('#verPwd').hide();
+                        $('#qrCode').attr('src',obj.src);
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5,time: 1500});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+
+    //谷歌验证码
+    function FormSumit3(ajaxurl) {
+        var code = $('input[name=code]').val();   //2019-3-15 任梦龙：修改
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {code: code},
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500}, function () {
+                        location.reload();
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>

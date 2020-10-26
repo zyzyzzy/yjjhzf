@@ -1,0 +1,82 @@
+<!--2019-3-11 任梦龙：验证码的遮罩层-->
+<form id="shadelayer" name="layer_code" class="layui-form" method="post" onsubmit="return false"
+      style="margin-top: 20px;">
+    <input type="hidden" name="code_type" value="<{$code_type}>">
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <!--2019-3-13 任梦龙：将text类型修改为password-->
+        <div class="layui-input-inline clickIcon">
+            <if condition="$code_type eq 1">
+                <input type="password" name="verfiy_code" placeholder="管理密码" autocomplete="off"
+                           class="layui-input">
+            <elseif condition="$code_type eq 2" />
+                <input type="password" name="verfiy_code" placeholder="谷歌验证码" autocomplete="off"
+                           class="layui-input">
+            <else />
+                <input type="password" name="verfiy_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                           class="layui-input">
+            </if>
+            <!--2019-3-15 任梦龙：添加可点击的小图标-->
+            <i id="icon" class="layui-icon click_icon">&#xe673;</i>
+        </div>
+
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="javascript: verifyLayerCode();">确认验证</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<style>
+    .clickIcon {
+        position: relative;
+    }
+   .click_icon{
+       position: absolute;
+       z-index: 10;
+       top: 10px;
+       right: 10px;
+       cursor: pointer;
+   }
+</style>
+<script>
+    function verifyLayerCode() {
+        var verfiy_code = $('input[name=verfiy_code]').val();   //验证码
+        var code_type = $('input[name=code_type]').val();   //验证类型
+        var ajaxurl = "<{:U('Index/verifyCodeType')}>";
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {
+                verfiy_code: verfiy_code,
+                code_type: code_type
+            },
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1000}, function () {
+                        $('#shadelayer').hide();  //谷歌验证页面隐藏
+                        location.reload();  //2019-3-11 任梦龙：在本页面刷新
+                    });
+                } else {
+                    layer.msg(obj.msg, {icon: 5});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+
+    //2019-3-15 任梦龙：点击小图标时，改变输入框的type类型
+    $('#icon').click(function(){
+        var type=$('input[name=verfiy_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=verfiy_code]').attr('type','text');
+        }else {
+            $('input[name=verfiy_code]').attr('type','password');
+        }
+    });
+</script>

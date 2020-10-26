@@ -1,0 +1,128 @@
+<div class="add-up" id="TodayStatiticDataByPayapiclass_line" loadUrl="<{:U('Index/getTodayStatiticDataByPayapiclass')}>"
+     style="width: 1000px;height: 400px;box-shadow:0 0 1px #000 inset;"></div>
+<div class="add-up" id="TodayStatiticDataByPayapiclass_cake" style="width: 400px;height: 400px;box-shadow:0 0 1px #000 inset;"></div>
+
+
+
+<!--<fieldset class="layui-elem-field">-->
+    <!--<legend>今日数据统计</legend>-->
+    <!--<div class="layui-col-md7" id="TodayStatiticDataByPayapiclass_line" loadUrl="<{:U('Index/getTodayStatiticDataByPayapiclass')}>"-->
+         <!--style="width: 1000px;height: 600px;box-shadow:0 0 1px #000 inset;">-->
+    <!--</div>-->
+    <!--<div class="layui-col-md4" id="TodayStatiticDataByPayapiclass_cake" style="width: 400px;height: 600px;box-shadow:0 0 1px #000 inset;">-->
+    <!--</div>-->
+<!--</fieldset>-->
+
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var ech = echarts;
+    var line = ech.init(document.getElementById('TodayStatiticDataByPayapiclass_line'));
+    var cake = ech.init(document.getElementById('TodayStatiticDataByPayapiclass_cake'));
+
+    // 指定图表的配置项和数据
+    var lineOption = {
+        title: {
+            text: '今日数据统计(充值/提现)'
+        },
+        tooltip: {},
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                //magicType: {show: true, type: ['bar']},
+                //saveAsImage: { show: true }
+            }
+        },
+        legend: {
+            data: ['充值', '提现']
+        },
+        xAxis: {
+            type: 'category',
+            name: '通道'
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '充值',
+                type: 'bar',
+                //data: [5, 20, 36, 10, 10, 20]
+            },
+            {
+                name: '提现',
+                type: 'bar',
+                //  data: [3, 24, 22, 9, 5, 15]
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    line.setOption(lineOption);
+
+    var cakeOption = {
+        title: {
+            text: '今日数据统计(充值/提现)',
+            y: 'top'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'bottom',
+            data: ['充值', '结算']
+        },
+        series: [
+            {
+                name: '详细数据',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '60%'],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    cake.setOption(cakeOption);
+
+    var lineOptions = line.getOption();
+    var cakeOptions = cake.getOption();
+
+    var url = $('#TodayStatiticDataByPayapiclass_line').attr('loadUrl');
+    $.ajax({
+        type: "post",
+        async: false, //同步执行
+        url: url,
+        data: {},
+        dataType: "json", //返回数据形式为json
+        success: function (result) {
+            //console.log(result);
+            if (result.status == "success") {
+                lineOptions.series[0].data = result.data.recharge;
+                lineOptions.series[1].data = result.data.settlement;
+                lineOptions.xAxis[0].data = result.data.payapiclass;
+                cakeOptions.series[0].data = [
+                    {value: result.data.sum_recharge, name: '充值'},
+                    {value: result.data.sum_settlement, name: '结算'},
+                ];
+                line.hideLoading();
+                line.setOption(lineOptions);
+                cake.hideLoading();
+                cake.setOption(cakeOptions);
+            } else {
+
+            }
+        },
+        error: function (errorMsg) {
+
+            //alert("不好意思，大爷，图表请求数据失败啦!");
+            line.hideLoading();
+        }
+    });
+
+</script>

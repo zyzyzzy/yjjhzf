@@ -1,0 +1,91 @@
+.container{
+	width: 465px;
+	height: 700px;
+	margin: 0 auto;
+}
+.div1{
+	width: 60px;
+	height: 600px;
+	float: left;
+	padding-top: 15px;
+	padding-left: 20px;
+	margin-right: 40px;
+}
+.div2{
+	width: 340px;
+	height: 700px;
+	float: left;
+	background: url('/Public/pay/images/iphone.png') no-repeat 0 20px;
+}
+
+.div3{
+	width: 250px;
+	height: 250px;
+	margin-left: 42px;
+	margin-top: 115px;
+	background: url('/Public/pay/images/WXbg.png') no-repeat;
+}
+.erweima{
+	width: 100px;
+	height: 100px;
+	margin-left: 75px;
+	margin-top: 75px;
+}
+.money{
+	font-size: 20px;
+	color: #00ca00;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.dindanhao{
+	font-size: 14px;
+	text-align: center;
+}
+.div4{
+	width: 305px;
+	height: 80px;
+	margin-left: 15px;
+}
+
+#time{
+    padding-top: 25px;
+	padding-left: 40px;
+}
+#time p{
+	width: 80px;
+    text-align: center;
+    font-family: "微软雅黑";
+	font-size: 14px;
+	float: left;
+}
+#time p span{
+    background: #00ca00;
+    color:#fff;
+    font-weight: bold;
+    padding: 3px;    
+}
+.div5{
+	width: 250px;
+	height: 70px;
+	border: 1px solid #00ca00;
+	border-radius: 10px;
+	margin-left: 40px;
+	
+}
+.ShaoMiao{
+	margin-left: 15px;
+	margin-top: 15px;
+	margin-right: 15px;
+	float: left;
+}
+.div5 h3{
+	float: left;
+	color: #00ca00;
+}
+.WZ{
+	margin-top: 13px;
+	font-size: 15px;
+}
+.wz{
+	font-size: 15px;
+}

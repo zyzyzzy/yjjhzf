@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>设置每日交易总额</title>
+       <include file="BaseTemplate:includecssjs"/>
+       <script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+   </head>
+   <body>
+     <div class="x-body">
+       <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="id" id="id" value="<{$Think.get.id}>" class="addeditinput" />
+           <div class="layui-form-item">
+             <label class="layui-form-label">日交易总额</label>
+             <div class="layui-input-block">
+                <input type="text" name="money" id="money" lay-verify="number" placeholder="请输入每日交易总额"
+                       autocomplete="off" value="<{$money}>" class="layui-input addeditinput">
+             </div>
+         </div>
+           <table class="layui-hide" id="EditPayapiaccountMoney" layui-data="{id:'EditPayapiaccountMoney'}"
+                  dataurl="<{:U('Payapi/LoadPayapiAccountMoney')}>?payapiaccountid=<{$payapiaccountid}>"></table>
+           <script type="text/html" id="zh_payname">
+               {{ d.zh_payname }}
+           </script>
+           <script type="text/html" id="editMoney">
+               <div>
+                   <input style="height: 28px!important" type="text" name="{{ d.id }}" id="payapimoney" lay-verify="number"
+                          placeholder="请输入每日交易总额" autocomplete="off" value="{{ d.money }}" class="layui-input addeditinput">
+               </div>
+           </script>
+
+             <div class="layui-form-item">
+               <div class="layui-input-block">
+                   <button class="layui-btn" onclick="javascript: FormSumit('<{:U("PayapiaccountMoneyEdit")}>');">修改每日交易总额</button>
+                   </div>
+           </div>
+       </form>
+
+   </div>
+   </body>
+ </html>

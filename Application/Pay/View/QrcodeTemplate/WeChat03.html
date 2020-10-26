@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微信二维码支付</title>
+    <link rel="stylesheet" href="/Public/pay/css/common.css">
+    <link rel="stylesheet" href="/Public/pay/css/WeChat03.css">
+    <link rel="stylesheet" href="/Public/js/layui/css/layui.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="div1">
+		<img class="weixin" src="/Public/pay/images/weixin.png">
+		</div>
+		<div class="div2">
+			<div class="div3">
+			    <img class="erweima" src="/<{$imgurl}>">
+				<h1 class="money">￥<{$amount}></h1>
+			</div>
+			<h2 class="dindanhao">订单号：<{$userordernumber}></h2>
+			
+			<div class="div4">
+				<div id="time"></div>
+			</div>
+			
+			<div class="div5">
+				<img class="ShaoMiao" src="/Public/pay/images/WXsaomiao.png">
+				 <h2 class="WZ">请使用微信&nbsp;&nbsp;“扫一扫”</h2>
+				 <h2 class="wz">扫描二维码支付</h2>
+			</div>
+		</div>
+    </div>
+	
+	<script src="/Public/js/jquery.min.js"></script>
+	<script>
+		//倒计时开始
+        var m = 2;
+        var s =59;
+        var myTime = document.getElementById("time");
+        oTime();
+        var t =setInterval(oTime,1000);
+		
+        function oTime() {
+            myTime.innerHTML ="<p><span>00</span>&nbsp;小时</p><p><span>"+ (m<10 ? "0"+m : m) +"</span>&nbsp;分钟</p><p><span>"+ (s<10 ? "0"+s : s) +"</span>&nbsp;秒</p>"
+            if(s % 5 == 0){
+                $.ajax({
+                    type : "POST", //提交方式
+                    url : '<{$queryorderurl}>',//路径
+                    data : {orderid:'<{$sysordernumber}>'},//数据，这里使用的是Json格式进行传输
+                    dataType:'json',
+                    success : function(result) {//返回数据根据结果进行相应的处理
+                        console.log(result);
+                        if(result.status == "ok"){
+                            $('.erweima').attr('src','/Public/pay/images/chenggong.png');
+                            clearInterval(t);
+                        }else{
+                            if(m==0&&s==0){
+                                $('.erweima').attr('src','/Public/pay/images/shibai.png');
+                                clearInterval(t)
+                            }else if(m==0&&s>0){
+                                s--;
+                            }else if(m>0&&s!=0){
+                                s--;
+                            }else if(m>0&&s==0){
+                                m--;
+                                s=59;
+                            }
+						}
+                    }
+                });
+            }else{
+                if(m==0&&s==0){
+                    $('.erweima').attr('src','/Public/pay/images/shibai.png');
+                    clearInterval(t)
+                }else if(m==0&&s>0){
+                    s--;
+                }else if(m>0&&s!=0){
+                    s--;
+                }else if(m>0&&s==0){
+                    m--;
+                    s=59;
+                }
+			}
+        }
+		//倒计时结束
+    </script>
+</body>
+</html>

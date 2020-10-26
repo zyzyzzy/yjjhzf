@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-input, .layui-textarea {
+            width: 96%;
+        }
+        .layui-form-label {
+            width: 85px;
+        }
+    </style>
+</head>
+<body>
+<if condition="$_SESSION['code_switch'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <form id="Form" class="layui-form"  method="post" onsubmit="return false">
+            <input type="hidden" name="id" value="<{$Think.get.id}>" class="addeditinput">
+            <div class="layui-form-item">
+                <label class="layui-form-label">跳转地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="submiturl" value="<{$find['submiturl']}>" placeholder="请输入跳转地址"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">异步回调地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="notifyurl" value="<{$find['notifyurl']}>" placeholder="请输入异步回调地址"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">同步回调地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="callbackurl" value="<{$find['callbackurl']}>" placeholder="请输入同步回调地址"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid layui-word-aux">地址形式例如:http://www.amnpay.com</div>
+            </div>
+            <!--2019-3-14 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+            <include file="BaseTemplate:verifycode"/>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button onclick="javascript: FormSumit('<{:U("Payapi/editAddressSet")}>','',true,false);" class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</if>
+</body>
+</html>

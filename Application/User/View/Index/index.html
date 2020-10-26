@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>易吉聚合支付后台用户系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="/Public/css/font.css">
+    <link rel="stylesheet" href="/Public/css/xadmin.css">
+    <script src="//libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/Public/js/xadmin.js"></script>
+    <style>
+        .layui-tab-title{ margin-right: 170px; overflow: hidden;}
+        .tab-box { height: 36px; padding-right: 170px; position: relative; box-sizing: border-box;}
+        .close-con { position: absolute; right: 0; top: 2px; z-index: 100;}
+        .close-con button { cursor: pointer; background: #fff; border-radius: 6px; height: 30px; line-height: 28px; padding: 0 10px; margin: 0 5px; font-size: 12px; -webkit-transition: all .3s;}
+        .close-con .btn-all { color: #00aefd; border: 1px solid #00aefd;}
+        .close-con .btn-all:hover { background: #00aefd;}
+        .close-con .btn-other { color: #E94C4D; border: 1px solid #E94C4D;}
+        .close-con .btn-other:hover { background: #E94C4D;}
+        .close-con button:hover { color: #fff;}
+    </style>
+</head>
+<body>
+
+<!-- 顶部开始 -->
+<div class="container" style="background-color: #009688;">
+    <div class="logo"><a href="./index.html"><img src="/Public/images/user/user_logo.png" alt=""></a></div>
+    <div class="left_open">
+        <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+    </div>
+    <ul class="layui-nav left fast-add" lay-filter="">
+        <!--2019-3-20 任梦龙：注释-->
+        <!--<li class="layui-nav-item">-->
+            <!--<a href="javascript:;">+新增</a>-->
+            <!--<dl class="layui-nav-child"> &lt;!&ndash; 二级菜单 &ndash;&gt;-->
+                <!--&lt;!&ndash;2019-3-14 任梦龙：将x_admin_show修改为y_admin_show&ndash;&gt;-->
+                <!--<dd><a onclick="y_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>-->
+                <!--<dd><a onclick="y_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>-->
+                <!--<dd><a onclick="y_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>-->
+            <!--</dl>-->
+        <!--</li>-->
+        <li class="layui-nav-item">
+            <a href="/UserPay/?usercode=<{$user_code}>" target="_blank">充值</a>
+        </li>
+        <if condition="$selfcash_status eq 1">
+            <li class="layui-nav-item">
+                <a onclick="x_admin_show('扫码','<{:U("UserPay/SelfCash/index")}>?usercode=<{$user_code}>',600,350)">自助收银</a>
+            </li>
+        </if>
+        <!--2019-5-6 rml：发布公告区域:只有存在公告才会出现公告按钮-->
+        <if condition="$exist eq 1">
+            <li class="layui-nav-item">
+                <a href="javascript:void(0);" onclick="showNotice('公告内容','<{:U("viewNotice")}>?noticeid=<{$notice_id}>',800,400);">公告
+                <i class="layui-icon layui-icon-notice layui-bg-blue"></i>
+                </a>
+            </li>
+        </if>
+
+    </ul>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <!--2019-3-25 任梦龙：修改,在后台区分是主用户还是子账号-->
+            <a href="javascript:;"><{$user_name}></a>
+            <!--<a href="javascript:;">admin</a>-->
+            <dl class="layui-nav-child">
+                <!--2019-3-25 任梦龙：添加个人信息 -->
+                <dd><a onclick="y_admin_show('个人信息','<{:U("UserSelf/userInfo")}>',1500,700)">个人信息</a></dd>
+                <!--2019-3-20 任梦龙：注释-->
+                <!--<dd><a onclick="y_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>-->
+                <!--<dd><a href="./login.html">退出</a></dd>-->
+                <dd><a id="logout">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item to-index"><a href="<{:U('UserLogin/index')}>" target="_blank">前台首页</a></li>
+    </ul>
+
+</div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<!-- 左侧菜单开始 -->
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <{:admin_menu($menujson)}>
+        </ul>
+    </div>
+</div>
+<!-- <div class="x-slide_left"></div> -->
+<!-- 左侧菜单结束 -->
+<!-- 右侧主体开始 -->
+<!--2019-4-22 rml：添加关闭按钮-->
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="home layui-this"><i class="layui-icon">&#xe68e;</i>首页</li>
+        </ul>
+        <div class="close-con">
+            <button class="btn-all" title="关闭所有">关闭所有</button>
+            <button class="btn-other" title="关闭其他">关闭其他</button>
+        </div>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src='<{:U("welcome")}>' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content-bg"></div>
+<!-- 右侧主体结束 -->
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+<div class="footer" style="background-color: #fff;font-size: 12px;border-top: 1px solid #E6E6E6;">
+    <div class="copyright" style="float: right;margin-right: 50px;">Copyright  ©  2008-2019 爱玛农网络科技有限公司，All Rights Reserved 鄂ICP备45678901号</div>
+</div>
+<!-- 底部结束 -->
+
+<!--将谷歌验证遮罩层的页面单独分离，通过后端标识码来决定是否显示-->
+<input type="hidden" id="code" value="<{$google_code}>">
+<if condition="$google_code eq 1">
+    <include file="BaseTemplate:openGoogle"/>
+</if>
+</body>
+</html>
+<script>
+    //退出登录
+    $('#logout').click(function () {
+        var url = '<{:U("UserLogin/logout")}>';
+        $.post(url, function (data) {
+            if (data) {
+                layer.msg(data.msg, {time: 1500}, function () {
+                    location.reload();
+                });
+            }
+        });
+    });
+
+    $(function () {
+        var code = $('#code').val();
+        //如果账号开启了谷歌验证
+        if (code == 1) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type: 1,
+                    area: ['450px', '800px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '开启谷歌验证',
+                    content: $('#google')
+                });
+            });
+        }
+    });
+
+    function showNotice(title, url, w, h) {
+        if (title == null || title == '') {
+            title = false;
+        }
+        ;
+        if (url == null || url == '') {
+            url = "404.html";
+        }
+        ;
+        if (w == null || w == '') {
+            w = ($(window).width() * 0.9);
+        }
+        ;
+        if (h == null || h == '') {
+            h = ($(window).height() - 50);
+        }
+        ;
+
+        layer.open({
+            type: 2,
+            area: [w + 'px', h + 'px'],
+            fix: false, //不固定
+            maxmin: false,
+            shadeClose: true,
+            shade: 0.4,
+            title: title,
+            content: url
+        });
+
+    }
+
+    $(function(){
+        $('.btn-all').click(function(){
+            var home =$("li[class='home']").attr('lay-id');
+            var tabtitle = $(".layui-tab-title>li");
+            var allTabIDArr = [];
+            $.each(tabtitle,function(i){
+                allTabIDArr[i] = $(this).attr('lay-id');
+            });
+            $.each(allTabIDArr,function(i){
+                var tmpTabID = allTabIDArr[i];
+                if(home!=tmpTabID){
+                    tabDelete(tmpTabID);
+                }
+            });
+        });
+        $('.btn-other').click(function(){
+            var currentActiveTabID =$("li[class='layui-this']").attr('lay-id');
+            var tabtitle = $(".layui-tab-title>li");
+            var allTabIDArr = [];
+            $.each(tabtitle,function(i){
+                allTabIDArr[i] = $(this).attr('lay-id');
+            });
+            $.each(allTabIDArr,function(i){
+                var tmpTabID = allTabIDArr[i];
+                if(currentActiveTabID!=tmpTabID){
+                    tabDelete(tmpTabID);
+                }
+            });
+
+        });
+        tabDelete = function(id){
+            element.tabDelete('xbs_tab',id);
+        }
+    });
+</script>

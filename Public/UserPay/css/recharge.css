@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    margin: 0;
+    color: #111;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    position: relative
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+}
+
+input, textarea, button, select, a {
+    -webkit-tap-highlight-color: transparent
+}
+
+input, textarea,button,select{ outline: none;}
+
+h1, h2, h3 {
+    font-weight: normal
+}
+
+h1 {
+    margin: 30px 0 5px;
+    font-size: 24px;
+    line-height: 32px;
+    word-break: break-all
+}
+
+h2 {
+    color: #aaa;
+    margin: 0 0 15px;
+    font-size: 15px
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+cite,em,i{ font-style: normal;}
+
+.clearfix:after{ content: " "; display: block; height: 0px; font-size: 0; clear: both; visibility: hidden;}
+.fl{ float: left;}
+.fr{ float: right;}
+
+.page{ max-width: 640px; margin: 0 auto;}
+.comm-bg-gray{ background: #efefef; }
+.comm-bg-white{ background: #fff;}
+
+.recharge-con{ padding: 10px; color: #484848;}
+
+
+/* banner */
+.recharge-con .banner-con{ width: 100%; text-align: center; position: relative;}
+.recharge-con .banner-con img{ display: block; max-width: 100%;}
+
+.recharge-con .banner-con .logo{ width: 100%; position: absolute; left: 50%; top: 50%;transform: translate(-50%, -50%);}
+.recharge-con .banner-con .logo img{ height: 3.125rem; margin: 0 auto;}
+.recharge-con .banner-con cite{ display: block; font-size: .875rem; padding-top: .25rem;}
+
+
+/* 充值金额 */
+.recharge-amount{ margin: .625rem .125rem 0; padding: .625rem; border: 1px solid #ebebeb; box-sizing: border-box;}
+.recharge-amount .title{ display: block; margin-bottom: .625rem; font-size: 1rem;}
+
+.recharge-amount .enter-num{ position: relative;}
+.recharge-amount .enter-num:before{ content: "￥"; display: inline-block; font-size: 1.375rem; color: #e66665; position: absolute; left: .3125rem; line-height: 2.5rem; }
+.recharge-amount .enter-num input{ width: 100%;  border: 0 none; padding: 0 .625rem 0 1.875rem; height: 2.5rem; line-height: 2.5rem; font-size: 1.25rem; box-sizing: border-box; color: #484848;}
+
+/* 支付方式*/
+.recharge-amount .bank-type{}
+.recharge-amount .bank-type li{ margin: 1.25rem 0;  display: flex; justify-content: space-between; flex-flow: row wrap;}
+.recharge-amount .bank-type li cite{ display: block; height: 1.875rem;}
+.recharge-amount .bank-type li img{ display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;}
+.recharge-amount .bank-type li input{ width: 1rem; height: 1rem;}
+
+.recharge-amount .bank-open{ padding-bottom: 1rem; display: none;}
+
+.recharge-amount .line img{ display: block; max-width: 100%;}
+
+.other-bank{ padding: .9375rem .3125rem .625rem; display: flex; justify-content: space-between; font-size: .875rem;}
+.other-bank span{ height: 1rem;}
+.other-bank span img{ display: block; width: auto; height: auto; max-width: 100%; max-height: 100%;}
+/* .other-bank span img{transform:rotate(7deg);} */
+
+
+.submit-btn{ padding: 0 .125rem 1.25rem; margin-top: 3.75rem;}
+.submit-btn button{ width: 100%; height: 2.625rem; line-height: 2.625rem; background: #ffa630; color: #fff; font-size: 1rem; border-radius: .625rem; border: 0 none;}

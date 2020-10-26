@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看用户工单记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/ueditor/ueditor.config.js"></script>
+    <script src="/Public/ueditor/ueditor.all.min.js"></script>
+    <script src="/Public/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <style>
+        body{
+            background-color: rgb(248, 248, 248);
+        }
+        .x-body{
+            background-color: rgb(248, 248, 248);
+            padding: 20px 30px 0 30px;
+        }
+        .layui-form-item{
+            margin-bottom: 0;
+        }
+        .line{
+            line-height: 38px;
+            color: rgb(94,93,93);
+        }
+        .record_div{
+            border-bottom: 1px dashed #E6E6E6;
+        }
+        .record_div:last-child{
+            border-bottom:none;
+        }
+        .layui-layer-content{
+            background-color: #fff;
+        }
+        .layui-form-label{
+            width: 50px;
+        }
+        .layui-input-block{
+            margin-left: 80px;
+        }
+        .title_span{
+            font-size: 16px;
+            margin-left: 10px;
+            vertical-align: -2px;
+            color: rgb(64,64,64);
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <!--问题内容-->
+    <div  style="border: 1px solid #E6E6E6;padding: 0;background-color: #fff;">
+        <div class="layui-form-item" style="border-bottom: 1px dashed #C9C9C9;">
+            <div class="layui-inline  layui-col-md9">
+                <div class="layui-input-block" style="margin-left: 10px;font-weight: bold;">
+                    <input type="text" readonly value="<{$info.title}>" class="layui-input" style="border: none;">
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md2">
+                <div class="layui-input-block" style="margin-left: 65px;float: right;">
+                    <input type="text" readonly value="<{$info.date_time}>" class="layui-input" style="border: none;font-size: 12px;color: #999999;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="margin-left: 20px;">
+                <div class="line" style="padding:15px 70px 15px 0;line-height: 30px;">
+                    <{$info.content}>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--沟通内容-->
+    <if condition="$info['type'] eq 1">
+    <if condition="count($list) gt 0">
+        <div class="x-body" style="border: 1px solid #E6E6E6;padding: 0;margin-top: 10px;">
+            <div class="layui-layer-title" style="background-color: #fff;height: 40px;border-bottom: 1px dashed #C9C9C9;">
+                <img src="/Public/images/admin/communicate_title.png" alt="">
+                <span class="title_span">沟通记录</span>
+            </div>
+            <div class="layui-layer-content">
+                <volist name="list" id="vo">
+                    <if condition="$vo.sensitive neq 1">
+                        <div class="layui-form-item record_div">
+                            <if condition="$vo['admin_user'] eq 'admin'">
+                                <label class="layui-form-label" style="color: #009688">管理员:</label>
+                            </if>
+                            <if condition="$vo['admin_user'] eq 'user'">
+                                <label class="layui-form-label" style="color: #f00;">用户:</label>
+                            </if>
+                            <div class="layui-input-block">
+                                <div class="line"><{$vo.content}></div>
+                            </div>
+                        </div>
+                    </if>
+                </volist>
+            </div>
+        </div>
+        <else/>
+        <div class="x-body" style="border: 1px solid #E6E6E6;padding: 0;margin-top: 10px;">
+            <div class="layui-layer-title" style="cursor: move;">沟通记录</div>
+            <div class="layui-layer-content">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 100%;text-align: center;">暂无沟通记录</label>
+                </div>
+            </div>
+        </div>
+    </if>
+        <else/>
+        <div class="x-body" style="border: 1px solid #E6E6E6;padding: 0;margin-top: 10px;">
+            <div class="layui-layer-title" style="cursor: move;">沟通记录</div>
+            <div class="layui-layer-content" style="padding: 20px;">
+                <{$info.help_content}>
+            </div>
+        </div>
+    </if>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">用户角色列表</block>
+<block name="nav">
+    <a href="">子账号管理</a>
+    <a><cite>角色列表</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="auth_name" id="authName" value="" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="allStatus" class="layui-select">
+            <option value="">状态</option>
+            <option value="1">正常</option>
+            <option value="2">禁用</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加角色','<{:U("addUserGroup")}>',700,300)">
+             <i class="layui-icon">&#xe61f;</i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="userGroupList" layui-data="{id:'userGroupList'}"
+           dataurl="<{:U('loadUserGroup')}>"></table>
+    <!--角色状态-->
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('updateGroupStstus')}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="正常|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+    <!--操作-->
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("editUserGroup")}>?id={{d.id}}',700,300)">
+            <i class="layui-icon">
+                 <span class="layui-badge layui-bg-green">
+                       <i class="layui-icon">&#xe642;</i>
+                 </span>
+            </i>
+        </a>
+        <a title="分配权限" href="javascript:;" onclick="y_admin_show('分配权限','<{:U("giveUserMenu")}>?id={{d.id}}')">
+            <i class="layui-icon">
+                    <span class="layui-badge layui-bg-green">
+                         <i class="layui-icon">&#xe61f;</i>
+                    </span>
+            </i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('delUserGroup')}>">
+            <i class="layui-icon">
+                  <span class="layui-badge layui-bg-danger">
+                       <i class="layui-icon">&#xe640;</i>
+                  </span>
+            </i>
+        </a>
+    </script>
+</block>
+
+

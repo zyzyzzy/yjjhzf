@@ -1,0 +1,48 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">解冻时间</label>
+            <div class="layui-input-block">
+                <input type="hidden" class="layui-input searchstr addeditinput" name="id" id="id" value="<{$Think.get.id}>" autocomplete="off">
+                <input type="hidden" class="layui-input searchstr addeditinput" name="delay_type" id="delay_type" value="<{$Think.get.delay_type}>" autocomplete="off">
+                <input class="layui-input searchstr addeditinput" name="delay" id="delay" autocomplete="off">
+            </div>
+            <if condition="$Think.get.old_expect_time neq 'null'">
+            <div class="layui-form-mid layui-word-aux" style="margin-left: 110px;">原预计到账时间：<{$Think.get.old_expect_time}></div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("delayUnfreezeConfirm")}>');">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //记载日期插件
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+
+            elem: '#delay' //指定元素
+
+            ,type: 'datetime'
+
+        });
+    });
+
+</script>
+</body>
+</html>

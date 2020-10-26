@@ -1,0 +1,1 @@
+<?phpreturn array(	//'配置项'=>'配置值'    'USERQRCODE_PATH' => 'Public/UserPay/images/userqrcode/',  //用户二维码模板图片存储位置);

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$user['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名 ：</label>
+            <div class="layui-input-block">
+                <input style="border: none" readonly type="text" value="<{$user['username']}>" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户认证 ：</label>
+            <div class="layui-input-block">
+                <input style="border: none" readonly type="text" value="<{$user['userrengzhengname']}>" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <!--2019-1-21 任梦龙：添加用户别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户别名 ：</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming"  value="<{$user['bieming']}>" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-block">
+                <select name="usertype" id="usertype" usertypeval="<{$user['usertype']}>" class="layui-input addeditinput">
+                    <option value=""></option>
+                    <volist name="types" id="type">
+                        <option value="<{$type['id']}>"><{$type["usertypename"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级用户</label>
+            <div class="layui-input-block">
+                <select name="superiorid" id="superiorid" superioridval="<{$user['superiorid']}>" class="layui-input addeditinput" lay-search="">
+                    <option value="">无上级用户</option>
+                    <volist name="users" id="us">
+                        <!--2019-1-25 任梦龙：修改-->
+                        <option value="<{$us['id']}>"><{$us["username"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <select name="status" id="status" statusval="<{$user['status']}>" class="layui-input addeditinput">
+                    <volist name="status" id="sta">
+                        <option value="<{$sta['id']}>"><{$sta["statusname"]}></option>
+                    </volist>
+                </select>
+            </div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("User/UserUpdate")}>');">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        var usertype =$('#usertype').attr('usertypeval');
+        $("#usertype").find("option[value="+usertype+"]").attr('selected',true);
+
+        var superiorid =$('#superiorid').attr('superioridval');
+        $("#superiorid").find("option[value="+superiorid+"]").attr('selected',true);
+
+        var authentication =$('#authentication').attr('authenticationval');
+        $("#authentication").find("option[value="+authentication+"]").attr('selected',true);
+
+        var status =$('#status').attr('statusval');
+        $("#status").find("option[value="+status+"]").attr('selected',true);
+
+
+        form.render();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <title>通道状态</title>
+
+
+
+    <include file="BaseTemplate:includecssjs"/>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+
+<div class="x-body">
+
+
+
+    <form class="layui-form" method="post" onsubmit="return false">
+
+
+
+        <input type="hidden" name="id" class="addeditinput" value="<{$find.id}>">
+
+
+
+        <div class="layui-form-item">
+
+            <label class="layui-form-label">通道状态</label>
+
+
+
+            <div class="layui-input-block" >
+
+                <input type="radio"  lay-filter="erweima" name="status" value="1" title="正常" >
+
+                <input type="radio"  lay-filter="erweima" name="status" value="2" title="禁用" >
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="layui-form-item">
+
+
+
+            <div class="layui-input-block">
+
+
+
+                <button class="layui-btn" onclick="javascript: FormSumit2('<{:U("PayapiListStatus")}>');">确认修改</button>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+
+</div>
+
+
+
+</body>
+

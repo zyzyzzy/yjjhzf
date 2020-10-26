@@ -1,0 +1,97 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">通道分类</block>
+<block name="nav">
+    <a href="">通道管理</a>
+    <a>
+        <cite>通道分类</cite>
+    </a>
+</block>
+<!--2019-4-18 rml:添加通道分类搜索框-->
+<block name="search">
+    <input type="text" name="classname" id="classname"  placeholder="分类名称" autocomplete="off" class="layui-input addeditinput">
+    <input type="text" name="classbm" id="classbm"  placeholder="分类编码" autocomplete="off" class="layui-input addeditinput">
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="addeditinput">
+            <option value="">状态</option>
+            <option value="1">启用</option>
+            <option value="0">禁用</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-normal" onclick="javascript:window.open('<{:U("Payapi/DownloadPayapiClass","tablename=payapiclass")}>')">
+        <i class="layui-icon">&#xe62d;</i>导出通道分类
+        </button>
+        <button class="layui-btn" onclick="y_admin_show('添加通道类别','<{:U("AddPayapiClass")}>',800,600)">
+         <i class="layui-icon"></i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="PayapiClass" layui-data="{id:'PayapiClass'}" dataurl="<{:U('LoadPayapiClass')}>"></table>
+    <script type="text/html" id="order_min_feilv">
+        {{# if(d.order_min_feilv){ }}
+        {{d.order_min_feilv}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="feilv">
+        {{parseFloat((d.order_feilv)*100).toFixed(2)}}%
+    </script>
+
+    <!--图片显示-->
+    <script type="text/html" id="img">
+        <a onclick="javascript:enlarge('/{{d.img_url}}')"><img src="/{{d.img_url}}" alt="" style="width: 100%;"></a>
+    </script>
+
+    <!--给通道分类加状态值-->
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('Payapi/payapiClassStatus')}>" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+
+    <!--pc端状态-->
+    <script type="text/html" id="showpc">
+        <input type="checkbox" name="pc" ajaxurl="<{:U('Payapi/payapiClassPc')}>" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="pccheckbox" {{ d.pc == 1 ? 'checked' : '' }}>
+    </script>
+
+    <!--手机端状态-->
+    <script type="text/html" id="showwap">
+        <input type="checkbox" name="wap" ajaxurl="<{:U('Payapi/payapiClassWap')}>" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="wapcheckbox" {{ d.wap == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("Payapi/EditPayapiClass")}>?id={{ d.id }}',800,600)" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-green" style="font-size: 15px;"><i class="layui-icon">&#xe642;</i></span></i>
+        </a>
+
+        {{# if(d.sys == 0){ }}
+        <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/DelPayapiClass')}>">
+        <i class="layui-icon"><span class="layui-badge layui-bg-danger" style="font-size: 15px;"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+        {{# } }}
+    </script>
+
+    <script>
+        //图片放大
+        function enlarge(src) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type:1,
+                    area: ['700px', '300px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '模板图片',
+                    shadeClose:true,
+                    content: '<div style="text-align: center;width: 100%;"><img src="'+src+'" alt="" style="width: 96%;margin-left: 2%;"></div>'
+                });
+            });
+        }
+    </script>
+</block>
+

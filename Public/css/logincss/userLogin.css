@@ -1,0 +1,265 @@
+/*公共样式*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+body {
+    font-family: tahoma, arial, "Hiragino Sans GB", "Microsoft Yahei", \5b8b\4f53, sans-serif;
+    font-size: 12px;
+    color: #000;
+    background: url("/Public/images/bg_03.png") no-repeat; /*背景图*/
+    background-size: cover;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+input, select, textarea {
+    vertical-align: middle;
+    width: auto;
+    outline: none;
+    border: 0;
+}
+
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+    outline: none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 0;
+}
+
+/*外面的大盒子*/
+.box {
+    clear: both;
+    width: auto;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background: #fff;
+    position: absolute;
+    z-index: 9;
+    top: 120px;
+    left: 36%;
+}
+
+/*logo与公司样式开始*/
+.title {
+    clear: both;
+    width: 540px;
+    /*height: 180px;*/
+    overflow: hidden;
+    margin: auto;
+    background: #E9624F;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.title .logo {
+    display: block;
+    clear: both;
+    width: 400px;
+    /*height: 100px;*/
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.title .logo .img {
+    display: block;
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    margin: auto;
+}
+
+.title h1 {
+    display: block;
+    clear: both;
+    width: 380px;
+    overflow: hidden;
+    margin: 10px auto;
+    color: #fff;
+    text-align: center;
+}
+
+/*logo与公司样式结束*/
+
+/*登陆样式开始*/
+.wrap {
+    clear: both;
+    width: 100%;
+    margin: auto;
+    background: #fff;
+    padding: 20px 85px;
+    color: #666;
+    box-sizing: border-box;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    opacity: 0.9; /*透明度*/
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+    -khtml-opacity: 0.9;
+}
+
+.wrap ul {
+    display: block;
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+}
+
+.wrap ul li {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.wrap h1.text-center {
+    text-align: center;
+}
+
+.layui-input {
+    display: block;
+    clear: both;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    padding-left: 60px;
+    font-size: 16px;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.wrap ul li .icon {
+    display: block;
+    clear: both;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+    background: #ddd;
+    box-sizing: border-box;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -webkit-transform: scale(0.95); /*css*/
+}
+
+.wrap ul li .icon .layui-icon {
+    display: block;
+    clear: both;
+    line-height: 45px;
+    margin-left: 12px;
+    font-size: 24px;
+    color: #fff;
+
+}
+
+/*验证码样式*/
+.wrap ul li.verify_code input {
+    display: block;
+    float: left;
+    width: 170px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.wrap ul li.verify_code .verify_img {
+    display: block;
+    float: left;
+    width: 180px;
+    height: 49px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/*登录按钮样式*/
+.wrap ul li.btn {
+    height: 45px;
+    overflow: hidden;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #ff365e;
+    border: none;
+    background: -webkit-linear-gradient(#FF8272, #FA5D5E); /*渐变属性*/
+}
+
+.wrap ul li.checkbox {
+    height: 30px;
+    line-height: 20px;
+}
+
+.wrap ul .checkbox p {
+    display: block;
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.wrap ul .checkbox p input {
+    display: block;
+    float: left;
+    width: 15px;
+    height: 15px;
+    overflow: hidden;
+}
+
+.wrap ul .checkbox p label {
+    font-size: 14px;
+    line-height: 15px;
+    margin-left: 5px;
+}
+
+.wrap ul .checkbox a.forget {
+    display: block;
+    float: right;
+    width: auto;
+    overflow: hidden;
+    color: #E9624F;
+}
+/*登陆样式结束*/

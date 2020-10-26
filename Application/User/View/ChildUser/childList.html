@@ -1,0 +1,86 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">用户子账号列表</block>
+<block name="nav">
+    <a href="javascript:;">子账号管理</a>
+    <a><cite>子账号列表</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="child_name" id="childName" value="" placeholder="请输入子账号名称" autocomplete="off" class="layui-input">
+    <!--2019-1-21 任梦龙：添加子账号的别名-->
+    <input type="text" name="bieming" id="bieming" value="" placeholder="请输入子账号别名" autocomplete="off" class="layui-input">
+    <div class="layui-input-inline">
+        <select name="status" id="status">
+            <option value="">状态</option>
+            <option value="1">启用</option>
+            <option value="2">禁用</option>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <!--2019-3-15 任梦龙：由于添加子账号只有主用户才能操作,所以后面的用户id参数直接从session中获取-->
+        <button class="layui-btn" onclick="y_admin_show('添加子账号','<{:U("addChildUser")}>',700,400)">
+             <i class="layui-icon layui-icon-add-circle"></i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="childList" layui-data="{id:'childList'}" dataurl="<{:U('loadChildUserList')}>?user_id=<{:session('user_id')}>"></table>
+    <!--2019-1-25 任梦龙：添加子账号的ip白名单-->
+    <script type="text/html" id="showip">
+        <a onclick="y_admin_show('IP白名单','<{:U("childIpList")}>?id={{d.id}}',800,600)" href="javascript:;" style="text-decoration: underline">IP白名单</a>
+    </script>
+
+    <!--2019-3-21 任梦龙：修改为修改密码页面。可修改管理和登录密码-->
+    <script type="text/html" id="showmanagepwd">
+        <a href="javascript:y_admin_show('修改密码','<{:U("editUserPwd")}>?id={{d.id}}',700,400)" style="text-decoration: underline">修改密码</a>
+    </script>
+
+    <!--2019-01-28 汪桂芳：添加子用户的谷歌验证-->
+    <script type="text/html" id="showsgoogle">
+        {{# if(d.google==0){ }}
+        <a style="color: #1e9fff;text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.child_name}}】','<{:U("childGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">开通未开启</a>
+        {{# }else if(d.google==1){ }}
+        <a style="text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.child_name}}】','<{:U("childGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">已开启</a>
+        {{# }else{ }}
+        <a style="color: #ff0101;text-decoration: underline" href="javascript:y_admin_show('谷歌验证【{{d.child_name}}】','<{:U("childGoogle")}>?id={{d.id}}&google={{d.google}}',500,300)" style="text-decoration: underline">未开通</a>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('updateStatus')}>" value="{{d.id}}" lay-skin="switch"
+        lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("editChildUser")}>?id={{d.id}}',700,400)" href="javascript:;">
+            <i class="layui-icon">
+                    <span class="layui-badge layui-bg-green">
+                        <i class="layui-icon">&#xe642;</i>
+                    </span>
+            </i>
+        </a>
+        <!--分配角色-->
+        <a title="分配角色" href="javascript:;" onclick="y_admin_show('分配角色','<{:U("giveUserGroup")}>?id={{d.id}}',700,500)">
+            <i class="layui-icon">
+                    <span class="layui-badge layui-bg-green">
+                         <i class="layui-icon">&#xe61f;</i>
+                    </span>
+            </i>
+        </a>
+
+        <a title="设置账号登录" href="javascript:;" onclick="y_admin_show('设置账号登录','<{:U("setSameChild")}>?id={{d.id}}&samechild={{d.same_child}}',500,300)">
+        <i class="layui-icon"><span class="layui-badge" style="background-color: #3366b8"><i class="layui-icon">&#xe620;</i></span></i>
+        </a>
+
+        <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('delChildUser')}>">
+            <i class="layui-icon">
+                    <span class="layui-badge layui-bg-danger">
+                        <i class="layui-icon">&#xe640;</i>
+                    </span>
+            </i>
+        </a>
+    </script>
+</block>

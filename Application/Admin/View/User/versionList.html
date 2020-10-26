@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易接口版本号页面</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="user_id" id="user_id" value="<{$user_id}>" class="addeditinput"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="padding: 8px 10px;">交易接口版本</label>
+            <div class="layui-input-block">
+                <foreach name="list" item="v">
+                    <input type="checkbox" <?php if(in_array($v['id'],$version_arr)){echo 'checked';} ?>
+                    lay-filter="choice" title="<{$v['numberstr']}>--<{$v['bieming']}>" value="<{$v['id']}>"
+                    name="version[<{$v['id']}>]">
+                </foreach>
+            </div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="version">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use(['layer','form'],function(){
+        var form = layui.form;
+        var $ = layui.jquery;
+        $("button[type=reset]").click();  //2019-2-26 任梦龙：添加代码是为了防止点击复选框选中不了的问题
+        //监听提交
+        form.on('submit(version)', function (data) {
+            var version_ids = data.field;
+            var url = "<{:U('User/chooseVersion')}>";
+            $.post(url, version_ids, function (obj) {
+               if(obj.status == 'ok'){
+                    layer.msg(obj.msg,{icon: 6,time: 1500},function(){
+                        location.reload();
+                    });
+               }else {
+                   layer.msg(obj.msg,{icon: 5,time: 1500});
+                   return false;
+               }
+            });
+            return false; //阻止表单跳转
+        });
+    });
+</script>

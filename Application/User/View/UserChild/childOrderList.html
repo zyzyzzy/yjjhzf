@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>分润记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-input{
+            margin-bottom: 1%;
+        }
+        body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
+        body { background:#fff; color:#333; font-family: Verdana, Arial, Helvetica, sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-weight:normal; font-size:100%; }
+        address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}
+        a { text-decoration:none; }
+        img { border:none; }
+        ol,ul,li { list-style:none; }
+        input, textarea, select, button { font:14px Verdana,Helvetica,Arial,sans-serif; outline: none; }
+        table { border-collapse:collapse; }
+        html {overflow-y: scroll;}
+        body{ min-width: 1200px; height: 100%; background: #fff;}
+
+        .clearfix:after {content: " "; display: block; height:0; font-size: 0; clear:both; visibility: hidden;}
+        .clearfix { *zoom:1; }
+        .fl { float: left;}
+        .fr { float: right;}
+
+
+        .amount-panel{ padding: 20px;}
+        .amount-panel li{ float: left; width: 465px; height: 66px; line-height: 66px; font-size: 18px; margin-right: 50px;}
+        .amount-panel li span,.amount-panel li img{ float: left;}
+        .amount-panel li span{ background: #fff; padding: 0 30px; -moz-box-shadow:0px 0px 8px #f0f0f0; -webkit-box-shadow:0px 0px 8px #f0f0f0; box-shadow:0px 0px 8px #f0f0f0;}
+        .amount-panel li cite{ font-size: 26px; vertical-align: middle; margin-left: 20px;}
+        .amount-panel li cite:before{ content: "￥"; display: inline-block; font-size: 26px;}
+        .amount-panel .blue-box cite,.amount-panel .blue-box cite:before{ color: #1e9fff;}
+        .amount-panel .red-box cite,.amount-panel .red-box cite:before{ color: #f26464;}
+    </style>
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+        <a href="javascript:;">代理专区</a>
+        <a><cite>分润记录</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+
+    <div class="layui-row">
+        <ul class="amount-panel clearfix">
+            <li class="blue-box"><span>订单金额<cite id="sum_ordermoney"></cite></span><img src="/Public/images/user/settleorder_pic1.png" /></li>
+            <li class="red-box"><span>提成金额<cite id="sum_tcmoney"></cite></span><img src="/Public/images/user/settleorder_pic2.png" /></li>
+        </ul>
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+                <input type="text" name="username" id="username" placeholder="用户名或商户号" autocomplete="off" class="layui-input searchstr">
+                <input type="text" name="userordernumber" id="userordernumber" placeholder="用户订单号" autocomplete="off" class="layui-input searchstr">
+                <div class="layui-input-inline">
+                    <select name="status" id="status" class="layui-select searchstr">
+                        <option value="">请选择状态</option>
+                        <volist name="statustype" id="vo">
+                            <option value="<{$key}>"><{$vo}></option>
+                        </volist>
+                    </select>
+                </div>
+
+                &nbsp;&nbsp;提交时间：<input class="layui-input searchstr" placeholder="开始时间" name="start" id="start" value="<{$open_start}>" autocomplete="off">
+                <input class="layui-input searchstr" placeholder="结束时间" name="end" id="end" value="<{$open_end}>" autocomplete="off">
+                &nbsp;&nbsp;成功时间：<input class="layui-input searchstr" placeholder="开始时间" name="success_start" id="success_start" autocomplete="off">
+                <input class="layui-input searchstr" placeholder="结束时间" name="success_end" id="success_end" autocomplete="off">
+
+                <block name="searchbutton">
+                    <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+                    <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+                </block>
+
+        </form>
+
+
+    </div>
+
+    <table class="layui-hide" lay-filter="demo" id="childOrderList" layui-data="{id:'childOrderList'}" dataurl="<{:U('loadChildOrderList')}>"></table>
+
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" onclick="orderlistdownload()" id="orderlistdownload" url='<{:U("downloadChildOrderList")}>'><i class="layui-icon">&#xe62d;</i>导出交易记录</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="payapiclassname">
+        {{# if(d.payapiclassname){ }}
+        {{d.payapiclassname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="successtime">
+        {{# if(d.successtime){ }}
+        {{d.successtime}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="orderstatus">
+            {{#  if(d.status==0){ }}
+                <span style="color: #f00">{{d.statusname}}</span>
+            {{#  } }}
+            {{#  if(d.status==1){ }}
+            <span style="color: #1E9FFF">{{d.statusname}}</span>
+            {{#  } }}
+            {{#  if(d.status==2){ }}
+            <span style="color: #009688">{{d.statusname}}</span>
+            {{#  } }}
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <p style="color: #1E9FFF">
+            <button style="background: #4a89f5" class="layui-btn self-btn" onclick="y_admin_show('查看订单详细信息','<{:U("seeChildOrderInfo")}>?orderid={{d.orderid}}',1000,500)" title="查看订单详细信息">查看</button>
+        </p>
+    </script>
+
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>

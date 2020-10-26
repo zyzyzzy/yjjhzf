@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>邮箱修改</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" onsubmit="return false">
+        <input type="hidden" name="id" value="<{$email['id']}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">SMTP地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="smtp" id="smtp" value="<{$email['smtp']}>" placeholder="SMTP地址" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">端口</label>
+            <div class="layui-input-block">
+                <input type="text" name="dk" id="dk" value="<{$email['dk']}>" placeholder="端口" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱授权码</label>
+            <div class="layui-input-block">
+                <input type="text" name="em_code" id="emCode" placeholder="邮箱授权码" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" id="username" value="<{$email['user_name']}>" placeholder="用户名" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">Email账号</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" id="email" value="<{$email['email']}>"  placeholder="Email账号" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">收件人邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="receive_email" id="receiveEmail" value="<{$email['receive_email']}>" placeholder="收件人邮箱" autocomplete="off" class="layui-input addeditinput">
+            </div>
+        </div>
+        <include file="BaseTemplate:verifycode"/>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("EmailSeting/emailUpdate")}>');" lay-submit lay-filter="formDemo">确认</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

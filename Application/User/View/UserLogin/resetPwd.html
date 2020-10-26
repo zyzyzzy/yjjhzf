@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <link rel="stylesheet" href="/Public/css/resetPwd.css">
+</head>
+<body>
+<div class="box">
+    <div class="top">
+        <div class="logo_img">
+            <img src="/Public/images/mima_logo.png">
+        </div>
+    </div>
+    <div class="bot">
+        <div class="find">找回密码</div>
+        <div class="email_area">
+            <p>验证邮箱</p>
+            <input class="email" type="email" id="email" placeholder="请输入您的电子邮箱">
+            <input class="sub" type="button" id="sub_btn" value="提交">
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#sub_btn").click(function () {
+            var email = $("#email").val();
+            var preg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; //匹配Email
+            if (email == '' || !preg.test(email)) {
+                $("#chkmsg").html("请填写正确的邮箱！");
+                layer.msg('请填写正确的邮箱!', {icon: 5, time: 1500});
+                return false;
+            } else {
+                $("#sub_btn").attr("disabled", "disabled").val('提交中..').css("cursor", "default");
+                var url = "<{:U('UserLogin/sendMail')}>";
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: {email: email},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status == 'ok') {
+                            layer.msg(data.msg, {icon: 6, time: 1500}, function () {
+                                $("#sub_btn").removeAttr("disabled").val('提 交').css("cursor", "pointer");
+                            });
+                        } else {
+                            layer.msg(data.msg, {icon: 5, time: 1500});
+                        }
+
+                    }
+                });
+            }
+        });
+    })
+</script>

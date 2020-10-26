@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MD5密钥</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" action="<{:U("CreateMemberid")}>"  onsubmit="return false">
+    <input type="hidden" name="userid" value="<{$userid}>" class="addeditinput">
+    <div class="layui-form-item">
+        <label class="layui-form-label">生成规律：</label>
+        <div class="layui-input-block">
+            <select id="createtype" name="createtype" lay-verify="required" lay-filter="typetype" class="addeditinput">
+                <option value=""></option>
+                <option value="1">用户ID + 10000</option>
+                <option value="2">年月日时分秒 连接 用户ID</option>
+                <option value="3">随机数 连接 用户ID</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="javascript: FormSumit('<{:U("CreateMemberid")}>')">生成商户号</button>
+        </div>
+    </div>
+    </form>
+</div>
+</body>
+</html>

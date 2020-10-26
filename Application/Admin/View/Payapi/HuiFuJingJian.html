@@ -1,0 +1,166 @@
+<extend name="BaseTemplate:List" />
+<block name="title">汇付进件</block>
+<block name="nav">
+	 <a href="">通道管理</a>
+  　 <a>
+     <cite>汇付进件</cite>
+   　</a>
+</block>
+<block name="search">
+	<input type="text" name="request_id" id="request_id"  placeholder="请求ID" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="mer_name" id="mer_name"  placeholder="企业名称" autocomplete="off" class="layui-input addeditinput">
+    <input type="text" name="license_code" id="license_code"  placeholder="企业执照" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="cont_phone" id="cont_phone"  placeholder="联系人手机号" autocomplete="off" class="layui-input addeditinput">
+  <div class="layui-input-inline">
+    <select name="dls_id" id="dls_id" class="addeditinput">
+        <option value="">所属代理商</option>
+      <volist name="dls_list" id="vo">
+        <option value="<{$vo.id}>"><{$vo.dls_name}></option>
+      </volist>
+    </select>
+  </div>
+    
+
+  <div class="layui-input-inline">
+    <select name="status" id="status">
+      <option value="">进件状态</option>
+        <option value="0">未提交</option>
+        <option value="1">进件提交成功</option>
+        <option value="2">进件提交失败</option>
+        <option value="3">进件成功</option>
+        <option value="4">进件失败</option>
+        <option value="5">入驻提交成功</option>
+        <option value="6">入驻成功</option>
+        <option value="7">入驻失败</option>
+    </select>
+  </div>
+</block>
+
+<block name="table_script">
+	 <table class="layui-hide" id="PayapiList" layui-data="{id:'HuiFuJingJian'}" dataurl="<{:U('LoadHuiFuJingJian')}>"></table>
+    <script type="text/html" id="showtoolbar">
+        <button class="layui-btn" onclick="y_admin_show('添加代理商','<{:U("Payapi/AddHuiFuDaiLiShang")}>',600,550)"><i class="layui-icon"></i> 添加代理商</button>
+        <button class="layui-btn" onclick="y_admin_show('代理商列表','<{:U("Payapi/HuiFuDaiLiShangList")}>',800,650)"><i class="layui-icon layui-icon-list"></i> 代理商列表</button>
+        <button class="layui-btn layui-btn-normal" onclick="y_admin_show('新增进件','<{:U("Payapi/AddHuiFuJingJian")}>',850,700)"><i class="layui-icon layui-icon-release"></i> 新增进件</button>
+    </script>
+
+      <script type="text/html" id="caozuo">
+          {{# if(d.status == 0){ }}
+
+              <a title="提交"  onclick="jingjian_tijiao(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/HuiFuJingJianTiJiao')}>">
+                  <i class="layui-icon"><span class="layui-badge layui-bg-blue">提交进件 </span></i>
+              </a>
+
+              <a title="编辑"  onclick="y_admin_show('编辑进件信息','<{:U("Payapi/EditHuiFuJingJian")}>?id={{ d.id }}',850,700)" href="javascript:;">
+              <i class="layui-icon"><span class="layui-badge layui-bg-green">编辑进件 </span></i>
+              </a>
+
+              <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/DelHuiFuJingJian')}>">
+                  <i class="layui-icon"><span class="layui-badge layui-bg-danger">删除</span></i>
+              </a>
+
+          {{# } }}
+
+
+          {{# if(d.status == 1){ }}
+
+          <a title="查询"  onclick="jingjian_tijiao(this,{{ d.id }},'您确认要查询进件结果吗？')" href="javascript:;" ajaxurl="<{:U('Payapi/HuiFuJingJianSearch')}>">
+              <i class="layui-icon"><span class="layui-badge layui-bg-blue">查询进件 </span></i>
+          </a>
+
+
+          <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+          </a>
+
+          {{# } }}
+
+
+          {{# if(d.status == 2 || d.status == 4){ }}
+          <a title="编辑"  onclick="y_admin_show('编辑进件信息','<{:U("Payapi/EditHuiFuJingJian")}>?id={{ d.id }}',850,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-green">编辑进件 </span></i>
+          </a>
+          <a title="提交"  onclick="jingjian_tijiao(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/HuiFuJingJianTiJiao')}>">
+          <i class="layui-icon"><span class="layui-badge layui-bg-blue">提交进件 </span></i>
+          </a>
+          <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+          </a>
+          <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/DelHuiFuJingJian')}>">
+              <i class="layui-icon"><span class="layui-badge layui-bg-danger">删除</span></i>
+          </a>
+          {{# } }}
+              {{# if(d.status == 3){ }}
+              <a title="查看"  onclick="y_admin_show('查看','<{:U("Payapi/ShowHuiFuJingJian")}>?id={{ d.id }}',700,700)" href="javascript:;">
+              <i class="layui-icon"><span class="layui-badge layui-bg-green">查看进件 </span></i>
+              </a>
+              <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+                <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+              </a>
+              <a title="账号"  onclick="y_admin_show('账号','<{:U("Payapi/HuiFuJingJianZhangHao")}>?id={{ d.id }}',500,700)" href="javascript:;">
+              <i class="layui-icon"><span class="layui-badge layui-bg-red">账号 </span></i>
+              </a>
+              <a title="商户入驻"  onclick="y_admin_show('商户入驻','<{:U("Payapi/HuiFuShangHuRuZhu")}>?id={{ d.id }}',850,700)" href="javascript:;">
+              <i class="layui-icon"><span class="layui-badge layui-bg-blue">入驻 </span></i>
+              </a>
+              {{# } }}
+
+
+          {{# if(d.status == 5){ }}
+          <a title="查询"  onclick="jingjian_tijiao(this,{{ d.id }},'您确认要查询入驻结果吗？')" href="javascript:;" ajaxurl="<{:U('Payapi/HuiFuRuZhuSearch')}>">
+              <i class="layui-icon"><span class="layui-badge layui-bg-blue">查询入驻 </span></i>
+          </a>
+          <a title="查看"  onclick="y_admin_show('查看','<{:U("Payapi/ShowHuiFuJingJian")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-green">查看进件 </span></i>
+          </a>
+          <a title="查看"  onclick="y_admin_show('查看','<{:U("Payapi/ShowHuiFuJingJian")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-green">查看入驻 </span></i>
+          </a>
+          <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+          </a>
+          <a title="账号"  onclick="y_admin_show('账号','<{:U("Payapi/HuiFuJingJianZhangHao")}>?id={{ d.id }}',500,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-red">账号 </span></i>
+          </a>
+          {{# } }}
+
+          {{# if(d.status == 7){ }}
+          <a title="商户入驻"  onclick="y_admin_show('商户入驻','<{:U("Payapi/HuiFuShangHuRuZhu")}>?id={{ d.id }}',850,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-blue">重新入驻 </span></i>
+          </a>
+          <a title="查询"  onclick="jingjian_tijiao(this,{{ d.id }},'您确认要查询入驻结果吗？')" href="javascript:;" ajaxurl="<{:U('Payapi/HuiFuRuZhuSearch')}>">
+              <i class="layui-icon"><span class="layui-badge layui-bg-blue">查询入驻 </span></i>
+          </a>
+          <a title="查看"  onclick="y_admin_show('查看','<{:U("Payapi/ShowHuiFuJingJian")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-green">查看进件 </span></i>
+          </a>
+
+          <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+          </a>
+          <a title="账号"  onclick="y_admin_show('账号','<{:U("Payapi/HuiFuJingJianZhangHao")}>?id={{ d.id }}',500,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-red">账号 </span></i>
+          </a>
+          {{# } }}
+
+          {{# if(d.status == 6){ }}
+          <a title="商户入驻"  onclick="y_admin_show('商户入驻','<{:U("Payapi/HuiFuShangHuRuZhu")}>?id={{ d.id }}',850,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-blue">重新入驻 </span></i>
+          </a>
+          <a title="查看"  onclick="y_admin_show('查看','<{:U("Payapi/ShowHuiFuJingJian")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-green">查看进件 </span></i>
+          </a>
+
+          <a title="响应"  onclick="y_admin_show('响应','<{:U("Payapi/HuiFuJingJianXY")}>?id={{ d.id }}',700,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-orange">响应 </span></i>
+          </a>
+          <a title="账号"  onclick="y_admin_show('账号','<{:U("Payapi/HuiFuJingJianZhangHao")}>?id={{ d.id }}',500,700)" href="javascript:;">
+          <i class="layui-icon"><span class="layui-badge layui-bg-red">账号 </span></i>
+          </a>
+          {{# } }}
+
+          <a title="复制"  onclick="copy_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/CopyHuiFuJingJian')}>">
+          <i class="layui-icon"><span class="layui-badge layui-bg-cyan">复制 </span></i>
+          </a>
+      </script>
+</block>

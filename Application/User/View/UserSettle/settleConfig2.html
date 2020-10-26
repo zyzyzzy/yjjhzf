@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-label{
+            width: 170px;
+            padding: 9px 0;
+        }
+        .layui-input-block{
+            margin-left: 170px;
+        }
+        .layui-input{
+            width: 20%;
+            border: none;
+            color: #009688;
+        }
+        .layui-form-item{
+            margin-bottom: 5px;
+            border-bottom: 1px solid #E6E6E6;
+        }
+        .layui-form-item:last-child{
+            border-bottom:none;
+        }
+        .four{
+            letter-spacing: 24px;
+        }
+        .tips{
+            width: 85%;
+            height: 38px;
+            line-height: 38px;
+            color: #999;
+        }
+        .label-other{
+            width: 6px;
+            padding: 9px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+        <a href="">结算管理</a>
+        <a><cite>结算设置</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i>
+    </a>
+</div>
+<div class="x-body" style="width: 90%">
+    <div class="layui-tab layui-tab-card">
+        <form class="layui-form settle"  method="post" onsubmit="return false" style="padding-top: 10px;padding-bottom: 10px;">
+        <div style="margin-left: 15px;">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label four">结算时间</label>
+                    <label class="layui-form-label label-other">：</label>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input readonly style="width: 100%;" type="text" value="<{$config['day_start']}>" name="day_start" id="day_start" autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                    <div class="layui-form-mid">——</div>
+                    <div class="layui-input-inline" style="width: 80px;">
+                        <input readonly style="width: 100%;" type="text" value="<{$config['day_end']}>" name="day_end" id="day_end" autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">单笔提款金额范围（元）</label>
+                    <label class="layui-form-label label-other">：</label>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <input readonly style="width: 100%;" type="text" value="<{$config['min_money']}>" name="min_money" autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                    <div class="layui-form-mid">——</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <input readonly style="width: 100%;" type="text" value="<{$config['max_money']}>" name="max_money" autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">当日提款最大金额（元）</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-inline">
+                    <input readonly style="width: 100%;" type="text" name="day_maxmoney" id="day_maxmoney" value="<{$config['day_maxmoney']}>" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">当日提款最大次数（次）</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" name="day_maxnum" id="day_maxnum" value="<{$config['day_maxnum']}>" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label four">提款状态</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" name="status" id="status" value="<{$config['status']}>" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label four">提款方式</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-inline" style="width: 850px;">
+                    <input readonly type="text" name="auto_type" id="auto_type" value="<{$config['auto_type']}>" autocomplete="off" class="layui-input layui-input-inline addeditinput" style="width: 10%;">
+                    <span class="tips"><i class="layui-icon layui-icon-about"></i> 自动提款：程序设置某个时间自动到账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手动提款：用户申请后，管理员需手动给用户打款</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label four">代付通道</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" name="daifu" id="daifu" value="<{$config['daifu']}>" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label four">代付账号</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" name="account" id="account" value="<{$config['account']}>" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="letter-spacing: 8px;">手续费扣款类型</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-inline" style="width: 850px;">
+                    <input readonly type="text" name="deduction_type" id="deduction_type" value="<{$config['deduction_type']}>" autocomplete="off" class="layui-input layui-input-inline addeditinput" style="width: 10%;">
+                    <span class="tips"><i class="layui-icon layui-icon-about"></i> 内扣：手续费从提款金额中扣除，余下的为到账金额&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;外扣：手续费从用户总金额中扣除，提款金额即为到账金额</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label four">结算费率</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" value="<{$config['settle_feilv']}>" name="settle_feilv" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="letter-spacing: 1px;">单笔最小手续费（元）</label>
+                <label class="layui-form-label label-other">：</label>
+                <div class="layui-input-block">
+                    <input readonly type="text" value="<{$config['settle_min_feilv']}>" name="settle_min_feilv" autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+</body>
+</html>

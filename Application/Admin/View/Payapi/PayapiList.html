@@ -1,0 +1,83 @@
+<extend name="BaseTemplate:List" />
+<block name="title">通道列表</block>
+<block name="nav">
+	 <a href="">通道管理</a>
+  　 <a>
+     <cite>通道列表</cite>
+   　</a>
+</block>
+<block name="search">
+	<input type="text" name="zh_payname" id="zh_payname"  placeholder="原通道名称" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="en_payname" id="en_payname"  placeholder="原通道编码" autocomplete="off" class="layui-input addeditinput">
+    <input type="text" name="zh_payname" id="bieming_zh_payname"  placeholder="自定义通道名称" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="en_payname" id="bieming_en_payname"  placeholder="自定义通道编码" autocomplete="off" class="layui-input addeditinput">
+  <div class="layui-input-inline">
+    <select name="payapishangjiaid" id="payapishangjiaid" class="addeditinput">
+        <option value="">通道商家</option>
+      <volist name="PayapishangjiaList" id="vo">
+        <option value="<{$vo.id}>"><{$vo.shangjianame}></option>
+      </volist>
+    </select>
+  </div>
+    
+  <div class="layui-input-inline">
+   <select name="payapiclassid" id="payapiclassid" class="addeditinput">
+            <option value="">通道分类</option>
+      <volist name="PayapiclassList" id="vo">
+            <option value="<{$vo.id}>"><{$vo.classname}></option>
+      </volist>
+    </select>
+  </div>
+  <div class="layui-input-inline">
+    <select name="status" id="status">
+      <option value="">通道状态</option>
+        <option value="1">启用</option>
+        <option value="0">禁用</option>
+    </select>
+  </div>
+</block>
+
+<block name="table_script">
+	 <table class="layui-hide" id="PayapiList" layui-data="{id:'PayapiList'}" dataurl="<{:U('LoadPayapiList')}>"></table>
+    <script type="text/html" id="bieming_zh">
+        {{# if(d.bieming_zh_payname){ }}
+        {{d.bieming_zh_payname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="bieming_en">
+        {{# if(d.bieming_en_payname){ }}
+        {{d.bieming_en_payname}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="showtoolbar">
+        <button class="layui-btn" onclick="y_admin_show('添加通道','<{:U("Payapi/AddPayapiList")}>',600,500)"><i class="layui-icon"></i>添加</button>
+    </script>
+ <script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('Payapi/PayapiStatus')}>" value="{{d.id}}"
+        lay-skin="switch" lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="showaccount">
+    	<button class="layui-btn layui-btn-xs" onclick="location.href='<{:U("Payapi/Showpayapiaccount")}>?id={{ d.id }}'">账号设置</button>
+    </script>
+    <script type="text/html" id="showjump">
+        <button class="layui-btn layui-btn-xs" onclick="y_admin_show('广告设置','<{:U("Payapi/editPayapiJump")}>?id={{ d.id }}',900,500)">广告设置</button>
+    </script>
+      <script type="text/html" id="caozuo">
+              <a title="编辑"  onclick="y_admin_show('编辑通道','<{:U("Payapi/EditPayapiList")}>?id={{ d.id }}',600,500)" href="javascript:;">
+                <i class="layui-icon"><span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe642;</i> </span></i>
+              </a>
+              <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/DelPayapiList')}>">
+                <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+              </a>
+              {{# if(d.template==1){ }}
+              <a title="选择扫码模板"  onclick="y_admin_show('选择扫码模板','<{:U("Payapi/selectTemplate")}>?id={{ d.id }}',1200,700)" href="javascript:;">
+              <img height = "18px" src="/Public/icon/selectTemplate.png"
+                   style="background:#5bc0de;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;"/>
+              </a>
+              {{# } }}
+      </script>
+</block>

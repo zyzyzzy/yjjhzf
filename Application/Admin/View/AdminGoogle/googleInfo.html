@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二次验证</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <if condition='$google["code"] eq 1'>
+        <if condition='$google["status"] eq 0'>
+            <div class="layui-form-item" style="margin-bottom: 10px;">
+                <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第一步:</label>
+                <div class="layui-input-block">
+                    <input style="border: none" type="text" readonly value="扫码下载谷歌二次验证app:Eagle 2Fa" autocomplete="off" class="layui-input">
+                    <img src="/Public/images/googlecode_download.png" alt="" style="width: 200px;">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第二步:</label>
+                <div class="layui-input-block">
+                    <input style="border: none" type="text" readonly value="打开app,扫描下方二维码" autocomplete="off" class="layui-input">
+                    <img src="<{$src}>" alt="">
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-bottom: 0;">
+                <label class="layui-form-label" style="font-size: 18px;font-weight: 600;">第三步:</label>
+                <div class="layui-input-block">
+                    <input style="border: none" type="text" readonly value="填写app上的验证码,点击完成验证" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+                <div class="layui-form-item">
+                    <div class="layui-input-block" style="width: 20%;margin-top: 0.5%;">
+                        <input type="text" name="code" value="" placeholder="请填写验证码" autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" id="btn" onclick="javascript: FormSumit('<{:U("verifyCode")}>','',true,false);">验证</button>
+                    </div>
+                </div>
+            </form>
+        </if>
+        <if condition='$google["status"] eq 1'>
+            <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+                <span>已开启</span>
+            </div>
+            <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 20px;">
+                <span>如想要关闭二次验证,请联系管理员处理</span>
+            </div>
+        </if>
+    <else/>
+        <div class="layui-form-item" style="text-align: center;color: #C0C0C0;font-size: 36px;margin-top: 8%;">
+            <span>未开通</span>
+        </div>
+    </if>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,40 @@
+@charset "utf-8";
+/* CSS Document */
+
+.pick-character{ border-bottom: 1px solid #e5e5e5;}
+.pick-character label{ color: #5b5b5b; padding-left: 0;}
+
+
+.role-menu{ margin-top: 28px;}
+.role-menu li{ float: left; border: 1px solid #c2c2c2; border-top-left-radius: 6px; border-top-right-radius: 6px; background: #f1f1f1; color: #232323; height: 31px; line-height: 31px; margin: 10px 19px -1px 0;}
+.role-menu li a{ display: block; padding: 0 15px; color: #232323;}
+.role-menu .on{ background: #00aefd; border-color: #00aefd;}
+.role-menu .on:hover a,.role-menu .on a{ color: #fff;}
+.role-menu li:hover a{ color: #00aefd;}
+
+
+.set-middle{ border: 1px solid #c2c2c2;}
+.set-middle-item{ position: relative; padding: 0 0 127px 20px;}
+
+/* .form-panel{ padding-left: 20px;} */
+.form-panel .parents-all{ margin: 22px 0 10px;}
+.form-panel .parents-all label{ color: #464646;}
+.form-panel .parents-all img{ display: inline-block; margin-top: -1px; margin-left: 15px;}
+.form-panel .open .parents-all img{ transform: rotate(180deg);}
+
+
+.form-panel .sub-check{ display: none;} 
+.form-panel .sub-check dl{ display: flex; flex-direction: row; flex-wrap: wrap; padding-left: 37px; color: #6a6a6a;}
+.form-panel .sub-check dd{ margin: 10px 40px 10px 0;}
+.parents-all input,
+.form-panel .sub-check dl input{ width: 18px; height: 18px; vertical-align: middle; margin-right: 18px;}
+
+.operating-panel{ position: absolute; left: 20px; bottom: 50px; color: #464646;}
+.operating-panel label{ margin-right: 36px;}
+.operating-panel input{ width: 18px; height: 18px; vertical-align: middle; margin-right: 18px;}
+.operating-panel button{ width: 72px; height: 33px; line-height: 33px; text-align: center; border-radius: 6px; color: #fff; background: #00aefd; border: 0 none; cursor: pointer; margin-left: 20px;}
+.operating-panel button:hover{ opacity: .7;}
+
+
+
+

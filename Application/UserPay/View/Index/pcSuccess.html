@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户账号设置</title>
+    <link rel="stylesheet" href="index.css" >
+    <style>
+        /*公共样式*/
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-text-stroke-width: 0px;
+            -moz-text-stroke-width: 0px;
+            -o-text-stroke-width: 0px;
+            -ms-text-stroke-width: 0px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+        }
+
+        body {
+            font-family: tahoma, arial, "Hiragino Sans GB", "Microsoft Yahei", \5b8b\4f53, sans-serif;
+            font-size: 12px;
+            color: #000;
+            background-size: cover;
+        }
+
+        a {
+            color: #000;
+            font-size: 12px;
+            text-decoration: none;
+            blr: expression(this.onFocus=this.blur());
+        }
+
+        input, select, textarea {
+            vertical-align: middle;
+            width: auto;
+            outline: none;
+            border: 0;
+        }
+
+        select {
+            appearance: normal;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        img {
+            vertical-align: middle;
+            border: 0;
+            outline: none;
+        }
+
+        div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+            display: block;
+            width: auto;
+            height: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0px;
+            border: 0;
+        }
+        .top_zhifu {
+            width: 100%;
+            height: auto;
+            background: #fafafa;
+            border-bottom: 1px solid #E5E5E5;
+        }
+        .top_zhifu .hb {
+            width: 100%;
+            height: 18px;
+        }
+        .top_zhifu_logo {
+            width: 900px;
+            height: 60px;
+            margin: 0 auto;
+        }
+        .logo {
+            float: left;
+            height: 50px;
+            margin-top: 5px;
+        }
+        .logo img {
+            height: 100%;
+        }
+        .cashier{
+            float: left;
+            height: 50px;
+            margin-top: 5px;
+            line-height: 50px;
+            margin-left: 10px;
+        }
+        .cashier_text{
+            font-size: 22px;
+            color: #4f4f4f;
+            font-family: "Microsoft YaHei";
+        }
+        .cashier_sign{
+            font-size: 22px;
+            padding: 0 10px;
+            color: #bfbfbf;
+        }
+        .shouyintai {
+            line-height: 60px;
+            float: right;
+            font-size: 20px;
+            color: #4f4f4f;
+            font-family: "Microsoft YaHei";
+        }
+        .shouyintai img {
+            width: 147px;
+            height: 52px;
+        }
+        .container{
+            width: 60%;
+            margin-left: 20%;
+            height: 400px;
+            background-color: #f5f5f5;
+            margin-top: 30px;
+        }
+        .box {
+            clear: both;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            margin: auto;
+            padding-top: 13%;
+            margin-left: 25%;
+        }
+        .left_box {
+            float: left;
+            width: 10%;
+            height: 100px;
+            overflow: hidden;
+            margin-right: 2%;
+            margin-top: 1%;
+        }
+        .left_box img {
+            width: 100%;
+        }
+        .right_box {
+            float: left;
+            width: 50%;
+            overflow: hidden;
+        }
+        .right_box h1 {
+            clear: both;
+            width: 100%;
+            line-height: 50px;
+            height: 50px;
+            overflow: hidden;
+            color: #46940d;
+            font-size: 32px;
+        }
+        .right_box .pay {
+            clear: both;
+            width: 100%;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .right_box .pay p {
+            float: left;
+            width: auto;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .right_box .pay p.success {
+            margin-right: 20px;
+        }
+        .right_box .pay .money {
+            color: #d02706;
+            font-weight: bold;
+        }
+        .right_box .pay .pay_num {
+            color: #444444;
+        }
+        .right_box .time {
+            clear: both;
+            width: 100%;
+            line-height: 30px;
+            height: 30px;
+            overflow: hidden;
+            color: #7d7d7d;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="top_zhifu">
+    <div class="top_zhifu_logo">
+        <div class="logo">
+            <if condition="$user_cashier['logo']">
+                <img src="/<{$user_cashier['logo']}>">
+                <else/>
+                <img src="/Public/images/userpay/TITLE.png">
+            </if>
+        </div>
+        <div class="cashier">
+            <span class="cashier_sign">|</span>
+            <span class="cashier_text">收银台</span>
+        </div>
+        <div class="shouyintai">
+            <if condition="$user_cashier['company']">
+                <span><{$user_cashier['company']}></span>
+                <else/>
+                <span>武汉爱码农网络科技有限公司</span>
+            </if>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="box">
+        <div class="left_box">
+            <img src="/Public/UserPay/images/pc_success.png">
+        </div>
+        <div class="right_box">
+            <h1>恭喜您！支付成功啦！</h1>
+            <div class="pay">
+                <p class="success">您已成功支付 <span class="money">￥<{$info.true_ordermoney}>元</span></p>
+                <p>订单编号：<span class="pay_num"><{$info.userordernumber}></span></p>
+            </div>
+            <p class="time">支付时间：<{$info.successtime}></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

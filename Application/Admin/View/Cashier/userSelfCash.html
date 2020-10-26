@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户收银台设置页面</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-pane .layui-form-label{
+            width: 140px;
+        }
+        .layui-form-pane .layui-input-block{
+            margin-left: 140px;
+            left: 0;
+        }
+        .layui-form-item .layui-input-inline{
+            margin-left: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <input type="hidden" name="type" value="<{$selfcash_status}>" class="layui-input user_type">
+    <form name="form1" class="layui-form layui-form-pane"  method="post" action="">
+        <div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">自助收银设置</label>
+                <label style="width: 5px;" id="settleSet"></label>
+                <div class="layui-input-block">
+                    <input dataurl="<{:U('userSelfCashStatusEdit')}>?user_id=<{$user_id}>&status=0" class="layui-input <if condition="$selfcash_status eq 0">addeditinput</if>" lay-filter="type" type="radio" name="selfcash_status" value="0" title="关闭" <if condition="$selfcash_status eq 0">checked</if>>
+                    <input dataurl="<{:U('userSelfCashStatusEdit')}>?user_id=<{$user_id}>&status=1" class="layui-input <if condition="$selfcash_status eq 1">addeditinput</if>" lay-filter="type" type="radio" name="selfcash_status" value="1" title="开通" <if condition="$selfcash_status eq 1">checked</if>>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form name="form2" class="layui-form layui-form-pane cashier" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <input type="hidden" value="fal" id="img_upload">
+            <label class="layui-form-label">商户二维码</label>
+            <if condition="$del neq 3">
+                <div class='layui-input-inline' id='div_prev' title='' style="min-height: 0;border: 1px solid #E6E6E6;width: 200px;">
+                    <img src="/<{$qrcode}>" alt="" style="height: 200px;" >
+                </div>
+            </if>
+            <if condition="$del eq 3">
+                <div class="layui-input-inline">
+                    <button class="layui-btn btn" lay-submit lay-filter="cashier" ajaxurl="<{:U('addUserQrcode')}>">重新生成</button>
+                </div>
+                <else/>
+                <div class="layui-input-inline">
+                    <button class="layui-btn btn" lay-submit lay-filter="cashier" ajaxurl="<{:U('deleteUserQrcode')}>">删除</button>
+                </div>
+            </if>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function(){
+        var type = $("input[name='type']").val();
+        if(type == 1){
+            $('.cashier').show();
+        }else{
+            $('.cashier').hide();
+        }
+    });
+    // var v = $('.user_type').val();
+    // if(v == 1){
+    //     $('.cashier').show();
+    // }else{
+    //     $('.cashier').hide();
+    // }
+    layui.use('form',function(){
+        var form=layui.form;
+        form.on('radio(type)',function(data){
+            // var val = this.value;
+            var dataurl = $(this).attr('dataurl');
+            //修改数据库
+            $.ajax({
+                type:'POST',
+                url:dataurl,
+                dataType:'json',
+                success:function(data){
+                    if(data.status == "ok"){
+                        layer.msg(data.msg,{icon:6,time:1500},function(){
+                            location.reload();
+                        })
+                    }else{
+                        layer.msg(data.msg,{icon:5,time:2000})
+                    }
+                }
+            });
+            // if(val == 1){
+            //     $('.cashier').show();
+            // }else{
+            //     $('.cashier').hide();
+            // }
+        });
+    });
+
+</script>
+<script>
+    $('.btn').click(function () {
+        var user_id = '<{$user_id}>';
+        var ajaxurl = $(this).attr('ajaxurl');
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {user_id:user_id},
+            datatype: 'json',
+            success: function (res) {
+                if(res.status=='ok'){
+                    layer.msg(res.msg,{icon:6,time:2000},function () {
+                        location.reload();
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:5,time:3000});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    });
+</script>

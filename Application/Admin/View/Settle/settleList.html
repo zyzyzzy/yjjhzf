@@ -1,0 +1,208 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">结算记录</block>
+<block name="nav">
+    <a href="javascript:;">结算管理</a>
+    <a><cite>结算记录</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="memberid" id="memberid" placeholder="请输入商户号" autocomplete="off"
+           class="layui-input searchstr">
+    <input type="text" name="ordernumber" id="ordernumber" placeholder="请输入系统订单号" autocomplete="off"
+           class="layui-input searchstr">
+    <input type="text" name="userordernumber" id="userordernumber" placeholder="请输入用户订单号" autocomplete="off"
+           class="layui-input searchstr">
+    <div class="layui-input-inline">
+        <select name="bankname" id="bankname" class="layui-select searchstr" lay-search>
+            <option value="">请选择银行</option>
+            <volist name="allBanks" id="vo">
+                <option value="<{$vo.bankname}>"><{$vo.bankname}></option>
+            </volist>
+        </select>
+    </div>
+    <!--<div class="layui-input-inline">
+        <select name="type" id="type" class="layui-select searchstr">
+            <option value="">请选择类型</option>
+            <option value="0">T + 0</option>
+            <option value="1">T + 1</option>
+        </select>
+    </div>-->
+    <div class="layui-input-inline">
+        <select name="status" id="status" class="layui-select searchstr" lay-search>
+            <option value="">请选择结算状态</option>
+            <volist name="status" id="vo">
+                <option value="<{$key}>"><{$vo}></option>
+            </volist>
+        </select>
+    </div>
+    <!--2019-03-12汪桂芳添加-->
+    <div class="layui-input-inline">
+        <select name="refundstatus" id="refundstatus" class="layui-select searchstr" lay-search>
+            <option value="">请选择退款状态</option>
+            <volist name="refundstatus" id="vo">
+                <option value="<{$key}>"><{$vo}></option>
+            </volist>
+        </select>
+    </div>
+    <!--2019-1-22 任梦龙：添加导出搜索的识别class名searchstr-->
+    <!--2019-1-22 任梦龙：添加开户名，手机号，身份证，银行卡号的搜索-->
+    <input type="text" name="bankusername" id="searchBankUser" placeholder="请输入开户名" autocomplete="off"
+           class="layui-input searchstr">
+    <input type="text" name="phonenumber" id="searchPhone" placeholder="请输入手机号" autocomplete="off"
+           class="layui-input searchstr">
+    <input type="text" name="identitynumber" id="identityNumber" placeholder="请输入身份证" autocomplete="off"
+           class="layui-input searchstr" style="width: 175px;">
+    <input type="text" name="bankcardnumber" id="bankcardNumber" placeholder="请输入银行卡号" autocomplete="off"
+           class="layui-input searchstr" style="width: 175px;">
+
+    <br/>
+    <!--2019-01-25汪桂芳,添加金额范围的搜索-->
+    &nbsp;&nbsp;结算金额：
+    <input type="number" class="layui-input searchstr" placeholder="起始金额" name="money_start"
+                            id="money_start" autocomplete="off">
+    <input type="number" class="layui-input searchstr" placeholder="结束金额" name="money_end" id="money_end"
+           autocomplete="off">
+
+    &nbsp;&nbsp;申请时间：<input style="margin-top: 1%;" class="layui-input searchstr" placeholder="开始时间" name="apply_start"
+                            id="apply_start" value="" autocomplete="off">
+    <input class="layui-input searchstr" placeholder="结束时间" name="apply_end" id="apply_end" value="" autocomplete="off">
+    &nbsp;&nbsp;处理时间：<input class="layui-input searchstr" placeholder="开始时间" name="deal_start" id="deal_start"
+                            autocomplete="off">
+    <input class="layui-input searchstr" placeholder="结束时间" name="deal_end" id="deal_end" autocomplete="off">
+</block>
+
+<block name="table_script">
+    <table class="layui-hide" id="settleList" layui-data="{id:'settleList'}" dataurl="<{:U("loadSettleList")}>"></table>
+
+    <script type="text/html" id="showtoolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-normal" onclick="settlelistdownload()" id="settlelistdownload"
+                    url='<{:U("Settle/downloadSettleList")}>'><i class="layui-icon">&#xe62d;</i>导出结算记录
+            </button>
+        </div>
+    </script>
+
+    <script type="text/html" id="bankusername">
+        {{# if(d.bankusername){ }}
+        {{d.bankusername}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="phonenumber">
+        {{# if(d.phonenumber){ }}
+        {{d.phonenumber}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="dealtime">
+        {{# if(d.dealtime){ }}
+        {{d.dealtime}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="deduction_type">
+        {{#  if(d.deduction_type==1){ }}
+        外扣
+        {{#  } else { }}
+        内扣
+        {{#  } }}
+    </script>
+
+    <!--<script type="text/html" id="ordertype">
+        {{#  if(d.type==1){ }}
+        T + 1
+        {{#  } else { }}
+        T + 0
+        {{#  } }}
+    </script>-->
+
+    <script type="text/html" id="orderstatus">
+        {{#  if(d.status==0){ }}
+        <span style="color: #f00;">未处理</span>
+        {{#  } }}
+        {{#  if(d.status==1){ }}
+        <span style="color: #4A89F5;">处理中</span>
+        {{#  } }}
+        {{#  if(d.status==2){ }}
+        已打款
+        {{#  } }}
+        {{#  if(d.status==4){ }}
+        <span style="color: #f523e4;">打款失败</span>
+        {{#  } }}
+        {{#  if(d.status==3){ }}
+        <span style="color: #019688;">已退款</span>
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="orderrefundstatus">
+        {{#  if(d.refundstatus==0){ }}
+        正常
+        {{#  } }}
+        {{#  if(d.refundstatus==1){ }}
+        <span style="color: #4A89F5;">退款中</span>
+        {{#  } }}
+        {{#  if(d.refundstatus==2){ }}
+        <span style="color: #019688;">已退款</span>
+        {{#  } }}
+        {{#  if(d.refundstatus==3){ }}
+        <span style="color: #f00;">退款失败</span>
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <p style="color: #1E9FFF">
+            <button style="background: #4a89f5;" class="layui-btn layui-btn-normal self-btn"
+                    onclick="y_admin_show('查看订单详细信息','<{:U("seeSettleInfo")}>?settleid={{d.settleid}}',1000,700)" title="查看订单详细信息">查看</button>
+            <!--<button style="background: #009688;" class="layui-btn layui-btn-normal self-btn"-->
+                    <!--ajaxurl="<{:U('settle/settleStatusEdit')}>?id={{d.settleid}}" title="结算订单处理"-->
+                    <!--onclick="settleStatusEdit(this)">处理-->
+            <!--</button>-->
+            <button style="background: #5bc0de;" class="layui-btn layui-btn-normal self-btn"
+                    ajaxurl="<{:U('settle/query')}>?id={{d.settleid}}" title="结算订单验证"
+                    onclick="query(this)" title="结算订单验证">验证
+            </button>
+            {{# if(d.status==0){ }}
+            <button style="background: #FF5722;" class="layui-btn layui-btn-normal self-btn"
+                    onclick="y_admin_show('订单退款处理','<{:U("seeSettleRefund")}>?settleid={{d.settleid}}',1000,700)" title="订单退款处理">退款</button>
+            {{# } }}
+        </p>
+    </script>
+
+    <script>
+         function query(data){
+             var ajaxurl = $(data).attr('ajaxurl');
+             $.ajax({
+                 url:ajaxurl,
+                 type:'get',
+                 dataType:'json',
+                 success:function(response){
+                     if(response.status=='error'){
+                         layer.msg(response.msg,{icon:5,time:2000});
+                     }else{
+                         layer.msg(response.msg,{icon:1,time:2000});
+                     }
+                 },
+             });
+         }
+         function settleStatusEdit(data){
+             var ajaxurl = $(data).attr('ajaxurl');
+             $.ajax({
+                 url:ajaxurl,
+                 type:'get',
+                 dataType:'json',
+                 success:function(response){
+                     if(response.status=='error'){
+                         layer.msg(response.msg,{icon:5,time:2000});
+                     }else{
+                         layer.msg(response.msg,{icon:1,time:2000});
+                     }
+                 },
+             });
+         }
+    </script>
+</block>

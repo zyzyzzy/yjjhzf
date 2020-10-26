@@ -1,0 +1,26 @@
+<!--2018-12-26 上午9:30 任梦龙修改-->
+<extend name="BaseTemplate:List" />
+<block name="title">账号使用信息</block>
+<block name="nav">
+    <a href="">交易通道</a>
+    <!--<a href="<{:U('Payapi/PayapiList')}>">通道(<{$zh_payname}>)</a>-->
+    <a href="">通道账号</a>
+    <a><cite>账号使用信息</cite></a>
+</block>
+<block name="search"></block>
+<block name="searchbutton"></block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll(this)" ajaxurl="<{:U("delAllTongdaoZhanghao","payapi_id=".$payapi_id)}>"><i class="layui-icon">&#x1006;</i>批量删除</button>
+    </xblock>
+</block>
+<!--2019-3-1 任梦龙：将参数中的下划线去除-->
+<block name="table_script">
+    <table class="layui-hide" id="seePayapiAccountInfo" layui-data="{id:'seePayapiAccountInfo'}" dataurl="<{:U("loadSeePayapiAccountInfo","payapiid=".$payapi_id."&payapiaccountid=".$payapiaccount_id)}>"></table>
+    <script type="text/html" id="caozuo">
+        <a title="删除" data-user="{{d.userid}}" data-payapi="{{d.payapiid}}" data-account="{{d.accountid}}" onclick="member_del(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/seePayapiAccountInfoDel')}>">
+            <i class="layui-icon"><span class="layui-badge layui-bg-danger" style="font-size: 15px;"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+    </script>
+</block>
+

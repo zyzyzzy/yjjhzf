@@ -1,0 +1,41 @@
+<!--2019-3-11 任梦龙：修改数据时的验证码输入框-->
+<input type="hidden" name="code_type" value="<{$code_type}>" class="addeditinput">
+<div class="layui-form-item layui-form-item-con">
+    <label class="layui-form-label">验证码</label>
+    <!--2019-3-13 任梦龙：将text类型修改为password-->
+    <div class="layui-input-inline">
+        <if condition="$code_type eq 1">
+            <input type="password" name="verfiy_code" placeholder="管理密码" autocomplete="off"
+                   class="layui-input addeditinput">
+            <elseif condition="$code_type eq 2"/>
+            <input type="password" name="verfiy_code" placeholder="谷歌验证码" autocomplete="off"
+                   class="layui-input addeditinput">
+            <else/>
+            <input type="password" name="verfiy_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                   class="layui-input addeditinput">
+        </if>
+        <!--2019-3-15 任梦龙：添加可点击的小图标-->
+        <i id="icon" class="layui-icon click_icon">&#xe673;</i>
+    </div>
+
+</div>
+<style>
+    .click_icon{
+        position: absolute;
+        z-index: 10;
+        top: 10px;
+        left: 165px;
+        cursor: pointer;
+    }
+</style>
+<script>
+    //2019-3-15 任梦龙：点击小图标时，改变输入框的type类型
+    $('#icon').click(function(){
+        var type=$('input[name=verfiy_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=verfiy_code]').attr('type','text');
+        }else {
+            $('input[name=verfiy_code]').attr('type','password');
+        }
+    });
+</script>

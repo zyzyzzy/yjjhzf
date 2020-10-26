@@ -1,0 +1,36 @@
+<extend name="BaseTemplate:List" />
+<block name="title">通道账号设置</block>
+<block name="nav">
+    <a href="">支付通道</a>
+    <a href="<{:U('Payapi/PayapiList')}>">通道(<{$zh_payname}>)</a>
+    <a><cite>通道账号</cite></a>
+</block>
+<block name="search"></block>
+<block name="searchbutton"></block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-bg-green" onclick="addAll(this)" ajaxurl="<{:U('addAllTongdaoZhanghao')}>?payapi_id=<{$payapi_id}>"><i class="layui-icon">&#xe605;</i>批量启用账号</button>
+        <button class="layui-btn layui-btn-danger" onclick="delAll(this)" ajaxurl="<{:U('delAllTongdaoZhanghao')}>?payapi_id=<{$payapi_id}>"><i class="layui-icon">&#x1006;</i>批量关闭账号</button>
+        <button class="layui-btn  layui-btn-normal" onclick="javascript:history.go(-1);"><i class="layui-icon">&#xe603;</i>返回</button>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="ShowUserPayapiaccount" layui-data="{id:'ShowUserPayapiaccount'}" dataurl="<{:U('loadShowpayapiaccount')}>?payapiid=<{$payapi_id}>"></table>
+    <script type="text/html" id="showbieming">
+        {{d.bieming}}
+    </script>
+
+    <script type="text/html" id="showstatus">
+        <input type="checkbox" data-id="{{d.payapi_id}}" name="accountid{{d.id}}"  value="{{d.id}}"  lay-skin="switch" lay-text="启用|禁用" lay-filter="checkboxpayapiaccount" {{ d.check == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="showdefault">
+        <input type="checkbox" data-id="{{d.payapi_id}}" name="accountid{{d.id}}"  value="{{d.id}}"  lay-skin="switch" lay-text="开启|关闭" lay-filter="checkdefaultaccount" {{ d.default == 1 ? 'checked' : '' }}>
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <button style="height: 25px;line-height: 25px;padding: 0 6px;" class="layui-btn layui-btn-normal" onclick="y_admin_show('查看通道账号使用信息','<{:U("seePayapiAccountInfo")}>?payapiaccount_id={{d.id}}&payapi_id={{d.payapi_id}}',800,600)" title="查看通道账号信息">查看</button>
+    </script>
+
+</block>
+

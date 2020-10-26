@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+            <if condition="$user_type eq 1">
+                <div class="layui-input-inline">
+                    <select name="child_id" id="child_id" class="layui-select addeditinput" lay-search>
+                        <option value="">请选择子账号</option>
+                        <volist name="child_list" id="vo">
+                            <option value="<{$vo.id}>"><{$vo.child_name}></option>
+                        </volist>
+                    </select>
+                </div>
+            </if>
+            <input class="layui-input addeditinput" placeholder="登录ip" name="loginip" id="loginip">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="登录开始日" name="start" id="start">
+            <input class="layui-input addeditinput" autocomplete="off" placeholder="登录截止日" name="end" id="end">
+            <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+            <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+        </form>
+    </div>
+    <table class="layui-hide" id="userLoginRecord" layui-data="{id:'userLoginRecord'}" dataurl="<{:U("loadUserLoginRecord")}>"></table>
+    <script type="text/html" id="login_ip">
+        {{# if(d.loginip){ }}
+        {{d.loginip}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+    <script type="text/html" id="loginaddress">
+        {{# if(d.loginaddress){ }}
+        {{d.loginaddress}}
+        {{# }else{ }}
+        -
+        {{# } }}
+    </script>
+
+</div>
+
+</body>
+
+</html>

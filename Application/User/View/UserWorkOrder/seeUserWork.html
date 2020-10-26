@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看用户工单记录</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/ueditor/ueditor.config.js"></script>
+    <script src="/Public/ueditor/ueditor.all.min.js"></script>
+    <script src="/Public/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <style>
+        body{
+            background-color: rgb(248, 248, 248);
+        }
+        .x-body{
+            background-color: rgb(248, 248, 248);
+            padding: 20px 30px 0 30px;
+        }
+        .layui-form-item{
+            margin-bottom: 0;
+        }
+        .line{
+            line-height: 38px;
+            color: rgb(94,93,93);
+        }
+        .record_div{
+            border-bottom: 1px dashed #E6E6E6;
+        }
+        .record_div:last-child{
+            border-bottom:none;
+        }
+        .layui-layer-content{
+            background-color: #fff;
+        }
+        .layui-form-label{
+            width: 50px;
+        }
+        .layui-input-block{
+            margin-left: 80px;
+        }
+        .title_span{
+            font-size: 16px;
+            margin-left: 10px;
+            vertical-align: -2px;
+            color: rgb(64,64,64);
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <!--问题内容-->
+    <div  style="border: 1px solid #E6E6E6;padding: 0;background-color: #fff;">
+        <div class="layui-form-item" style="border-bottom: 1px dashed #C9C9C9;">
+            <div class="layui-inline  layui-col-md9">
+                <div class="layui-input-block" style="margin-left: 10px;font-weight: bold;">
+                    <input type="text" readonly value="<{$info.title}>" class="layui-input" style="border: none;">
+                </div>
+            </div>
+            <div class="layui-inline  layui-col-md2">
+                <div class="layui-input-block" style="margin-left: 65px;float: right;">
+                    <input type="text" readonly value="<{$info.date_time}>" class="layui-input" style="border: none;font-size: 12px;color: #999999;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="margin-left: 20px;">
+                <div class="line" style="padding:15px 70px 15px 0;line-height: 30px;">
+                    <{$info.content}>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--沟通内容-->
+    <div class="x-body" style="border: 1px solid #E6E6E6;padding: 0;margin-top: 10px;">
+        <div class="layui-layer-title" style="background-color: #fff;height: 40px;border-bottom: 1px dashed #C9C9C9;">
+            <img src="/Public/images/admin/communicate_title.png" alt="">
+            <span class="title_span">沟通记录</span>
+        </div>
+        <div class="layui-layer-content">
+            <if condition="count($list) gt 0">
+                <volist name="list" id="vo">
+                    <div class="layui-form-item record_div">
+                        <if condition="$vo['admin_user'] eq 'admin'">
+                            <label class="layui-form-label" style="color: rgb(39,173,154);width: 90px;">管理员:</label>
+                        </if>
+                        <if condition="$vo['admin_user'] eq 'user'">
+                            <label class="layui-form-label" style="color: #ff6c00;width: 90px;"><{$vo.user_name}>:</label>
+                        </if>
+                        <div class="layui-input-inline" style="width: 75%">
+                            <if condition="$vo.sensitive eq 1">
+                                <div class="line" id="line_<{$vo.id}>" style="color: #666666;">此条记录为用户隐私信息,点击
+                                    <span onclick="google_show('谷歌验证','<{$vo.id}>')" style="text-decoration: underline;color: #00a0e9;cursor: pointer;">查看</span>
+                                </div>
+                                <else/>
+                                <div class="line" style="color: rgb(64,64,64);"><{$vo.content}></div>
+                                <if condition="$vo.sensitive_content neq ''">
+                                    <div class="line" id="line_<{$vo.id}>" style="border-top: 1px dashed #E9E9E9;color: #666666;">
+                                        此条记录为用户隐私信息,点击
+                                        <span onclick="google_show('谷歌验证','<{$vo.id}>')" style="text-decoration: underline;color: #00a0e9;cursor: pointer;">查看</span>
+                                    </div>
+                                </if>
+                            </if>
+                        </div>
+                        <div class="layui-input-inline" style="width: 115px;float: right;color: #999999;font-size: 12px;margin-top: 4px;">
+                            <div class="line"><{$vo.datetime}></div>
+                        </div>
+                    </div>
+                </volist>
+                <else/>
+                <p><img src="/Public/images/admin/gap.png" alt="" style="margin-left: 40%;margin-top: 2%;"></p>
+                <p style="color:rgb(143,143,143);margin-left: 40%;margin-top: 2%;padding-bottom: 2%;">暂无沟通记录哦!</p>
+            </if>
+        </div>
+    </div>
+    <!--谷歌验证-->
+    <div id="google" style="display: none;">
+        <form class="layui-form" method="post" onsubmit="return false">
+            <input type="hidden" name="id" id="id" class="layui-input addeditinput">
+            <include file="BaseTemplate:verifycode" />
+            <div class="layui-form-item" style="margin-top: 3%;">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="javascript: Submit('<{:U("verifyGoogle")}>');">确认</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function google_show(title,id) {
+        $('#id').val(id);
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                area: ['400px', '200px'],
+                fix: false, //不固定
+                maxmin: false,//不显示最大最小化
+                // closeBtn: 0,//不显示关闭按钮
+                shade: 0.4,
+                title: title,
+                content: $('#google')
+            });
+        });
+    }
+    function Submit(ajaxurl) {
+        var verfiy_code =  $('input[name="verfiy_code"]').val();
+        var code_type =  $('input[name="code_type"]').val();
+        var id = $('#id').val();
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: {verfiy_code:verfiy_code,id:id,code_type:code_type},
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500},function () {
+                        layer.closeAll();//关闭当前页面的所有层
+                        $('#line_'+obj.id).html('');
+                        var str = '<span style="color: #f00;">用户隐私信息:</span>';
+                        str += obj.content;
+                        $('#line_'+obj.id).html(str);
+                    });
+                    layer.render();
+                } else {
+                    layer.msg(obj.msg, {icon: 5, time: 4000});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+                return false;
+            }
+        });
+    }
+</script>
+</body>
+</html>

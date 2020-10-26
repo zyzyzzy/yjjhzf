@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑扫码模板</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .thumb {margin-left:-90px; margin-top:15px; height:128px;}
+        .layui-form-pane .layui-form-label{width: 150px;}
+        .layui-form-pane .layui-input-block{margin-left: 150px;}
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div id='prevModal'>
+        <img id='img_prev'/>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" id="id" value="<{$info.id}>">
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" id="title" value="<{$info.title}>" placeholder="标题" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">PC端模板文件名</label>
+            <div class="layui-input-block">
+                <input type="text" name="pc_template_name" value="<{$info.pc_template_name}>" id="pc_template_name" placeholder="eg:pc_alipay,文件名,不带后缀" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">WAP端模板文件名</label>
+            <div class="layui-input-block">
+                <input type="text" name="wap_template_name" value="<{$info.wap_template_name}>" id="wap_template_name" placeholder="eg:wap_alipay,文件名,不带后缀" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">PC端模板截图</label>
+                <div class="layui-input-block" style="margin-left: 15%;">
+                    <button type="button" class="layui-btn pc_upload" data-value="pc">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                </div>
+                <div class='layui-input-block' id='pc_div_prev' title=''>
+                    <img src="/<{$info.pc_img_name}>" alt="" class="thumb">
+                </div>
+            </div>
+            <div class="layui-inline" style="margin-left: 100px;">
+                <label class="layui-form-label">WAP端模板截图</label>
+                <div class="layui-input-block">
+                    <button type="button" class="layui-btn wap_upload" data-value="wap">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                </div>
+                <div class='layui-input-block' id='wap_div_prev' title=''>
+                    <img src="/<{$info.wap_img_name}>" alt="" class="thumb">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" value="<{$info.pc_img_name}>" id="pc_img_name" name="pc_img_name">
+        <input type="hidden" value="<{$info.wap_img_name}>" id="wap_img_name" name="wap_img_name">
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn" ajaxurl="<{:U('editAdvTemplate')}>">确认修改</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        upload.render({
+            elem: '.pc_upload'
+            ,url: '<{:U("upload")}>'	//后台接收地址
+            ,auto: true				//不自动上传设置
+            ,accept: 'images'				 //允许上传的文件类型
+            ,size: 2097152				 //允许上传的文件大小 2M
+            ,data: {
+                img_type:'pc',
+                title: function(){
+                    return $('#title').val();
+                }
+            }
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            ,done: function(res, index, upload){//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status=='ok'){
+                    var str = '';
+                    $("#pc_div_prev").html(str); //添加到预览区域
+                    str = '<img class="thumb" src="/'+res.data+'"/>'
+                    $("#pc_div_prev").html(str); //添加到预览区域
+                    $('#pc_img_name').val(res.data);
+                }else{
+                    layer.msg('PC端图片上传失败:'+res.msg,{icon:5,time:3000});
+                }
+            }
+        });
+        upload.render({
+            elem: '.wap_upload'
+            ,url: '<{:U("upload")}>'	//后台接收地址
+            ,auto: true				//不自动上传设置
+            ,accept: 'images'				 //允许上传的文件类型
+            ,size: 2097152				 //允许上传的文件大小 2M
+            ,data: {
+                img_type:'wap',
+                title: function(){
+                    return $('#title').val();
+                }
+            }
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            ,done: function(res, index, upload){//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status=='ok'){
+                    var str = '';
+                    $("#wap_div_prev").html(str); //添加到预览区域
+                    str = '<img class="thumb" src="/'+res.data+'"/>'
+                    $("#wap_div_prev").html(str); //添加到预览区域
+                    $('#wap_img_name').val(res.data);
+                }else{
+                    layer.msg('WAP端图片上传失败:'+res.msg,{icon:5,time:3000});
+                }
+            }
+        })
+    });
+    $('#btn').click(function () {
+        var title = $('#title').val();
+        if(title==''){
+            layer.msg("请填写模板标题",{icon:5,time:3000});
+            return false;
+        }
+        var pc_template_name = $('#pc_template_name').val();
+        if(pc_template_name==''){
+            layer.msg("请填写PC端模板文件名",{icon:5,time:3000});
+            return false;
+        }
+        var wap_template_name = $('#wap_template_name').val();
+        if(wap_template_name==''){
+            layer.msg("请填写WAP端模板文件名",{icon:5,time:3000});
+            return false;
+        }
+        var pc_img_name = $('#pc_img_name').val();
+        if(pc_img_name==''){
+            layer.msg("请先上传PC端模板图片",{icon:5,time:3000});
+            return false;
+        }
+        var wap_img_name = $('#wap_img_name').val();
+        if(wap_img_name==''){
+            layer.msg("请先上传WAP端模板图片",{icon:5,time:3000});
+            return false;
+        }
+        var ajaxurl = $(this).attr("ajaxurl");
+        var id = $('#id').val();
+        $.ajax({
+            type:'POST',
+            url:ajaxurl,
+            data:{
+                id:id,
+                title:title,
+                pc_template_name:pc_template_name,
+                wap_template_name:wap_template_name,
+                pc_img_name:pc_img_name,
+                wap_img_name:wap_img_name
+            },
+            dataType:'json',
+            success:function(data){
+                if(data.status == "ok"){
+                    layer.msg(data.msg,{icon:6,time:2000},function () {
+                        parent.location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg,{icon:5,time:2000});
+                }
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert('操作有误,请检查后再重试')
+            }
+        });
+    });
+</script>
+

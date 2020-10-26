@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>交易记录</title>
+    <include file="BaseTemplate:includecssjs" />
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+        <a href="javascript:;">通道管理</a><a>
+        <cite>代付通道</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <table class="layui-hide" id="daifuList" layui-data="{id:'daifuList'}" dataurl="<{:U("loadDaifuList")}>"></table>
+    <script type="text/html" id="feilv">
+        {{(d.settle_feilv)*100}}%
+    </script>
+
+    <script type="text/html" id="payapistatus">
+        {{#  if(d.status==1){ }}
+        启用
+        {{#  } else { }}
+        <span style="color: #f00;">禁用</span>
+        {{#  } }}
+    </script>
+</div>
+<script src="/Public/User/<{$Think.ACTION_NAME}>.js"></script>
+</body>
+
+</html>

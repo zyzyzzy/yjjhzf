@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户子账号的ip白名单</title>
+    <link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css"  media="all">
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-mid {
+            padding: 0px 0!important;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" onsubmit="return false">
+        <input type="hidden" name="child_id" value="<{$id}>" class="addeditinput">
+        <input type="hidden" name="user_id" value="<{$user_id}>" class="addeditinput">
+        <div class="layui-form-item">
+            <label class="layui-form-label">绑定IP</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ip" placeholder="例如：127.0.0.1" autocomplete="off"
+                       class="layui-input addeditinput">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <button onclick="javascript: FormSumit('<{:U("addChildIp")}>','',true,false);" class="layui-btn"
+                lay-submit lay-filter="formDemo">新增绑定IP</button>
+            </div>
+        </div>
+    </form>
+    <table class="layui-hide" id="childIpList" layui-data="{id:'childIpList'}" dataurl="<{:U('ChildUser/loadChildIp')}>?child_id=<{$id}>"></table>
+    <script type="text/html" id="barDemo">
+        <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+           ajaxurl="<{:U('ChildUser/delChildIp')}>?child_id=<{$id}>" onclick="delete_info(this,{{d.id}})" >删除</a>
+    </script>
+</div>
+<script>
+    var tableIns;
+    layui.use('table', function(){
+        var table = layui.table;
+        tableIns =  table.render({
+            elem: '#childIpList'
+            ,url: $("#childIpList").attr("dataurl")
+            ,cols: [[
+                {type:'numbers'}
+                ,{field:'ip', title:'绑定IP'}
+                ,{field:'date_time', title:'添加时间'}
+                ,{field:'id', title:'操作',fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}
+            ]]
+            ,page: true
+            ,text: {
+                none: '无数据'
+            }
+            ,method: 'post'
+        });
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<extend name="BaseTemplate:List" />
+<block name="title">通道列表</block>
+<block name="nav">
+	 <a href="">汇付进件</a>
+  　 <a>
+     <cite>代理商列表</cite>
+   　</a>
+</block>
+<block name="search">
+	<input type="text" name="dls_name" id="dls_name"  placeholder="代理商名称" autocomplete="off" class="layui-input addeditinput">
+	<input type="text" name="apikey" id="apikey"  placeholder="API_KEY" autocomplete="off" class="layui-input addeditinput">
+
+</block>
+
+<block name="table_script">
+	 <table class="layui-hide" id="PayapiList" layui-data="{id:'HuiFuDaiLiShangList'}" dataurl="<{:U('LoadHuiFuDaiLiShangList')}>"></table>
+
+      <script type="text/html" id="caozuo">
+              <a title="编辑"  onclick="y_admin_show('编辑代理商信息','<{:U("Payapi/EditHuiFuDaiLiShang")}>?id={{ d.id }}',600,550)" href="javascript:;">
+                <i class="layui-icon"><span class="layui-badge layui-bg-green"><i class="layui-icon">&#xe642;</i> </span></i>
+              </a>
+              <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('Payapi/DelHuiFuDaiLiShang')}>">
+                <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+              </a>
+      </script>
+</block>

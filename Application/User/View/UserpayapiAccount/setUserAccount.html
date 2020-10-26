@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户账号设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-input, .layui-textarea {
+            width: 96%;
+        }
+        .layui-form-label {
+            width: 85px;
+        }
+    </style>
+</head>
+<body>
+<if condition="$_SESSION['switch_code'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <form id="Form" class="layui-form"  method="post" onsubmit="return false">
+            <input type="hidden" name="id" value="<{$Think.get.id}>" class="addeditinput">
+            <div class="layui-form-item">
+                <label class="layui-form-label"><if condition="$find['ziduan']['memberid']"><{$find['ziduan']['memberid']}><else/>商户号</if></label>
+                <div class="layui-input-block">
+                    <input type="text" name="memberid" value="<{$find['memberid']}>" placeholder="请输入<{$find['ziduan']['memberid']}>"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><if condition="$find['ziduan']['account']"><{$find['ziduan']['account']}><else/>账号名</if></label>
+                <div class="layui-input-block">
+                    <input type="text" name="account" value="<{$find['account']}>" placeholder="请输入<{$find['ziduan']['account']}>"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <!--判断是否存在商家配置文件-->
+            <if condition="$find['extra']">
+                <volist name="find['extra']" id="vo">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><{$vo}></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="<{$key}>" value="<{$find[$key]}>" placeholder="额外字段,可选填"
+                                   autocomplete="off" class="layui-input addeditinput">
+                        </div>
+                    </div>
+                </volist>
+            </if>
+            <!--2019-4-2 任梦龙：任梦龙：将提交地址，同步回调地址，异步回调地址单独分离-->
+            <include file="BaseTemplate:verifycode"/>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button onclick="javascript: FormSumit('<{:U("UserpayapiAccount/editAccountSet")}>','',true,false);"
+                    class="layui-btn" lay-submit lay-filter="formDemo">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</if>
+</body>
+</html>

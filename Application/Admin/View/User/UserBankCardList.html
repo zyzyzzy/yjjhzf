@@ -1,0 +1,72 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">用户银行卡相设置</block>
+<block name="nav">
+    <a href="">用户管理</a>
+    <a href="">用户管理</a>
+    <a href="">用户列表</a>
+    <a><cite>银行卡设置</cite></a>
+</block>
+<block name="search">
+<div class="layui-input-inline">
+                <select name="bankname" id="bankname" class="layui-select">
+                  <option value="">银行名称</option>
+                  <volist name="banklist" id="vo">
+                  <option value="<{$vo.bankname}>"><{$vo.bankname}></option>
+                  </volist>
+                </select>
+              </div>
+          <input type="text" name="banknumber" id="banknumber"  placeholder="银行卡号" autocomplete="off" class="layui-input">
+          <input type="text" name="bankmyname" id="bankmyname"  placeholder="开户人姓名" autocomplete="off" class="layui-input">
+           <input type="text" name="shenfenzheng" id="shenfenzheng"  placeholder="身份证号" autocomplete="off" class="layui-input">
+            <input type="text" name="tel" id="tel"  placeholder="手机号" autocomplete="off" class="layui-input">
+          
+          <div class="layui-input-inline">
+            <select name="status" id="status">
+              <option value="">状态</option>
+              <option value="0">禁用</option>
+              <option value="1">正常</option>
+            </select>
+          </div>
+         
+</block>
+<block name="xblock">
+    <xblock>
+       
+        <button class="layui-btn" onclick="y_admin_show('添加用户','<{:U("AddUserBankCard")}>?userid=<{$Think.get.userid}>',600)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+<table class="layui-hide" id="UserList" layui-data="{id:'UserBankCardList'}" dataurl="<{:U('LoadUserBankCardList')}>?userid=<{$Think.get.userid}>"></table>
+
+<script type="text/html" id="showshengshi">
+{{d.banksheng}} / {{d.bankshi}}
+</script>
+
+<script type="text/html" id="showstatus">
+        <input type="checkbox" name="status" ajaxurl="<{:U('UserBankCardStatus')}>" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statuscheckbox" {{ d.status == 1 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="showmr">
+        <input type="checkbox" name="status" ajaxurl="<{:U('UserBankCardMr')}>" value="{{d.id}}" lay-skin="switch" lay-text="默认|普通" lay-filter="Mrcheckbox" {{ d.mr == 1 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("UserBankCardEdit")}>?id={{d.id}}',600)" href="javascript:;">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+            </i>
+        </a>
+       
+       <a title="删除" onclick="delete_del(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('DelUserBankCard')}>">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-danger">
+                    <i class="layui-icon">&#xe640;</i>
+                </span>
+            </i>
+        </a>
+    </script>
+
+</block>

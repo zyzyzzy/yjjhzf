@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置单笔最大金额</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <input type="hidden" name="id" id="id" value="<{$Think.get.id}>" class="addeditinput" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">金额</label>
+            <div class="layui-input-block">
+                <input type="number" name="max_money" id="maxMoney" lay-verify="number" placeholder="请输入单笔最大金额" autocomplete="off" value="<{$max_money}>" class="layui-input addeditinput">
+            </div>
+            <div class="layui-form-mid layui-word-aux"></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("conformMaxMoney")}>');">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

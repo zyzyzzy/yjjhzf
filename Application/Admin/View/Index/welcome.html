@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理首页 - 易吉聚合支付后台用户系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/Public/Admin/css/comm.css">
+    <link rel="stylesheet" href="/Public/Admin/css/index.css">
+    <link rel="stylesheet" href="/Public/Admin/blue/doubleDate.css" />
+    <script src="//libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/doubleDate2.0.js"></script>
+    <script src="/Public/Admin/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="/Public/js/echarts.js"></script>
+    <link rel="stylesheet" href="/Public/css/xadmin.css">
+
+</head>
+
+<body>
+<div class="home-wrapper">
+
+    <div class="welcome">
+        <!--2019-4-22 rml：修改信息-->
+        欢迎管理员：<em class="red"><{:session("admin_info.user_name")}></em>！上次登录时间：<span><{:session("admin_info.lastlogin_time")}></span>
+        <!--<span style="float: left">欢迎管理员：<em class="red"><{$admin_info.user_name}></em>！最近登录时间：<span><{$admin_info.lastlogin_time}></span></span>-->
+        <span style="float: right">
+            <a class="layui-btn layui-btn-small" style="line-height:2.8em;height: 50px;float:right;background-color: #00aefd;" href="javascript:location.replace(location.href);" title="刷新">
+                <i class="layui-icon" style="line-height:30px;"><i class="layui-icon">&#xe669;</i></i>
+            </a>
+        </span>
+    </div>
+
+    <ul class="statistics-wrapper">
+        <li class="profit">利润<span>¥<{$sum_profit}></span></li>
+        <li class="user-number">用户数<span><{$sum_user}></span></li>
+        <li class="transaction-num">交易笔数<span><{$sum_SuccessCount}></span></li>
+        <li class="total-amount">交易总金额<span>¥<{$sum_amount}></span></li>
+        <li class="with-total-amount">提款总金额<span>¥<{$sum_tkamount}></span></li>
+        <li class="success-rate">成功率<span><{$sum_rate}>%</span></li>
+    </ul>
+
+    <!-- 数据统计 -->
+    <!--<div class="sjtj-content">-->
+        <!--<div class="title sjtj-icon">数据统计</div>-->
+        <!--<ul class="clearfix">-->
+            <!--<li class="lirun"><img src="/Public/Admin/images/lr.png" /><span>利润<em><{$sum_profit}></em></span></li>-->
+            <!--<li class="yhs"><img src="/Public/Admin/images/user.png" /><span>用户数<em><{$sum_user}></em></span></li>-->
+            <!--<li class="jybs"><img src="/Public/Admin/images/jybs.png" /><span>交易笔数<em><{$sum_SuccessCount}></em></span></li>-->
+            <!--<li class="zfje"><img src="/Public/Admin/images/zfje.png" /><span>充值总金额<em><{$sum_amount}></em></span></li>-->
+            <!--<li class="czje"><img src="/Public/Admin/images/czje.png" /><span>提款总金额<em><{$sum_tkamount}></em></span></li>-->
+            <!--<li class="cgl"><img src="/Public/Admin/images/cgl.png" /><span>成功率<em><{$sum_rate}>%</em></span></li>-->
+        <!--</ul>-->
+    <!--</div>-->
+
+    <!-- 系统通知 -->
+    <!--<div class="xttz-content">-->
+        <!--<div class="title xttz-icon">消息通知</div>-->
+        <!--<div class="msg"><span>一个昵称</span>用户充值300元</div>-->
+    <!--</div>-->
+
+    <!-- 统计数据 -->
+    <div class="tjsj-content">
+        <div class="title">统计数据</div>
+        <div class="tjsj-detailed">
+            <div class="date-select clearfix">
+                <ul class="iptgroup">
+                    <li><input name="start" type="text" readonly="readonly" class="doubledate ipticon" /></li>
+                    <li>--</li>
+                    <li><input name="end" type="text" readonly="readonly" class="doubledate ipticon" /></li>
+                </ul>
+                <a id="search" url="<{:U('index/searchData')}>" href="JavaScript:;" class="btn-search" title="搜索">搜索</a>
+            </div>
+            <ul class="table-comm table1 clearfix">
+                <li>
+                    <span>充值金额 ：<em id="order_sum_ordermoney"></em>元</span>
+                    <span>充值手续费 ：<em id="order_sum_moneytrade"></em>元</span>
+                    <span>充值成本 ：<em id="order_sum_moneycost"></em>元</span>
+                    <span>充值数量 ：<em id="order_count"></em>笔</span>
+                </li>
+                <li>
+                    <span>提现金额 ：<em id="settle_sum_ordermoney"></em>元</span>
+                    <span>提现手续费 ：<em id="settle_sum_moneytrade"></em>元</span>
+                    <span>提现成本 ：<em id="settle_sum_moneycost"></em>笔</span>
+                    <span>提现数量 ：<em id="settle_count"></em>笔</span>
+                </li>
+            </ul>
+            <ul class="table-comm table2 clearfix">
+                <li><cite><{$y}>年<{$m}>月份统计数据</cite></li>
+                <li>
+                    <span><{$d}>日充值：<{$today_amount}>元|手续费：<{$today_moneytrade}>元|<{$today_count}>笔</span>
+                    <span><{$d}>日提款：<{$today_settle_money}>元|手续费：<{$today_tc_moneytrade}>元|<{$today_settle_count}>笔</span>
+                    <span><{$d}>日代理佣金：<{$today_tc_money}>元|<{$today_tc_count}>笔</span>
+                </li>
+                <li>
+                    <span><{$m}>月充值：<{$months_amount}>元|手续费：<{$months_moneytrade}>元|<{$months_count}>笔</span>
+                    <span><{$m}>月提款：<{$months_settle_money}>元|手续费：<{$months_settle_moneytrade}>元|<{$months_settle_count}>笔</span>
+                    <span><{$m}>月代理佣金：<{$months_tc_money}>元|<{$months_tc_count}>笔</span>
+                </li>
+                <li>
+                    <span><{$y}>年充值：<{$year_amount}>元|手续费：<{$year_moneytrade}>元|<{$year_count}>笔</span>
+                    <span><{$y}>年提款：<{$year_settle_money}>元|手续费：<{$year_settle_moneytrade}>元|<{$year_settle_count}>笔</span>
+                    <span><{$y}>年代理佣金：<{$year_tc_money}>元|<{$year_tc_count}>笔</span>
+                </li>
+            </ul>
+            <ul class="table-comm table2 clearfix">
+                <li><cite><{$y}>年收入统计</cite></li>
+                <li><span><{$y}>年<{$m}>月<{$d}>日</span><span>充值纯利润：<{$today_sumprofit}>元</span><span>结算纯利润：<{$today_settle_sumprofit}>元</span>
+                </li>
+                <li><span><{$y}>年<{$m}>月 整月</span><span>充值纯利润：<{$months_sumprofit}>元</span><span>结算纯利润：<{$months_settle_sumprofit}>元</span>
+                </li>
+                <li><span><{$y}>年整年</span><span>充值纯利润：<{$year_sumprofit}>元</span><span>结算纯利润：<{$year_settle_sumprofit}>元</span>
+                </li>
+            </ul>
+            <!-- 充值统计 -->
+            <div class="set-content clearfix">
+                <div class="set-title hd">
+                    <ul class="clearfix">
+                        <li class="on">近七日统计</li>
+                        <li >今日统计</li>
+                        <li>近7日成功率统计</li>
+                        <li>分类统计</li>
+                        <li>用户统计</li>
+                        <li>实时统计记录</li>
+                    </ul>
+                </div>
+                <div class="set-middle bd">
+                    <div class="set-middle-item clearfix">
+                        <!--<div class="add-up"></div>-->
+                        <!--<div class="add-up">提款统计</div>-->
+                        <include file="Index:LastsevenDay"/>
+                    </div>
+                    <!--今日统计-->
+                    <div class="set-middle-item clearfix">
+                       <!-- <div class="add-up">充值统计</div>
+                        <div class="add-up"></div>-->
+                        <include file="Index:todayStatiticDataByPayapiclass"/>
+                    </div>
+
+                    <div class="set-middle-item clearfix">
+                        <!--<div class="add-up">手续费统计</div>-->
+                        <!--<div class="add-up"></div>-->
+                        <include file="Index:LatelySuccessrate"/>
+                    </div>
+                    <!--分类统计-->
+                    <div class="set-middle-item clearfix">
+                        <include file="Index:getLatelyByPayapiclass"/>
+                       <!-- <div class="add-up"></div>
+                        <div class="add-up">分类统计</div>-->
+                    </div>
+                    <div class="set-middle-item clearfix">
+                        <!--<div class="add-up">用户统计</div>-->
+                        <!--<div class="add-up"></div>-->
+                        <include file="Index:getMaxMoneyByUser"/>
+                    </div>
+                    <div class="set-middle-item clearfix">
+                        <!--<div class="add-up"></div>-->
+                        <!--<div class="add-up">实时统计记录</div>-->
+                        <include file="Index:getTodayStatisticData"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.doubledate').kuiDate({
+            className: 'doubledate',
+            isDisabled: "1"
+        });
+    });
+</script>
+<script>
+    jQuery(".set-content").slide({
+        autoPlay: false,
+        trigger: "click",
+        delayTime: 700,
+        pnLoop: false
+    });
+</script>
+<script>
+    var search =$('#search');
+    search.click(function(){
+        var start = $('input[name=start]').val();
+        var end = $('input[name=end]').val();
+        var url = search.attr('url');
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {'start':start,'end':end},
+            dataType: "json", //返回数据形式为json
+            success: function (result) {
+                ///console.log(result);
+               if(result.status=='success'){
+                   $('#order_sum_ordermoney').text(result.data.orderinfo['sum_ordermoney']);
+                   $('#order_sum_moneytrade').text(result.data.orderinfo['sum_moneytrade']);
+                   $('#order_sum_moneycost').text(result.data.orderinfo['sum_moneycost']);
+                   $('#order_count').text(result.data.orderinfo['count']);
+                   $('#settle_sum_ordermoney').text(result.data.settleinfo['sum_ordermoney']);
+                   $('#settle_sum_moneytrade').text(result.data.settleinfo['sum_moneytrade']);
+                   $('#settle_sum_moneycost').text(result.data.settleinfo['sum_moneycost']);
+                   $('#settle_count').text(result.data.settleinfo['count']);
+               }
+
+            },
+            error: function (errorMsg) {
+
+                //alert("不好意思，大爷，图表请求数据失败啦!");
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

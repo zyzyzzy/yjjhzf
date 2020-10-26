@@ -1,0 +1,59 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">通道分类</block>
+<block name="nav">
+    <a href="">通道管理</a>
+    <a><cite>通道商家</cite></a>
+</block>
+<block name="search"></block>
+<block name="searchbutton"></block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn" onclick="y_admin_show('添加通道商家','<{:U("AddPayapiShangjia")}>',600,300)">
+            <i class="layui-icon"></i>添加
+        </button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+
+    <table class="layui-table" lay-data="{url:'<{:U("LoadPayapiShangjia")}>', page:true, id:'PayapiShangjia',method:'post',text:{none: '无数据'}}" lay-filter="PayapiShangjia">
+    <script type="text/html" id="showtoolbar">
+        <button class="layui-btn" onclick="javascript:location.reload();">
+            <i class="layui-icon">&#xe666;</i>刷新数据
+        </button>
+    </script>
+    <thead>
+        <tr>
+            <th lay-data="{type:'numbers',width:70}">ID</th>
+            <th lay-data="{field:'shangjianame',width:150}">商家名称</th>
+            <volist name="payapiclasslist" id="vo">
+                <th lay-data="{field:'id', templet: '#payapiclass<{$vo["id"]}>'}"><{$vo.classname}></th>
+            </volist>
+            <th lay-data="{field:'id', templet: '#caozuo', fixed: 'right', width:160}">操作</th>
+        </tr>
+    </thead>
+    </table>
+    <volist name="payapiclasslist" id="vo">
+        <script type="text/html" id="payapiclass<{$vo['id']}>">
+                <input type="checkbox" name="payapiclass" ajaxurl="<{:U('Payapi/PayapiShangjiaClassEdit')}>" value="{{d.id}}" payapiclassid="<{$vo['id']}>" lay-skin="switch" lay-text="开|关" lay-filter="payapiclass"
+            {{# if(checkedjs(d.classjson,<{$vo["id"]}>)){ }}
+            checked
+            {{# } }}>
+        </script>
+    </volist>
+    <script type="text/html" id="caozuo">
+        <a title = "编辑" onclick = "y_admin_show('编辑','<{:U("Payapi/EditPayapiShangjia")}>?id={{ d.id }}',600,300)" href="javascript:;" >
+            <i class="layui-icon" ><span class="layui-badge layui-bg-green" style="font-size: 15px;" > <i class="layui-icon" >&#xe642;</i></span></i>
+        </a>
+        <a title = "交易银行编码设置" onclick = "y_admin_show('交易银行编码设置','<{:U("Payapi/shangjiaBankcode")}>?id={{ d.id }}&type=1',1000,500)" href="javascript:;" >
+            <img height = "18px" src="/Public/icon/trans.png" style="background:#5bc0de;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;" / >
+        </a>
+        <a title = "结算银行编码设置" onclick = "y_admin_show('结算银行编码设置','<{:U("Payapi/shangjiaBankcode")}>?id={{ d.id }}&type=2',1000,500)" href="javascript:;" >
+            <img height = "18px" src="/Public/icon/settle.png" style="background:#5cb85c;padding: 2px 7px;box-sizing: border-box;border-radius: 3px;vertical-align: -3px;" / >
+        </a>
+        <a title = "删除" onclick="delete_info(this,{{ d.id }})" href = "javascript:;" ajaxurl="<{:U('Payapi/DelPayapiShangjia')}>" >
+            <i class="layui-icon" ><span class="layui-badge layui-bg-danger" style="font-size: 15px;" > <i class="layui-icon" >&#xe640;</i></span></i>
+        </a>
+    </script>
+</block>
+

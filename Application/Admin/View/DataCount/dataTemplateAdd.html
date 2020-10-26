@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加统计模板</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .thumb {margin-left:5px; margin-top:15px; height:128px}
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div id='prevModal'>
+        <img id='img_prev'/>
+    </div>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属后台</label>
+            <div class="layui-input-block">
+                <select name="admin_user" id="admin_user" class="layui-input addeditinput">
+                    <option value="admin">系统后台</option>
+                    <option value="user">用户后台</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+                <input type="text" name="title" id="title" placeholder="标题" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">方法名</label>
+            <div class="layui-input-block">
+                <input type="text" name="action" id="action" placeholder="eg:getTodayStatisticData" class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">默认显示</label>
+            <div class="layui-input-block">
+                <select name="default" id="default" class="layui-input addeditinput">
+                    <option value="1">默认显示</option>
+                    <option value="0">默认不显示</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <i class="layui-icon layui-icon-about"></i> 当用户未选择任何统计模板时,首页会显示默认的模板
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">模板截图</label>
+            <div class="layui-input-block" style="margin-left: 15%;">
+                <button type="button" class="layui-btn upload">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                </button>
+            </div>
+            <div class='layui-input-block' id='div_prev' title=''></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="btn">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $('#btn').click(function () {
+        var str = $('#div_prev').html();
+        if(str==''){
+            layer.msg("请先上传图片",{icon:5,time:5000});
+        }
+    });
+    layui.use('upload', function(){
+        var upload = layui.upload;
+        //执行实例
+        upload.render({
+            elem: '.upload'
+            ,url: '<{:U("addDataTemplate")}>'	//后台接收地址
+            ,auto: false				//不自动上传设置
+            ,accept: 'images'				 //允许上传的文件类型
+            ,size: 2097152				 //允许上传的文件大小 2M
+            // ,exts: 'jpg,png,gif,jpeg' 			//设置智能上传图片格式文件
+            ,bindAction: '#btn'			//“上传”按钮的ID
+            ,choose: function(obj){ //文件选择后的回调
+                //图片预览
+                obj.preview(function(index, file, result){
+                    $("#div_prev").html(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    //放大
+                    imgobj.className = 'thumb';
+                    $("#div_prev").html(imgobj); //添加到预览区域
+                });
+            }
+            ,before: function(obj){ //obj参数包含的信息
+                console.log(obj);
+                //需要传到后台的其他参数
+                var admin_user = $('#admin_user').val();
+                var title = $('#title').val();
+                var action = $('#action').val();
+                var defaultval = $('#default').val();
+                this.data= {admin_user:admin_user,title:title,action:action,defaultval:defaultval};//传递到后台的数据
+            }
+            ,done: function(res, index, upload){//文件提交后的回调
+                layer.closeAll('loading'); //关闭loading
+                if(res.status=='ok'){
+                    layer.msg(res.msg,{icon:6,time:2000},function () {
+                        parent.location.reload();
+                    });
+                }else{
+                    layer.msg(res.msg,{icon:5,time:3000});
+                }
+            }
+        })
+    });
+
+
+</script>

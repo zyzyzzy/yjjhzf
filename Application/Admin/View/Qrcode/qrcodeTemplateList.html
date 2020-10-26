@@ -1,0 +1,70 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">扫码模板列表</block>
+<block name="nav">
+    <a href="javascript:;">通道管理</a>
+    <a><cite>扫码模板</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="title" id="title" placeholder="标题" autocomplete="off" class="layui-input searchstr">
+    <div class="layui-input-inline">
+        <select name="payapiclass_id" id="payapiclass_id" class="layui-select searchstr" lay-search>
+            <option value="">请选择通道分类</option>
+            <volist name="payapiclass" id="vo">
+                <option value="<{$vo.id}>"><{$vo.classname}></option>
+            </volist>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'qrcodeTemplateList')" ajaxurl="<{:U('delAll')}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加统计模板','<{:U("qrcodeTemplateAdd")}>',800,600)"><i class="layui-icon">&#xe61f;</i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="qrcodeTemplateList" layui-data="{id:'qrcodeTemplateList'}" dataurl="<{:U('loadQrcodeTemplateList')}>"></table>
+    <script type="text/html" id="default">
+        <input type="checkbox" name="default" ajaxurl="<{:U('editDefault')}>" value="{{d.id}}"
+        lay-skin="switch" lay-text="默认|普通" lay-filter="defaultcheckbox" {{ d.default == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="img">
+        <a onclick="javascript:enlarge('/{{d.img_name}}')"><img src="/{{d.img_name}}" alt="" style="height: 100%;"></a>
+    </script>
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("qrcodeTemplateEdit")}>?id={{d.id}}',800,600)">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+            </i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('templateDel')}>">
+            <i class="layui-icon">
+                 <span class="layui-badge layui-bg-danger" >
+                      <i class="layui-icon">&#xe640;</i>
+                 </span>
+            </i>
+        </a>
+    </script>
+    <script>
+        //图片放大
+        function enlarge(src) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type:1,
+                    area: ['600px', '550px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '模板图片',
+                    shadeClose:true,
+                    content: '<div style="text-align: center;width: 100%;height: 100%;"><img src="'+src+'" alt="" style="height: 96%;margin-top: 2%;"></div>'
+                });
+            });
+        }
+    </script>
+</block>
+

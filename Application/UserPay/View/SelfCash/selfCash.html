@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自助收银</title>
+    <link rel="stylesheet" href="/Public/UserPay/css/selfCash.css?v=0328">
+</head>
+<body class="comm-bg-gray">
+<section class="page">
+    <div class="pay-wrapper">
+        <div class="input-plane comm-bg-white">
+            <div class="banner-con">
+                <if condition="$selfcash_back">
+                    <img src="/<{$selfcash_back}>" />
+                    <else/>
+                    <img src="/Public/UserPay/images/userback/default.png" />
+                </if>
+                <if condition="$user_cashier['type'] eq 1">
+                    <span class="logo"><img src="/<{$user_cashier['logo']}>" />
+                    <cite><{$user_cashier['company']}></cite>
+                <else/>
+                    <span class="logo"><img src="/Public/UserPay/images/logo.png" />
+                    <cite>武汉爱玛农网络科技有限公司</cite>
+                </if>
+            </div>
+            <input type="hidden" value="<{$client}>" id="client">
+            <div class="enter-num">
+                <h4>支付金额</h4>
+                <form action="<{:U('UserPay/SelfCash/payConfirm')}>" id="form" method="post">
+                    <input type="hidden" value="<{$Think.get.usercode}>" id="usercode" name="usercode">
+                    <input type="hidden" value="<{$payname}>" id="payname" name="payname">
+                    <div class="en-money"><input type="text" id="input-amount" name="order_money" onfocus="this.blur();" readonly></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/Public/js/jquery.min.js"></script>
+<script src="/Public/UserPay/js/mynumkb.js"></script>
+<script>
+    $("#input-amount").mynumkb();
+    $('#btn').html($('#client').val()+"支付");
+</script>
+</body>
+</html>

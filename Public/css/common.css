@@ -1,0 +1,17 @@
+/*2019-4-4 任梦龙：建立公共的css，目的是为了尽量避免样写在页面或者标签内，而且有些样式是共用的，所以可以用一个class来表示即可*/
+.layui-form-item .usersecret-div-width {
+    width: 300px;
+}
+
+.class-mid {
+    padding: 0px 0 !important;
+}
+
+.refrash-btn {
+    line-height: 1.6em;
+    margin-top: 3px;
+    float: right;
+}
+.refrash-btn-height {
+    line-height:40px;
+}

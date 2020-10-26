@@ -1,0 +1,64 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">查看管理员三级菜单</block>
+<block name="nav">
+    <a href="">管理员管理</a>
+    <a href="">菜单列表</a>
+    <a><cite>查看操作</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="menu_title" id="menuTitle" placeholder="请输入菜单名称" class="layui-input" autocomplete="off">
+</block>
+<block name="searchbutton">
+    <button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+    <button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'viewAdminOpt')"
+                ajaxurl="<{:U('delAllAdminMenu')}>"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="viewAdminOpt" layui-data="{id:'viewAdminOpt'}" dataurl="<{:U('loadAdminOptList')}>?pid=<{$id}>"></table>
+    <!--菜单名称-->
+    <script type="text/html" id="showmenutitle">
+        {{d.menu_title}}
+    </script>
+
+    <!--控制器名称-->
+    <script type="text/html" id="showcontroller">
+        {{#  if(d.controller){ }}
+        {{d.controller}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+
+    <!--方法名称-->
+    <script type="text/html" id="showaction">
+        {{#  if(d.action){ }}
+        {{d.action}}
+        {{#  } else { }}
+
+        {{#  } }}
+    </script>
+
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("MenuEdit")}>?id={{d.id}}',800,500)">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+        </i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('MenuDel')}>">
+            <i class="layui-icon">
+                 <span class="layui-badge layui-bg-danger" >
+                     <i class="layui-icon">&#xe640;</i>
+                 </span>
+            </i>
+        </a>
+    </script>
+</block>
+
+

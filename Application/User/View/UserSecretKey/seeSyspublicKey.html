@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看系统公钥</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<!--2019-3-19 任梦龙：如果session('switch_code') = 1,表示有验证遮罩层,否则就是显示正常的页面-->
+<if condition="$_SESSION['switch_code'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+            <div class="layui-form-item">
+                <div class="layui-form-item textarea">
+                    <textarea id="keystr" class="layui-textarea"
+                              style="width: 50%;height: 400px;"><{$sys_publickey}></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+</if>
+</body>
+</html>

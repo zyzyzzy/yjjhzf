@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>支付完成</title>
+	<style>
+		body{
+			background-color: #E6E6E6;
+		}
+		.top{
+			height: 50rem;
+			border: 1px solid rgb(213,213,213);
+			background-color: #fff;
+		}
+		.footer{
+			height: 25rem;
+			border: 1px solid rgb(213,213,213);
+			background-color: #fff;
+		}
+		.img{
+			margin-top: 10rem;
+			text-align: center;
+		}
+		.text{
+			text-align: center;
+			margin-top: 2rem;
+		}
+		.text-text{
+			font-size: 3rem;
+			color: rgb(72,72,72);
+		}
+		.text-money{
+			font-size: 4rem;
+			color: rgb(72,72,72);
+			font-weight: bold;
+		}
+		ul li{
+			width: 100%;
+			list-style: none;
+		}
+		.footer li{ display: flex; font-size: 3rem; color: rgb(122,122,122); margin: 3rem 0;}
+		.footer li span{ flex: 1;}
+		.footer li span:first-child{ width: 35%;}
+		.footer li span:last-child{ width: 65%; text-align: right; padding-right: 2rem;}
+	</style>
+</head>
+<body>
+<div class="container">
+	<div class="top">
+		<div class="img">
+			<img src="/Public/UserPay/images/wechat-pay.png" alt="" width="300">
+		</div>
+		<div class="text">
+			<p class="text-text">支付成功!</p>
+			<p class="text-money">¥ <{$info.true_ordermoney}></p>
+		</div>
+	</div>
+	<ul class="footer">
+		<li><span>订&nbsp;&nbsp;单&nbsp;&nbsp;号</span><span><{$info.userordernumber}></span></li>
+		<li><span>交易时间</span><span><{$info.successtime}></span></li>
+		<li><span>支付方式</span><span>微信支付</span></li>
+	</ul>
+</div>
+</body>
+</html>

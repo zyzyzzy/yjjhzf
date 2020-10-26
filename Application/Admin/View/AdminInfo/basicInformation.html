@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本信息</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-input-block{
+            width: 50%;
+        }
+    </style>
+</head>
+<body class="layui-anim layui-anim-up">
+<!--2019-2-28 任梦龙：判断遮罩层的方式-->
+<!--2019-3-11 任梦龙：如果session('code_switch') = 1,表示有验证遮罩层,否则就是显示正常的页面-->
+<if condition="$_SESSION['code_switch'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+ <else/>
+    <div class="x-body" id="yemian">
+        <form class="layui-form" method="post" onsubmit="return false">
+            <input type="hidden" name="admin_id" value="<{$admin_id}>" class="addeditinput">
+            <input type="hidden" name="id" value="<{$admin_info['id']}>" class="addeditinput">
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号名称</label>
+                <div class="layui-input-block">
+                    <input style="border: none" readonly type="text" name="admin_name" value="<{$admin['user_name']}>"
+                           disabled class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号别名</label>
+                <div class="layui-input-block">
+                    <input style="border: none" readonly type="text" name="bieming" value="<{$admin['bieming']}>"
+                           disabled class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <select name="sex" class="addeditinput">
+                        <option value=""></option>
+                        <option value="0" <if condition="$admin_info['sex'] eq 0">selected</if>>保密</option>
+                        <option value="1" <if condition="$admin_info['sex'] eq 1">selected</if>>男</option>
+                        <option value="2" <if condition="$admin_info['sex'] eq 2">selected</if>>女</option>
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input class="layui-input addeditinput" placeholder="请输入手机号" name="phone"
+                           value="<{$admin_info['phone']}>" autocomplete="off">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" value="<{$admin_info['email']}>"  placeholder="请输入邮箱"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">QQ号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="qq_number" value="<{$admin_info['qq_number']}>" placeholder="请输入QQ号"
+                           autocomplete="off" class="layui-input addeditinput">
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+            <!--2019-3-11 任梦龙：在修改时也要进行验证,也得区分验证码的类型-->
+            <include file="BaseTemplate:verifycode"/>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="javascript: FormSumit('<{:U("basicInformationEdit")}>','',true,false);"">确认修改</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</if>
+</body>
+</html>

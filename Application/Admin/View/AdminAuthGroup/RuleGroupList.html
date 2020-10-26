@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分配权限</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<form class="layui-form layui-form-pane" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分配权限</label>
+        <input type="hidden" name="role_id" id="roleId" value="<{$role_id}>" />
+
+            <foreach name="menu_list" item="vo" key="k">
+
+                <div class="layui-input-block">
+
+                    <input type="checkbox" name="menu[<{$vo.id}>]" value="<{$vo['id']}>" title="<{$vo.menu_title}>" class="level_one" <?php if(in_array($vo['id'],$rule_arr)){echo "checked";} ?>>
+
+                    <foreach name="vo[$vo['id']]" item="v">
+
+                        <div class="layui-input-block">
+
+                            <input type="checkbox" name="menu[<{$v.id}>]" title="<{$v.menu_title}>" value="<{$v['id']}>" class="level_two" <?php if(in_array($v['id'],$rule_arr)){echo "checked";} ?>>
+
+                            <div class="layui-input-block">
+
+                                <foreach name="v[$v['id']]" item="v1">
+
+                                    <input type="checkbox" name="menu[<{$v1.id}>]" title="<{$v1.menu_title}>" value="<{$v1['id']}>" class="level_three" <?php if(in_array($v1['id'],$rule_arr)){echo "checked";} ?>>
+
+                                </foreach>
+
+                            </div>
+
+                        </div>
+
+                    </foreach>
+
+                </div>
+
+            </foreach>
+
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <!--<button class="layui-btn" onclick="FormSumit1('<{:U("comfirmRole")}>');">确认分配</button>-->
+            <button class="layui-btn" lay-submit lay-filter="role">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+
+        var form = layui.form,
+                $ = layui.jquery;
+
+        $("button[type=reset]").click();
+
+        //监听提交
+
+        form.on('submit(role)', function (data) {
+
+
+            var roleInfo = data.field;
+
+
+            var url = "/Admin/AdminAuthGroup/comfirmRuleGroup";
+
+            $.post(url, roleInfo, function (data) {
+
+                if (data.status == 'error') {
+
+                    layer.msg(data.msg, {icon: 5, time: 1000});//失败的表情
+
+                    return;
+
+                } else {
+                    layer.msg(data.msg, {
+
+                        icon: 6, //成功的表情
+
+                        time: 1500 //1.5秒关闭（如果不配置，默认是3秒）
+
+                    }, function () {
+
+                        parent.location.reload();
+
+                    });
+
+                }
+
+            });
+
+            return false;//阻止表单跳转
+
+        });
+
+    });
+
+
+</script>

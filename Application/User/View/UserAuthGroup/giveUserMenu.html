@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>分配权限 - 用户后台</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="stylesheet" href="/Public/Admin/giverulegroup/comm.css">
+    <link rel="stylesheet" href="/Public/Admin/giverulegroup/index.css">
+    <link rel="stylesheet" href="/Public/lib/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="/Public/Admin/giverulegroup/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/Public/lib/layui/layui.js"></script>
+    <script type="text/javascript" src="/Public/js/xadmin.js"></script>
+    <script type="text/javascript" src="/Public/Admin/js/jquery.SuperSlide.2.1.1.js"></script>
+</head>
+<body>
+<div style="padding:0 50px;">
+    <div class="set-content">
+        <ul class="role-menu set-title clearfix hd">
+            <foreach name="menus" item="item">
+                <li><a href="JavaScript:;" title="<{$item.menu_title}>"><{$item.menu_title}></a></li>
+            </foreach>
+        </ul>
+        <div class="set-middle bd" loadurl="<{:U('UserAuthGroup/confirmRuleGroup')}>">
+
+            <foreach name="menus" item="item" key="k">
+                <form id="<{$k}>">
+                    <input type="hidden" name="group_id" value="<{$id}>">
+                    <input type="hidden" name="id" value="<{$item.id}>">
+                    <div class="set-middle-item">
+                        <ul class="form-panel">
+                            <foreach name="item['childs']" item="childs">
+                                <li>
+                                    <div class="parents-all">
+                                        <label>
+                                            <input type="checkbox" name="checkBox[]" value="<{$childs['id']}>"
+                                            <?php echo in_array($childs['id'],$rulesArr)?"checked":""   ?> ><{$childs['menu_title']}>
+                                            <img src="/Public/Admin/giverulegroup/top.png"/>
+                                        </label>
+                                    </div>
+                                    <div class="sub-check">
+                                        <dl>
+                                            <foreach name="childs['childs']" item="child">
+                                                <dd>
+                                                    <label>
+                                                        <input type="checkbox" name="checkBox[]" value="<{$child['id']}>"
+                                                        <?php echo in_array($childs['id'],$rulesArr)?"checked":""   ?> ><{$child['menu_title']}>
+                                                    </label>
+                                                </dd>
+                                            </foreach>
+                                        </dl>
+                                    </div>
+                                </li>
+                            </foreach>
+                        </ul>
+                        <div class="operating-panel">
+                            <label><input type="checkbox" class="all">全选</label>
+                            <label><input type="checkbox" class="opposite">反选</label>
+                            <button type="button" onclick="sub(<{$k}>)" title="确定">确定</button>
+                        </div>
+                    </div>
+                </form>
+            </foreach>
+        </div>
+    </div>
+</div>
+<script>
+    /* 全选反选 */
+    $(".all").click(function () {
+        if (this.checked) {
+            $(".form-panel :checkbox").attr("checked", true);
+        } else {
+            $(".form-panel :checkbox").attr("checked", false);
+        }
+    });
+    $(".opposite").click(function () {
+        $(".form-panel :checkbox").each(function () {
+            $(this).attr("checked", !$(this).attr("checked"));
+        });
+        allchk();
+    });
+    function allchk() {
+        var chknum = $(".form-panel :checkbox").size();//选项总个数
+        var chk = 0;
+        $(".form-panel :checkbox").each(function () {
+            if ($(this).attr("checked") == true) {
+                chk++;
+            }
+        });
+        if (chknum == chk) {//全选
+            $(".all").attr("checked", true);
+        } else {//不全选
+            $(".all").attr("checked", false);
+        }
+    }
+    var cli = function(d){
+        var n = d.next();
+        d.click(function(){
+            if(d.find('input').prop('checked')==true){
+                d.find('input').prop("checked",false);
+                n.find('input').each(function(){
+                    $(this).prop("checked",false);
+                });
+                d.find("img").css("transform"," rotate(0deg)");
+                n.hide();
+            }else{
+                d.find('input').prop("checked",true);
+                n.find('input').each(function(){
+                    $(this).prop("checked",true);
+                });
+                d.find("img").css("transform"," rotate(180deg)");
+                n.show();
+            }
+        });
+    }
+    $(".parents-all").each(function(){
+        var parents =$(this);
+        cli(parents);
+        cli(parents.find('label'));
+    })
+    $(document).ready(function (){
+        $(".sub-check").each(function(){
+            if($(this).find('input:checked').length>0){
+                $(this).show();
+            }
+        });
+    });
+    /* 选项卡 */
+    jQuery(".set-content").slide({autoPlay: false, trigger: "click", delayTime: 700, pnLoop: false});
+
+    function sub(id){
+        $.ajax({
+            url:$('.bd').attr('loadurl'),
+            type:'post',
+            data:$('#'+id).serialize(),
+            dataType:'json',
+            success:function(result){
+                console.log(result);
+                if(result.status=="success"){
+                    layer.msg(result.msg,{icon:1,time:2000})
+                }else{
+                    layer.msg(result.msg,{icon:5,time:2000})
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

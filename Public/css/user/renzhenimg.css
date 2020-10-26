@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-text-stroke-width: 0px;
+    -moz-text-stroke-width: 0px;
+    -o-text-stroke-width: 0px;
+    -ms-text-stroke-width: 0px;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+body {
+    font-family: tahoma, arial, "Hiragino Sans GB", "Microsoft Yahei", \5b8b\4f53, sans-serif;
+    font-size: 12px;
+    color: #000;
+    background-size: cover;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    blr: expression(this.onFocus=this.blur());
+}
+
+input, select, textarea {
+    vertical-align: middle;
+    width: auto;
+    outline: none;
+    border: 0;
+}
+
+select {
+    appearance: normal;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+    outline: none;
+}
+
+div, p, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6 {
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 0;
+}
+
+.box_img {
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    /*border: 1px solid red;*/
+}
+.box_img .top {
+    clear: both;
+    width: 100%;
+    overflow: hidden;
+    /*border: 1px solid blue;*/
+    margin-bottom: 20px;
+}
+.top li {
+    float: left;
+    width: 30%;
+    /*height: 300px;*/
+    overflow: hidden;
+    border: 1px solid #01988c;
+    margin-right: 2%;
+}
+.top li .title {
+    clear: both;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    font-size: 18px;
+    text-align: center;
+}
+.top li .img_area {
+    clear: both;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    /*padding: 20px;*/
+    /*border: 1px solid #0BB20C;*/
+}
+.top li .img_area img {
+    width: 100%;
+}
+.top li .upload_area {
+    clear: both;
+    width: 100%;
+    line-height: 20px;
+    /*height: 140px;*/
+    overflow: hidden;
+    padding-left: 20px;
+    /*border: 1px solid #0C0C0C;*/
+}
+.top li .upload_area .renzhenimg {
+    clear: both;
+    width: 100%;
+    line-height: 100px;
+    height: 140px;
+    overflow: hidden;
+}
+.top li .upload_area .renzhenimg img {
+    width: 50%;
+}
+.top li .upload_area .dengdai {
+    color: #F60;
+    font-size: 16px;
+}
+
+

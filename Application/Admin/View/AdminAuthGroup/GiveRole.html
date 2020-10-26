@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>分配角色</title>
+    <include file="BaseTemplate:includecssjs"/> 
+</head>
+<body>
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">选择角色</label>
+            <input type="hidden" name="admin_id" value="<{$admin_id}>" class="addeditinput" />
+            <div class="layui-input-block">
+                <foreach name="list" item="v">
+                    <input type="checkbox" lay-filter="choice" title="<{$v.auth_name}>" value="<{$v.id}>"
+                           name="group_id[<{$key}>]" <?php if(in_array($v['id'],$check_list)){echo 'checked';} ?> >
+                </foreach>
+            </div>
+        </div>  
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="role">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+<script>
+    layui.use('form', function () {
+        var form = layui.form,
+                $ = layui.jquery;
+        $("button[type=reset]").click();
+        //监听提交
+        form.on('submit(role)', function (data) {
+            var roleInfo = data.field;
+            var url = '<{:U("AdminAuthGroup/ConfirmRoleGroup")}>';
+            $.post(url, roleInfo, function (data) {
+                if(data.status == 'ok'){
+                    layer.msg(data.msg, {icon: 6, time: 1500}, function () {
+                        location.reload();
+                    });
+                }else {
+                    layer.msg(data.msg, {icon: 5, time: 2000});//失败的表情
+                    return false;
+                }
+            });
+            return false;//阻止表单跳转
+        });
+    });
+</script>

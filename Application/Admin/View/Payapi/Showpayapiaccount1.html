@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <title>通道帐号</title>
+
+
+
+    <include file="BaseTemplate:includecssjs"/>
+
+
+
+</head>
+
+
+
+<body>
+
+
+
+
+
+<div class="x-body">
+
+
+
+   <volist name="list" id="vo">
+
+        <div class="layui-row">
+
+        <form class="layui-form layui-col-md12 x-so" method="GET" id="Form<{$vo["id"]}>" onsubmit="return false">
+
+        <input type="hidden" name="id" id="id<{$vo["id"]}>" class="addeditinput">
+
+        <input type="checkbox" name="accountid<{$vo["id"]}>" id="accountid<{$vo["id"]}>" value="<{$vo["id"]}>" lay-filter="checkboxpayapiaccount" title="<{$vo["bieming"]}>">
+
+	    <!--<input type="text" name="money" id="money<{$vo["id"]}>"  placeholder="每日交易总额" autocomplete="off" class="layui-input addeditinput addeditinput<{$vo["id"]}>" style="display: none;">-->
+
+        <!--<button class="layui-btn  addeditinput<{$vo["id"]}>" onclick="javascript: FormSumit('<{:U("TongdaoZhanghaoEdit")}>','#Form<{$vo["id"]}> > ',false);" style="display: none;">修改每日交易总额</button>-->
+
+
+
+       
+
+        </form>
+
+        </div>
+
+         <hr />
+
+</volist>
+
+
+
+</div>
+
+ 
+
+ <script>
+
+ 	layui.use('form', function(){
+
+     var form = layui.form;
+
+     form.on('checkbox(checkboxpayapiaccount)',function(data){
+
+     	
+
+     		/****************************************************/
+
+     		ajaxurl = '<{:U("Payapi/TongdaoZhanghao")}>';
+
+
+
+	        datastr = "payapiaccountid=" + data.elem.value + "&checked=" + (data.elem.checked?1:0)+"&payapiid=<{$Think.get.id}>";
+
+	
+
+	        $.ajax({
+
+	
+
+	            type:'POST',
+
+	
+
+	            url:ajaxurl,
+
+	
+
+	            data:datastr,
+
+	
+
+	            dataType:'json',
+
+	
+
+	            success:function(obj){
+
+	
+
+	                    if(obj.status != "ok"){
+
+	
+
+	                        layer.tips('勾选失败', data.othis,{
+
+	
+
+	                            tips: [3,'#FF5722']
+
+	
+
+	                        });
+
+	
+
+	                    }else{
+
+	                    	if(data.elem.checked){
+
+	                    		// $(".addeditinput"+data.elem.value).show();
+
+	                    		// $("#money"+data.elem.value).val(0);
+
+							    $("#id"+data.elem.value).val(obj.id);
+
+	                    	}else{
+
+	                    		$(".addeditinput"+data.elem.value).hide();
+
+	                    	}
+
+	                    }
+
+	
+
+	                },
+
+	
+
+	            error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+	
+
+	                
+
+	
+
+	                }	
+
+	
+
+	            });
+
+
+
+     		/***************************************************/
+
+     
+
+     });
+
+  });
+
+  
+
+  <volist name="checklist" id="vo">
+
+    $("#accountid<{$vo["payapiaccountid"]}>").attr("checked",true);
+
+    // $(".addeditinput<{$vo["payapiaccountid"]}>").show();
+
+    // $("#money<{$vo["payapiaccountid"]}>").val(<{$vo["money"]}>);
+
+    $("#id<{$vo["payapiaccountid"]}>").val("<{$vo["id"]}>");
+
+  </volist>
+
+ </script>
+
+</body>
+
+
+
+</html>

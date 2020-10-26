@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮循权重</title>
+    <include file="BaseTemplate:includecssjs" />
+	<script type="text/javascript" src="/Public/js/xcity.js"></script>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" name="Form1" id="Form1" method="post" onsubmit="return false">
+    	<input type="hidden" name="id" id="id" value="<{$find['id']}>" class="addeditinput">
+    	<input type="hidden" name="account_id" value="<{$account_id}>" class="addeditinput">
+		<div class="layui-form-item">
+			<label class="layui-form-label">轮循类型</label>
+			<div class="layui-input-block">
+				<select name="status" id="status" required  class="layui-select addeditinput" lay-filter="statusstatus">
+					<option value="1">按条件轮循</option>
+					<option value="0">随机轮循</option>
+				</select>
+			</div>
+		</div>
+	  
+	  <div class="layui-form-item showdiv">
+            <label class="layui-form-label">开始时间：</label>
+            <div class="layui-input-block">
+                <input type="text" name="datetime_ks" id="datetime_ks" placeholder="开始时间"
+					   class="layui-input addeditinput" value="<{$find['datetime_ks']}>">
+            </div>
+        </div>
+		<div class="layui-form-item showdiv">
+			<label class="layui-form-label">结束时间：</label>
+			<div class="layui-input-block">
+				<input type="text" name="datetime_js" id="datetime_js" placeholder="结束时间"
+					   class="layui-input addeditinput" value="<{$find['datetime_js']}>">
+			</div>
+		</div>
+		<div class="layui-form-item showdiv">
+			<label class="layui-form-label">最小金额：</label>
+			<div class="layui-input-block">
+				<input type="number" name="money_ks" id="money_ks"   lay-verify="required"
+					   placeholder="最小交易金额" autocomplete="off" class="layui-input addeditinput" value="<{$find['money_ks']}>">
+			</div>
+		</div>
+		<div class="layui-form-item showdiv">
+			<label class="layui-form-label">最大金额：</label>
+			<div class="layui-input-block">
+				<input type="number" name="money_js" id="money_js"   lay-verify="required"
+					   placeholder="最大交易金额" autocomplete="off" class="layui-input addeditinput" value="<{$find['money_js']}>">
+			</div>
+		</div>
+		<div id="x-city">
+			<div class="layui-form-item showdiv">
+				<label class="layui-form-label">交易省</label>
+				<div class="layui-input-block">
+					<select name="province" id="province" required class="layui-select addeditinput" lay-filter="province" lay-search>
+						<option value="">交易省</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item showdiv">
+				<label class="layui-form-label">交易市</label>
+				<div class="layui-input-block">
+					<select name="city" id="city" required class="layui-select addeditinput" lay-filter="city" lay-search>
+						<option value="">请选择市</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	  
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("PayapiaccountloopsEdit")}>');">确认修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+	layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#datetime_ks' //指定元素
+          ,type: 'time'
+        });
+        laydate.render({
+            elem: '#datetime_js' //指定元素
+            ,type: 'time'
+        });
+        
+      });
+    layui.use(['form','code'],function () {
+        form = layui.form;
+        layui.code();
+        $("#x-city").xcity('<{$find["province"]}>','<{$find["city"]}>');
+    });
+    layui.use('form',function(){
+        var form = layui.form;
+        form.on('select(statusstatus)',function(obj){
+            if(obj.elem.value == 1){
+                $(".showdiv").show();
+               // form.render();
+            }else{
+               $(".showdiv").hide();
+              //  form.render();
+            }
+        });
+        $("#status").val(<{$find['status']}>);
+        if('<{$find["status"]}>' == '1'){
+            $(".showdiv").show();
+        }else{
+            $(".showdiv").hide();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录设置</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-select .layui-input,.layui-input{
+            width: 95%;
+        }
+    </style>
+</head>
+<body class="x-body">
+<form class="layui-form" action="" method="post" onsubmit="return false">
+    <input type="hidden" name="id" value="<{$website['id']}>" class="addeditinput">
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录次数</label>
+        <div class="layui-input-block">
+                <input type="number" name="login_count" value="<{$website['login_count']}>" placeholder="登录次数需为大于0的正整数,范围在3-100之间"
+                       autocomplete="off" class="layui-input addeditinput">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">等待时间</label>
+        <div class="layui-input-block">
+            <select name="set_time" class="layui-input addeditinput">
+                <option value="">请选择</option>
+                <foreach name="login_set" item="vo">
+                    <option value="<{$key}>" <if condition="$website['set_time'] eq $key">selected</if> ><{$vo}></option>
+                </foreach>
+
+            </select>
+        </div>
+    </div>
+    <include file="BaseTemplate:verifycode"/>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button onclick="javascript: FormSumit('<{:U("editLoginSeting")}>','',true,false);" class="layui-btn"
+            lay-submit lay-filter="formDemo">确认修改</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

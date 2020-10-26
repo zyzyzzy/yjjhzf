@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RSA密钥文件</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .x-body .box1 {
+            display: block;
+            width: 45%;
+        }
+
+        .x-body .box2 {
+            float: left;
+            width: 40%;
+            overflow: hidden;
+            position: absolute;
+            z-index: 10;
+            top: 20px;
+            right: 13%;
+        }
+        #box4 {
+            position: relative;
+        }
+        .upload_icon{
+            position: absolute;
+            z-index: 10;
+            top: 25%;
+            right: 3%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<if condition="$_SESSION['switch_code'] eq 1">
+    <include file="BaseTemplate:shadelayer"/>
+    <else/>
+    <div class="x-body">
+        <div class="box1">
+            <div>
+                <span>方式一：通过输入密钥内容保存</span>
+            </div>
+            <form name="form1" class="layui-form" method="post" onsubmit="return false">
+                <input type="hidden" name="id" id="id" value="<{$find['id']}>" class="addeditinput">
+                <div class="layui-form-item textarea">
+                <textarea name="user_keypath" id="user_keypath"
+                          placeholder="请先去掉'-----BEGIN *******-----' 和 '-----END *******-----'，然后输入密钥内容"
+                          class="layui-textarea addeditinput" style="height: 300px;"><{$find['user_keypath']}></textarea>
+                </div>
+                <span>请先去掉'-----BEGIN *******-----' 和 '-----END *******-----'，然后输入密钥内容</span>
+                <include file="BaseTemplate:verifycode"/>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" onclick="javascript: FormSumit1('<{:U("editUserkey")}>');">
+                        修改用户密钥
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!--上传文件区域-->
+        <div class="box2">
+            <div>
+                <span>方式二：通过上传文件保存</span>
+                <div>
+                    <button type="button" class="layui-btn" id="upload"><i class="layui-icon">&#xe67c;</i>上传文件</button>
+                    <input type="hidden" name="prev" value="">
+                    <span>支持pem,txt格式，小于3M,文件名需为英文格式</span>
+                    <br/><br/>
+                    <div id="box4">
+                        <if condition="$code_type eq 1">
+                            <input type="text" name="upload_code" placeholder="管理密码" autocomplete="off"
+                                   class="layui-input">
+                            <else/>
+                            <input type="text" name="upload_code" placeholder="管理密码或谷歌验证码" autocomplete="off"
+                                   class="layui-input">
+                        </if>
+                        <i id="uploadIcon" class="layui-icon upload_icon">&#xe673;</i>
+                    </div>
+                    <br/><br/>
+                    <button type="button" class="layui-btn" id="set"><i class="layui-icon">&#xe67c;</i>确认上传</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</if>
+</body>
+</html>
+<!--文件上传-->
+<script>
+    $('#set').click(function(){
+        var str = $("input[name=prev]").val();
+        if (str == '') {
+            layer.msg("请先上传文件", {icon: 5, time: 2000});
+            return false;
+        }
+    });
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        var ajax_url = '<{:U("UserSecretKey/uploadUserKey")}>';
+        //执行实例
+        upload.render({
+            elem: '#upload'
+            , url: ajax_url
+            , accept: 'file'  //上传类型--所有
+            // , exts: 'pem|txt'  //允许的后缀名
+            // , size: '5120'  //允许的文件大小：单位Kb 5 * 1024 =5M
+            , auto: false  //是否自动上传
+            , bindAction: '#set'  //指定一个元素来执行上传命令
+            , choose: function(obj){
+                obj.preview(function (index, file, result) {
+                    $("input[name=prev]").val(''); //添加到预览区域
+                    var imgobj = new Image(); //创建新img对象
+                    imgobj.src = result; //指定数据源
+                    imgobj.className = 'thumb';
+                    $("input[name=prev]").val(imgobj); //添加到隐藏的预览区域
+                });
+            }
+            , before: function (obj) {
+                var id = $('#id').val();            //当前密钥表id
+                var upload_code = $('input[name=upload_code]').val();
+                var code_type = $('input[name=code_type]').val();
+                this.data = {
+                    id: id,
+                    upload_code: upload_code,
+                    code_type: code_type,
+                };//传递到后台的数据
+            }
+            , done: function (res) {
+                if (res.status == 'ok') {
+                    $('.layui-textarea').val(res.file_contents);
+                    layer.msg(res.msg, {icon: 6, time: 1500},
+                        function(){
+                            location.reload();
+                        });
+                } else {
+                    layer.msg(res.msg, {icon: 5});
+                }
+            }
+            , error: function (index, upload) {
+                layer.msg('请勿非法操作',{icon: 5,time: 2000});
+            }
+        });
+    });
+
+    function FormSumit1(ajaxurl) {
+        datastr = "";
+        $(".addeditinput").each(function () {
+            datastr += $(this).attr("name") + "=" + $(this).val() + "&";
+        });
+        //因为textarea中的内容提交到服务端，"+"会转换为空格。所以将获取到的字符串中的"+"进行转换
+        datastr = datastr.replace(/\+/g, "%2B");
+        $.ajax({
+            type: 'post',
+            url: ajaxurl,
+            data: datastr,
+            datatype: 'json',
+            success: function (obj) {
+                if (obj.status == "ok") {
+                    layer.msg(obj.msg, {icon: 6, time: 1500},
+                        function () {
+                            location.reload();    //2019-3-12 任梦龙：刷新本页面
+                        });
+                } else {
+                    layer.msg(obj.msg, {icon: 5, time: 1500});
+                }
+            },
+            error: function (XMLHttpRequest, textStauts, errorThrown) {
+                layer.msg('操作错误，请检查！', {icon: 5, time: 1500});
+            }
+        });
+    }
+
+    $('#uploadIcon').click(function(){
+        var type=$('input[name=upload_code]').attr('type');
+        if(type == 'password'){
+            $('input[name=upload_code]').attr('type','text');
+        }else {
+            $('input[name=upload_code]').attr('type','password');
+        }
+    });
+</script>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title><block name="title">无标题</block></title>
+    <include file="BaseTemplate:includecssjs" />
+  </head>
+
+  <body class="layui-anim layui-anim-up">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">管理后台</a>
+          <block name="nav"></block>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+    </div>
+    <div class="x-body">
+
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="GET" onsubmit="return false">
+        	<block name="search"></block>
+
+          <block name="searchbutton">
+          	<button class="layui-btn" onclick="javascript:searchbutton();"><i class="layui-icon">&#xe615;</i></button>
+          	<button class="layui-btn layui-btn-primary" onclick="javascript:location.replace(location.href);">全部数据</button>
+          </block>
+        </form>
+
+        <block name="relationsearch">
+
+        </block>
+      </div>
+
+      <block name="xblock"></block>
+
+      <block name="table_script"></block>
+
+    </div>
+    <script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+  </body>
+
+</html>

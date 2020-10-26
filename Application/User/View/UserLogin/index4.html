@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script src="/Public/lib/layui/layui.all.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/Public/css/logincss/userLogin4.css">
+</head>
+<body>
+    <div class="load">
+        <input type="hidden" id="indexUrl2" value="<{:U('Index/index')}>">
+        <input type="hidden" id="loginUrl" value="<{:U('UserLogin/doLogin')}>">
+        <div class="yijijuhe"><img src="/Public/images/user/logo.png"></div>
+        <div class="login">
+            <div class="login-box">
+                <div class="input-box">
+                    <input type="text" name="login_name" id="loginName" placeholder="请输入用户名"
+                           autocomplete="off" class="user-input addeditinput">
+                    <div class="user-name"><img src="/Public/images/user/yonghu.png"></div>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="login_pwd" id="loginPwd" placeholder="请输入密码"
+                           autocomplete="off" class="user-input addeditinput">
+                    <div class="user-name"><img src="/Public/images/user/lock.png"></div>
+                </div>
+                <div class="input-code">
+                    <input type="text" name="login_code" id="code" placeholder="请输入验证码"
+                           autocomplete="off" class="user-input1 addeditinput">
+                    <div class="user-name"><img  src="/Public/images/user/dunpai.png"></div>
+                    <div class="user-input2">
+                        <img id="verifyImg" class="verify_img" src="<{:U('UserLogin/verify')}>"
+                             onclick="this.src=this.src + '?' + Math.random()">
+                    </div>
+                </div>
+                <div class="reload-login">
+                    <span class="input-btn" id="subLogin">登&nbsp;&nbsp;录</span>
+                </div>
+            </div>
+        </div>
+        <div class="company">
+            武汉爱码农网络科技有限公司
+        </div>
+    </div>
+    <script src="/Public/User/userLogin.js"></script>
+</body>
+</html>

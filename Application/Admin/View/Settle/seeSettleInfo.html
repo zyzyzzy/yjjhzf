@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看订单信息</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .layui-form-item{
+            border-bottom: 1px solid #f2f2f2;
+            margin-bottom: 0;
+        }
+        .layui-form-label{
+            width: 130px;
+        }
+        .layui-input-block{
+            margin-left: 160px;
+        }
+        .layui-input{
+            border: 0;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form"  method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">商户用户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['username']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">结算金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['ordermoney']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">商户编号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['memberid']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">交易费率：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['traderate']*100}>%" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">系统订单号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['ordernumber']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">交易手续费：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['moneytrade']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">用户订单号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['userordernumber']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #009688">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">成本费率：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['costrate']*100}>%" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">银行名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">成本金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['moneycost']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">支行名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankzhiname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">手续费扣款方式：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['deduction_type']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">银行编码：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankcode']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">到账金额：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['money']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">银行卡号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankcardnumber']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">结算状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="<{$order_info['status_name']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00;display: inline-block;width: 25%;">
+                    <if condition="($order_info['status'] neq 2) and ($order_info['status'] neq 3) ">
+                        (<span onclick="y_admin_show('结算订单处理','<{:U("editSettleStatus")}>?settleid=<{$order_info['settleid']}>',600,200)" style="text-decoration: underline;display: inline-block;cursor: pointer;">修改状态</span>)
+                    </if>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">开户名：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['bankusername']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <label class="layui-form-label">退款状态：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="<{$order_info['refundstatus_name']}>" readonly autocomplete="off" class="layui-input addeditinput" style="color: #f00;display: inline-block;">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">身份证号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['identitynumber']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <if condition="$order_info['refundremarks']">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">退款备注：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" value="<{$order_info['refundremarks']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                    </div>
+                </div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">手机号：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['phonenumber']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <if condition="$order_info['settle_change']">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">结算资金变动记录：</label>
+                </div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">开户省：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['province']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <if condition="$order_info['settle_change']">
+            <div class="layui-col-md6">
+                <p class="layui-input addeditinput" style="line-height: 38px;">
+                    <span style="font-size: 15px;">用户原金额:<span style="color: #5FB878;padding-left: 15px;"><{$order_info['settle_change']['oldmoney']}></span></span>
+                    <span style="font-size: 15px;margin-left: 20px;">改变金额:<span style="color: #1E9FFF;padding-left: 15px;"><{$order_info['settle_change']['changemoney']}></span></span>
+                    <span style="font-size: 15px;margin-left: 20px;">现金额:<span style="color: #f00;padding-left: 15px;"><{$order_info['settle_change']['nowmoney']}></span></span>
+                </p>
+            </div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">开户市：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['city']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <if condition="$order_info['refund_change']">
+                <div class="layui-col-md6">
+                    <label class="layui-form-label">退款资金变动记录：</label>
+                </div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">商家名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['shangjianame']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+            <if condition="$order_info['refund_change']">
+                <div class="layui-col-md6">
+                    <p class="layui-input addeditinput" style="line-height: 38px;">
+                        <span style="font-size: 15px;">用户原金额:<span style="color: #5FB878;padding-left: 15px;"><{$order_info['refund_change']['oldmoney']}></span></span>
+                        <span style="font-size: 15px;margin-left: 20px;">改变金额:<span style="color: #1E9FFF;padding-left: 15px;"><{$order_info['refund_change']['changemoney']}></span></span>
+                        <span style="font-size: 15px;margin-left: 20px;">现金额:<span style="color: #f00;padding-left: 15px;"><{$order_info['refund_change']['nowmoney']}></span></span>
+                    </p>
+                </div>
+            </if>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">通道名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['payapiname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">账号名称：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['accountname']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">申请时间：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['applytime']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">处理时间：</label>
+                <div class="layui-input-block">
+                    <input type="text" value="<{$order_info['dealtime']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-col-md6">
+                <label class="layui-form-label">备注：</label>
+                <div class="layui-input-inline">
+                    <input type="text" value="<{$order_info['remarks']}>" readonly autocomplete="off" class="layui-input addeditinput">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

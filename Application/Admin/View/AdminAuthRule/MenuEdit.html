@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>修改菜单</title>
+
+    <include file="BaseTemplate:includecssjs" />
+  </head>
+
+  <body>
+    <div class="x-body">
+      <form
+        class="layui-form layui-form-pane"
+        method="post"
+        onsubmit="return false"
+      >
+        <input
+          type="hidden"
+          name="id"
+          value="<{$menu_id}>"
+          class="addeditinput"
+        />
+        <input
+          type="hidden"
+          name="level"
+          value="<{$info.level}>"
+          class="addeditinput"
+        />
+        <if condition="$info['level'] eq 0">
+          <div class="layui-form-item">
+            <label class="layui-form-label">菜单图标</label>
+
+            <div class="layui-input-block">
+              <input
+                type="text"
+                name="icon"
+                value="<{$info.icon}>"
+                id="menuIcon"
+                placeholder="请参考layui官网输入菜单图标"
+                class="layui-input addeditinput"
+                autocomplete="off"
+                lay-verify="required"
+              />
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+
+            <div class="layui-input-block">
+              <input
+                type="text"
+                name="menu_title"
+                value="<{$info.menu_title}>"
+                placeholder="请输入菜单名称"
+                class="layui-input addeditinput"
+                autocomplete="off"
+                lay-verify="required"
+              />
+            </div>
+          </div>
+
+          <else />
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">菜单名称</label>
+
+            <div class="layui-input-block">
+              <input
+                type="text"
+                name="menu_title"
+                value="<{$info.menu_title}>"
+                placeholder="请输入菜单名称"
+                class="layui-input addeditinput"
+                autocomplete="off"
+                lay-verify="required"
+              />
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">控制器名</label>
+
+            <div class="layui-input-block">
+              <input
+                type="text"
+                name="controller"
+                value="<{$info.controller}>"
+                id="menuController"
+                placeholder="控制器名称采用驼峰法命名"
+                class="layui-input addeditinput"
+                autocomplete="off"
+                lay-verify="required"
+              />
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">方法名</label>
+
+            <div class="layui-input-block">
+              <input
+                type="text"
+                name="action"
+                value="<{$info.action}>"
+                id="menuAction"
+                placeholder="方法名称采用驼峰法命名"
+                class="layui-input addeditinput"
+                autocomplete="off"
+                lay-verify="required"
+              />
+            </div>
+          </div>
+        </if>
+
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="editmenu">
+              立即提交
+            </button>
+
+            <button type="reset" class="layui-btn layui-btn-primary">
+              重置
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+<script>
+  layui.use("form", function () {
+    var form = layui.form,
+      $ = layui.jquery;
+
+    //监听提交
+
+    form.on("submit(editmenu)", function (data) {
+      var userInfo = data.field;
+
+      var url = "<{:U('AdminAuthRule/MenuUpdate')}>";
+
+      $.post(url, userInfo, function (data) {
+        if (data.status == "ok") {
+          layer.msg(
+            data.msg,
+            {
+              icon: 6,
+              time: 1500,
+            },
+            function () {
+              parent.location.reload();
+            }
+          );
+        } else {
+          layer.msg(data.msg, {
+            icon: 5,
+          });
+        }
+      });
+
+      return false;
+    });
+  });
+</script>

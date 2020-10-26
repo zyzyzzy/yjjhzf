@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加接口设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">接口版本号</label>
+            <div class="layui-input-block">
+                <input type="text" name="numberstr" id="numberstr" placeholder="例如:1.0.0"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-2-25 任梦龙：为接口版本添加别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="padding: 8px 10px;">接口版本别名</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming" placeholder="例如:支付第一版"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">控制器名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="actionname" id="actionname" placeholder="例如:Defaultversion"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("addVersion")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

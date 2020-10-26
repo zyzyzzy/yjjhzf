@@ -1,0 +1,229 @@
+<include file="BaseTemplate:includecssjs" />
+<table class="layui-hide" id="PayapiAccountList" layui-data="{id:'PayapiAccountList'}" dataurl="<{:U('LoadUserPayapiAccount')}>?id=<{$id}>" houquurl="<{:U('HuoQuPayapiMoney')}>" payapiid="<{$payapiid}>"></table>
+<script type="text/html" id="showtoolbar">
+    <button class="layui-btn" onclick="y_admin_show('添加通道账号','<{:U("AddUserPayapiaccount")}>?payapiid=<{$payapiid}>&userpayapiclassid=<{$id}>',600,500)"><i class="layui-icon"></i>添加</button>
+    <button class="layui-btn" onclick="y_admin_show('编辑用户费率','<{:U("EditUserAccountFeilv")}>?userpayapiclassid=<{$id}>&userid=<{$userid}>',600,400)"><i class="layui-icon">&#xe642;</i>费率</button>
+    <!--2019-03-06汪桂芳添加-->
+    <if condition="$temp">
+    <button class="layui-btn" onclick="y_admin_show('用户扫码设置','<{:U("editUserQrcode")}>?payapiid=<{$payapiid}>&userid=<{$userid}>',800,500)"><i class="layui-icon">&#xe642;</i>扫码</button>
+    </if>
+    <button class="layui-btn" onclick="javascript:location.reload();"><i class="layui-icon">&#xe666;</i>刷新</button>
+    <button class="layui-btn  layui-btn-normal" onclick="javascript:window.location.href='<{:U("userTongdaoSetting")}>?userid=<{$userid}>'"><i class="layui-icon">&#xe603;</i>返回</button>
+</script>
+
+<script type="text/html" id="showpayapimoney">
+  {{d.tongdaoxiane}}
+  </script>
+
+<script type="text/html" id="order_cbfeilv">
+    {{ (d.order_cbfeilv * 100).toFixed(2) }}%
+</script>
+
+<script type="text/html" id="settle_cbfeilv">
+    {{ (d.settle_cbfeilv * 100).toFixed(2) }}%
+</script>
+<!--2019-2-11 任梦龙：将会员修改为用户-->
+<script type="text/html" id="showuserpayapimoney">
+    <a style="text-decoration: underline" href="javascript:y_admin_show('设置用户每日交易总额','<{:U("UserTongdaoSettings/EditUserPayapiaccountMoney")}>?userpayapiaccountid={{ d.userpayapiaccountid }}&userxianeid={{ d.userxianeid }}',600,300)">{{ d.userxiane }}</a>
+</script>
+
+  <script type="text/html" id="showpayapiname">
+      <{$payapiname}>
+  </script>
+
+<!--2018-12-29汪桂芳修改-->
+<!--<script type="text/html" id="showuseraccountfeilv">
+    <a style="text-decoration: underline" href="javascript:y_admin_show2('设置用户费率','<{:U("UserTongdaoSettings/EditUserAccountFeilv")}>?userid={{ d.userid }}&accountid={{ d.accountid }}',800,500)">费率设置</a>
+</script>-->
+
+<!--设置用户的到账方案-->
+<script type="text/html" id="showusermoneyclass">
+    <a style="text-decoration: underline" href="javascript:y_admin_show('设置用户到账方案','<{:U("UserTongdaoSettings/editUserMoneyClass")}>?userid={{ d.userid }}&accountid={{ d.accountid }}',500,300)">到账方案设置</a>
+</script>
+
+<script type="text/html" id="caozuo">
+
+  <a title="删除" onclick="delete_info(this,{{ d.id }})" href="javascript:;" ajaxurl="<{:U('DelUserPayapiaccount')}>?userpayapiclassid=<{$id}>">
+
+    <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+
+  </a>
+
+</script>
+<script>
+  var tableIns;
+
+layui.use('table', function(){
+
+    var table = layui.table;
+
+    var form = layui.form;
+
+
+
+    tableIns =  table.render({
+
+        elem: '#PayapiAccountList'
+
+        ,url: $("#PayapiAccountList").attr("dataurl")
+
+        ,toolbar: '#showtoolbar'
+
+        ,defaultToolbar: ['filter']
+
+        ,cellMinWidth: 80
+
+        ,title: '通道账号'
+
+        ,cols: [[
+
+            {type:'numbers',title: 'ID',width:70}
+
+            ,{field:'bieming', title:'账号别名',width:120}
+
+            ,{field:'shangjianame', title:'所属商家',width:120}
+
+            ,{field:'id', title:'当前通道' ,templet:'#showpayapiname',width:120}
+
+            ,{field:'memberid', title:'商户号',width:120}
+
+            // ,{field:'cbfeilv', title:'成本费率',sort: true, templet:'#showaccountcbfeilv'}
+
+            // ,{field:'feilv', title:'用户费率',sort: true , templet:'#showuseraccountfeilv'}
+
+            ,{field:'money', title:'总限额',sort: true,width:100}
+
+             ,{field:'tongdaoxiane', title:'当前通道限额',sort: true , templet:'#showpayapimoney',width:130}
+
+            ,{field:'order_cbfeilv', title:'交易成本费率',sort: true , templet:'#order_cbfeilv',width:130}
+
+            ,{field:'settle_cbfeilv', title:'结算成本费率',sort: true , templet:'#settle_cbfeilv',width:130}
+
+            // 2019-2-11 任梦龙：将会员修改为用户
+             ,{field:'userxiane', title:'当前用户限额',sort: true , templet:'#showuserpayapimoney',width:130}
+
+            ,{field:'id', title:'用户到账方案',templet:'#showusermoneyclass',width:130}
+
+            ,{field: 'id', title: '操作', templet: '#caozuo',fixed:'right',width:70}
+
+        ]]
+
+         ,page: true
+
+        ,text: {
+
+            none: '无数据'
+
+        }
+
+        ,method: 'post'
+
+    });
+
+        //监听锁定操作
+
+});
+
+function searchbutton(){
+
+    layui.use('table',function(){
+
+
+
+       tableIns.reload({
+
+         where: {
+
+           bieming: $("#bieming").val()
+           ,memberid: $("#memberid").val()
+           ,account: $("#account").val()
+           ,payapishangjiaid: $("#payapishangjiaid").val()
+           ,moneytypeclassid: $("#moneytypeclassid").val()
+           ,status: $("#status").val()
+
+         }
+
+         ,page: {
+
+           curr: 1
+
+         }
+
+       });
+
+
+
+    });
+
+  }
+
+function huoqudata(id){
+
+    /******************************************************************************/
+    ajaxurl = $("#PayapiAccountList").attr("houquurl");
+    datastr = "id=" + id + "&payapiid=" + $("#PayapiAccountList").attr("payapiid");
+    var money = 0;
+    $.ajax({
+        type:'POST',
+        url:ajaxurl,
+        data:datastr,
+        dataType:'text',
+       async:false,
+        success:function(str){
+            money = str;
+
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+        }
+    });
+    return money;
+    /*****************************************************************************/
+}
+
+function y_admin_show2(title, url, w, h) {
+    if (title == null || title == '') {
+        title = false;
+    }
+    ;
+    if (url == null || url == '') {
+        url = "404.html";
+    }
+    ;
+    if (w == null || w == '') {
+        w = ($(window).width() * 0.9);
+    }
+    ;
+    if (h == null || h == '') {
+        h = ($(window).height() - 50);
+    }
+    ;
+    $.post(url,function (data) {
+        if(data.status == 'no'){
+            layer.msg(data.msg,{icon:5,time:1500});
+        }else{
+            layer.open({
+                type: 2,
+                area: [w + 'px', h + 'px'],
+                fix: false, //不固定
+                maxmin: false,
+                shadeClose: true,
+                shade: 0.4,
+                title: title,
+                content: url
+            });
+        }
+
+    });
+
+}
+
+</script>
+<style>
+  .crumbs{
+    height: 40px;
+    line-height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom: 1px solid #e5e5e5
+  }
+</style>

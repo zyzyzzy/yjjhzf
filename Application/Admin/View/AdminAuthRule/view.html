@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看三级菜单</title>
+    <include file="BaseTemplate:includecssjs" />
+    <script src="/Public/Admin/js/<{$Think.ACTION_NAME}>.js"></script>
+</head>
+<body>
+<button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'viewAdminOpt')"
+        ajaxurl="<{:U('delAllAdminMenu')}>"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+<table class="layui-hide" id="viewAdminOpt" layui-data="{id:'viewAdminOpt'}" dataurl="<{:U('loadAdminOptList')}>?pid=<{$id}>"></table>
+<!--菜单名称-->
+<script type="text/html" id="showmenutitle">
+    {{d.menu_title}}
+</script>
+
+<!--控制器名称-->
+<script type="text/html" id="showcontroller">
+    {{#  if(d.controller){ }}
+    {{d.controller}}
+    {{#  } else { }}
+
+    {{#  } }}
+</script>
+
+<!--方法名称-->
+<script type="text/html" id="showaction">
+    {{#  if(d.action){ }}
+    {{d.action}}
+    {{#  } else { }}
+
+    {{#  } }}
+</script>
+
+<script type="text/html" id="caozuo">
+    <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("MenuEdit")}>?id={{d.id}}',800,500)">
+    <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+    </i>
+    </a>
+    <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('MenuDel')}>">
+        <i class="layui-icon">
+                 <span class="layui-badge layui-bg-danger" >
+                     <i class="layui-icon">&#xe640;</i>
+                 </span>
+        </i>
+    </a>
+</script>
+
+</body>
+</html>

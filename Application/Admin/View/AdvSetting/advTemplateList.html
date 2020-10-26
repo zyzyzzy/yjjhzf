@@ -1,0 +1,81 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">广告模板列表</block>
+<block name="nav">
+    <a href="javascript:;">交易设置</a>
+    <a><cite>广告模板</cite></a>
+</block>
+<block name="search">
+    <input type="text" name="title" id="title" placeholder="标题" autocomplete="off" class="layui-input searchstr">
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'advTemplateList')" ajaxurl="<{:U('delAll')}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加广告模板','<{:U("advTemplateAdd")}>',800,600)"><i class="layui-icon">&#xe61f;</i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="advTemplateList" layui-data="{id:'advTemplateList'}" dataurl="<{:U('loadAdvTemplateList')}>"></table>
+    <script type="text/html" id="default">
+        <input type="checkbox" name="default" ajaxurl="<{:U('editDefault')}>" value="{{d.id}}"
+        lay-skin="switch" lay-text="默认|普通" lay-filter="defaultcheckbox" {{ d.default == 1 ? 'checked' : '' }}>
+    </script>
+    <script type="text/html" id="pc_img">
+        <a onclick="javascript:enlargePc('/{{d.pc_img_name}}')"><img src="/{{d.pc_img_name}}" alt="" style="height: 100%;"></a>
+    </script>
+    <script type="text/html" id="wap_img">
+        <a onclick="javascript:enlargeWap('/{{d.wap_img_name}}')"><img src="/{{d.wap_img_name}}" alt="" style="height: 100%;"></a>
+    </script>
+    <script type="text/html" id="caozuo">
+        <a title="编辑" href="javascript:;" onclick="y_admin_show('编辑','<{:U("advTemplateEdit")}>?id={{d.id}}',800,600)">
+            <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+            </i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('templateDel')}>">
+            <i class="layui-icon">
+                 <span class="layui-badge layui-bg-danger" >
+                      <i class="layui-icon">&#xe640;</i>
+                 </span>
+            </i>
+        </a>
+    </script>
+    <script>
+        //图片放大
+        function enlargePc(src) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type:1,
+                    area: ['900px', '550px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '模板图片',
+                    shadeClose:true,
+                    content: '<div style="text-align: center;width: 100%;height: 100%;"><img src="'+src+'" alt="" style="width: 100%;"></div>'
+                });
+            });
+        }
+        function enlargeWap(src) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.open({
+                    type:1,
+                    area: ['550px', '700px'],
+                    fix: false, //不固定
+                    maxmin: false,//不显示最大最小化
+                    // closeBtn: 0,//不显示关闭按钮
+                    shade: 0.4,
+                    title: '模板图片',
+                    shadeClose:true,
+                    content: '<div style="text-align: center;width: 100%;height: 100%;"><img src="'+src+'" alt="" style="width: 100%;"></div>'
+                });
+            });
+        }
+    </script>
+</block>
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算日期设置</title>
+    <include file="BaseTemplate:includecssjs"/>
+    <style>
+        .layui-form-item{
+            margin-bottom: 25px;
+        }
+        .layui-form-label{
+            width: 80px;
+        }
+
+        .layui-input{
+            width: 20%;
+        }
+        .date_div{
+            margin-bottom: 2%;
+        }
+        .delete{
+            color: #000;
+            background-color: #fff;
+            padding: 0 8px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #e6e6e6;
+            margin-left: 2%;
+        }
+        .delete:hover{
+            color: #000;
+        }
+        .date{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <div>
+        <form class="layui-form"  method="post" onsubmit="return false">
+            <input type="hidden" name="user_id" value="0">
+            <div class="layui-form-item">
+                <h3><span style="color: #006DCC;font-weight: bold;font-size: 15px;">排除节假日</span><span style="color: #F32043;font-size: 13px;">(默认所有周六、周日为节假日 ，这里可以排除指定的周六或周日,将其作为非节假日)</span></h3>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">排除的日期</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                        <input style="width: 100%;" type="text" placeholder="请选择要排除的日期" name="day_remove" id="day_remove" autocomplete="off" class="layui-input addeditinput"/>
+                    </div>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <button onclick="javascript: FormSumit('<{:U("Settle/settleDateEdit")}>?type=1','',true,false);" class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item layui-col-md6">
+            <volist name="remove_date" id="vo">
+                <div class="layui-col-md3 date_div">
+                    <div class="layui-input-inline">
+                        <span class="date"><{$vo.date}></span><button onclick="javascript: FormSumit('<{:U("Settle/settleDateDelete")}>?id=<{$vo.id}>','',true,false);" class="layui-btn delete">删除</button>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+
+    <div style="margin-top: 8%;">
+        <form class="layui-form"  method="post" onsubmit="return false">
+            <input type="hidden" name="user_id" value="0">
+            <div class="layui-form-item">
+                <h3><span style="color: #006DCC;font-weight: bold;font-size: 15px;">添加节假日</span><span style="color: #F32043;font-size: 13px;">(添加除周六、周日以外的其它日期为节假日)</span></h3>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">添加的日期</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                        <input style="width: 100%;" type="text" placeholder="请选择要添加的节假日" name="day_holiday" id="day_holiday" autocomplete="off" class="layui-input addeditinput"/>
+                    </div>
+                    <label class="layui-form-label">节假日说明</label>
+                    <div class="layui-input-inline" style="width: 160px;">
+                        <input style="width: 100%;" type="text" placeholder="例：春节" name="remarks" id="remarks" autocomplete="off" class="layui-input addeditinput"/>
+                    </div>
+                    <div class="layui-input-inline" style="width: 150px;">
+                        <button onclick="javascript: FormSumit('<{:U("Settle/settleDateEdit")}>?type=2','',true,false);" class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item layui-col-md8">
+            <volist name="holiday_date" id="val">
+                <div class="layui-col-md3 date_div">
+                    <div class="layui-input-inline" style="width: 220px;">
+                        <span class="date"><{$val.date}><span style="color: #1AA093;"> <if condition="$val['remarks']">(<{$val.remarks}>)</if> </span></span><button onclick="javascript: FormSumit('<{:U("Settle/settleDateDelete")}>?id=<{$val.id}>','',true,false);" class="layui-btn delete">删除</button>
+                    </div>
+                </div>
+            </volist>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    //加载载日期插件
+    layui.use('laydate', function(){
+
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+
+        laydate.render({
+
+            elem: '#day_remove' //指定元素
+
+            ,type: 'date'
+            ,calendar: true
+
+        });
+
+        //执行一个laydate实例
+
+        laydate.render({
+
+            elem: '#day_holiday' //指定元素
+
+            ,type: 'date'
+            ,calendar: true
+
+        });
+
+
+    });
+
+</script>

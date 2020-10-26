@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>银联界面</title>
+    <link rel="stylesheet" href="/Public/pay/css/Unionpay01.css">
+    <script src="/Public/js/jquery.min.js"></script>
+</head>
+</head>
+<body>
+<div class="top wrap">
+    <img src="/Public/pay/images/y_pay.jpg" alt="">
+</div>
+<div class="content">
+    <p class="p1">¥<{$amount}></p>
+    <img class="erweima" src="/<{$imgurl}>" alt="">
+    <p>订单号: <span><{$userordernumber}></span></p>
+    <div id="time">
+
+    </div>
+</div>
+<div class="bottom wrap">
+    <div class="clearfix">
+        <img src="/Public/pay/images/sys_y.png" alt="">
+        <div class="box">
+            <p>请使用支付宝[扫一扫]</p>
+            <p><span>请勿修改备注及支付金额,否则无法到账</span></p>
+        </div>
+    </div>
+</div>
+<script>
+    var m = 2;
+    var s =59;
+    var myTime = document.getElementById("time");
+    oTime();
+    setInterval(oTime,1000);
+    function oTime() {
+        myTime.innerHTML = "<p><span>00</span>&nbsp;&nbsp;小时</p><p><span>"+ (m<10 ? "0"+m : m) +"</span>&nbsp;&nbsp;分钟</p><p><span>"+ (s<10 ? "0"+s : s) +"</span>&nbsp;&nbsp;秒</p>"
+        if(s % 5 == 0){
+            $.ajax({
+                type : "POST", //提交方式
+                url : '<{$queryorderurl}>',//路径
+                data : {orderid:'<{$sysordernumber}>'},//数据，这里使用的是Json格式进行传输
+                dataType:'json',
+                success : function(result) {//返回数据根据结果进行相应的处理
+                    console.log(result);
+                    if(result.status == "ok"){
+                        $('.erweima').attr('src','/Public/pay/images/chenggong.png');
+                        clearInterval(t);
+                    }else{
+                        if(m==0&&s==0){
+                            $('.erweima').attr('src','/Public/pay/images/shibai.png');
+                            clearInterval(t)
+                        }else if(m==0&&s>0){
+                            s--;
+                        }else if(m>0&&s!=0){
+                            s--;
+                        }else if(m>0&&s==0){
+                            m--;
+                            s=59;
+                        }
+                    }
+                }
+            });
+        }else{
+            if(m==0&&s==0){
+                $('.erweima').attr('src','/Public/pay/images/shibai.png');
+                clearInterval(t)
+            }else if(m==0&&s>0){
+                s--;
+            }else if(m>0&&s!=0){
+                s--;
+            }else if(m>0&&s==0){
+                m--;
+                s=59;
+            }
+        }
+    }
+</script>
+</body>
+</html>

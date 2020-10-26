@@ -1,0 +1,118 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    margin: 0;
+    color: #111;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    position: relative
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(255, 0, 0, 0)
+}
+
+input, textarea, button, select, a {
+    -webkit-tap-highlight-color: transparent
+}
+
+h1, h2, h3 {
+    font-weight: normal
+}
+
+h1 {
+    margin: 30px 0 5px;
+    font-size: 24px;
+    line-height: 32px;
+    word-break: break-all
+}
+
+h2 {
+    color: #aaa;
+    margin: 0 0 15px;
+    font-size: 15px
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+a {
+    color: #42bd56;
+    text-decoration: none
+}
+
+cite,em,i{ font-style: normal;}
+.clearfix:after{ content: " "; display: block; height: 0px; font-size: 0; clear: both; visibility: hidden;}
+.fl{ float: left;}
+.fr{ float: right;}
+
+.page{ max-width: 640px; margin: 0 auto;}
+.comm-bg-gray{ background: #efefef; }
+.comm-bg-white{ background: #fff;}
+
+.pay-wrapper{ padding-top: .625rem;}
+
+.pay-wrapper .input-plane{ margin: 0 .625rem; padding-bottom: 1.25rem;}
+
+.pay-wrapper .banner-con{ width: 100%; text-align: center; position: relative;}
+.pay-wrapper .banner-con img{ display: block; max-width: 100%;}
+
+.pay-wrapper .banner-con .logo{ width: 100%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+.pay-wrapper .banner-con .logo img{ height: 2.875rem; margin: 0 auto;}
+.pay-wrapper .banner-con cite{ display: block; font-size: .875rem; padding-top: .25rem; color: #fff;}
+
+.pay-wrapper .enter-num{ padding: 1.25rem 1.25rem 0;}
+.pay-wrapper .enter-num h4{ color: #5079a7;}
+
+.pay-wrapper .enter-num div input{ border: 0 none; outline: none;}
+.pay-wrapper .enter-num .en-money{ height: 50px; border-bottom: 1px solid #efefef; color: #353535; margin-top: .625rem; margin-bottom: 15px; position: relative;}
+.pay-wrapper .enter-num .en-money:before{ content: "￥"; display: inline-block; font-size: 30px; position: absolute; top: 3px;}
+.pay-wrapper .enter-num .en-money input{ width: 100%; padding-left: 32px; height: 50px; font-size: 30px; box-sizing: border-box;}
+
+.pay-wrapper .enter-num .en-remark{ color: #5079a7;}
+.pay-wrapper .enter-num .en-remark input{ width: 100%;}
+
+
+/* 数字键盘 */
+.mykb-box{
+    width: 100%;
+    background: #fff;
+    user-select: none;
+    -ms-user-select: none;
+    /*position:absolute;*/
+    position:fixed;
+    left: 0;
+    /*bottom: 0;*/
+    /*display: none;*/
+}
+.mykb-box .num-key{ width: 75%;}
+.mykb-box .delete-sure{ width: 25%;}
+.mykb-box .num-key li{
+    width:33.3%;
+    height:70px;
+    line-height:70px;
+    text-align: center;
+    font-weight:bold;
+    float:left;
+    color:#1e1e1e;
+    font-size:1.5rem;
+    cursor:pointer;
+    box-sizing: border-box;
+    border-top: 1px solid #d2d2d2;
+    border-right: 1px solid #d2d2d2;
+}
+
+.mykb-box .num-key .ling{ width: 66.6%;}
+
+.delete-sure li{ width: 100%; border-top: 1px solid #d2d2d2; box-sizing: border-box; cursor: pointer;}
+.delete-sure .del{ height:70px; position: relative;}
+.delete-sure .del img{ display: block; width: 1.875rem; height: 1.25rem; margin: 1.5625rem auto 0;}
+.delete-sure .sure{ position: relative;}
+.delete-sure .sure button{ width: 100%; height: 210px; border-top: 1px solid #d2d2d2;  background: #c9c9c9; color: #fff; font-size: 1.25rem; text-align: center; border: 0 none; box-sizing: border-box;}
+/*.delete-sure .sure span{ position: absolute; top: 0; left: 0; z-index: 10; display: block; color:#fff; font-size: 1.25rem;}padding-top: 4.375rem;*/
+.delete-sure .sure button:visited,.delete-sure .sure button:focus{ border: 0 none;}
+.delete-sure .blue-bg button{ background: #0b9cf2;}

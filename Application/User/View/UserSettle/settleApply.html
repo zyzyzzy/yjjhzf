@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>结算申请</title>
+    <include file="BaseTemplate:includecssjs"/>
+</head>
+<body>
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">用户后台</a>
+        <a href="">结算管理</a>
+        <a><cite>结算申请</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px"><i class="layui-icon">&#xe669;</i></i></a>
+</div>
+<div class="x-body">
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            <li class="layui-this">单笔结算</li>
+            <!--<li>批量结算</li>-->
+        </ul>
+        <div class="layui-tab-content" style="height:auto;">
+            <div class="layui-tab-item layui-show">
+                <iframe src="<{:U('applyInfo')}>" style="width: 100%; height: 700px; border: 0px;"></iframe>
+            </div>
+            <div class="layui-tab-item">
+                <iframe src="<{:U('manySettleApply')}>" style="width: 100%; height: 600px; border: 0px;"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

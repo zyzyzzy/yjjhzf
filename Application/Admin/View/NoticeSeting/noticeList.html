@@ -1,0 +1,44 @@
+<extend name="BaseTemplate:List"/>
+<block name="title">公告列表</block>
+<block name="nav">
+    <a href="javascript:;">公告管理</a>
+    <a><cite>公告发布</cite></a>
+</block>
+<block name="search">
+    <div class="layui-input-inline">
+        <select name="user_id" id="user_id" class="layui-select" lay-search>
+            <option value="">所属用户</option>
+            <option value="0">所有用户</option>
+            <volist name="user_list" id="user">
+                <option value="<{$user['id']}>"><{$user["username"]}></option>
+            </volist>
+        </select>
+    </div>
+</block>
+<block name="xblock">
+    <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAllActualInfo(this,'noticeList')"
+                ajaxurl="<{:U("delAllNotice")}>"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="y_admin_show('添加公告','<{:U("addNotice")}>',800,500)"><i class="layui-icon"></i>添加</button>
+        <span class="x-right" style="line-height:40px"></span>
+    </xblock>
+</block>
+<block name="table_script">
+    <table class="layui-hide" id="noticeList" layui-data="{id:'noticeList'}" dataurl="<{:U("loadNoticeList")}>"></table>
+    <script type="text/html" id="caozuo">
+        <a title="编辑" onclick="y_admin_show('编辑','<{:U("editNotice")}>?id={{d.id}}',800,500)" href="javascript:;">
+        <i class="layui-icon">
+                <span class="layui-badge layui-bg-green">
+                    <i class="layui-icon">&#xe642;</i>
+                </span>
+        </i>
+        </a>
+        <a onclick="y_admin_show('查看公告','<{:U("seeNoitice")}>?id={{d.id}}',800,500)" title="查看" href="javascript:;">
+        <i class="layui-icon"><span class="layui-badge layui-bg-blue"><i class="layui-icon">&#xe606;</i> </span></i>
+        </a>
+        <a title="删除" onclick="delete_info(this,{{d.id}})" href="javascript:;" ajaxurl="<{:U('delNotice')}>">
+            <i class="layui-icon"><span class="layui-badge layui-bg-danger"><i class="layui-icon">&#xe640;</i></span></i>
+        </a>
+    </script>
+</block>
+

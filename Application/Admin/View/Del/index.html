@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户清除数据 - 易吉聚合支付后台用户系统</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" href="/Public/Admin/blue/doubleDate.css" />
+    <link rel="stylesheet" href="/Public/Admin/del/css/comm.css?v=0412">
+    <link rel="stylesheet" href="/Public/Admin/del/css/index.css?v=0412">
+
+    <script type="text/javascript" src="/Public/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/del/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/Public/Admin/del/js/doubleDate2.0.js"></script>
+
+    <script src="/Public/lib/layui/layui.js" charset="utf-8"></script>
+
+    <script>
+
+        $(function () {
+            $(".doubledate").kuiDate({
+                className: "doubledate",
+                isDisabled: "1"
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div style="padding:0 50px;">
+    <form id="form" loadurl="<{:U('del/del')}>" >
+    <!-- 日期筛选 -->
+    <div class="operating-panel clearfix">
+        <div class="date-select fl">
+            <span class="fl filter">筛选日期：</span>
+            <ul class="iptgroup fl">
+                <li><input name="start" type="text" readonly="readonly" class="doubledate ipticon"></li>
+                <li>-</li>
+                <li><input name="end" type="text" readonly="readonly" class="doubledate ipticon"></li>
+            </ul>
+            <a href="JavaScript:;" class="reset-btn fl" title="重置">重置</a>
+        </div>
+        <div class="btn-box fr">
+            <label><input type="checkbox" class="checkall">全选</label>
+            <button type="button" onclick="del()" class="delete-btn" title="确认删除">确认删除</button>
+        </div>
+    </div>
+
+
+    <!-- 数据表  class="form-check"-->
+
+    <div class="date-list">
+        <ul>
+            <li><label><input type="checkbox" name="table[]" value="adminloginerror">管理员登陆错误记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="adminloginrecord">管理员登录记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="adminoperaterecord">管理员操作记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="delayunfreeze">冻结金额延期记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="manualunfreeze">订单冻结金额手动解冻记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="moneychange">资金变动记录表</label></li>
+
+            <li><label><input type="checkbox" name="table[]" value="ordercommission">订单提成记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="ordercomplaint">订单投诉处理过程记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="orderfreezemoney">订单冻结金额明细表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="orderlog">订单日志表</label></li>
+
+            <li><label><input id="order" type="checkbox" name="table[]" value="order">交易记录表</label>
+                <ul class="child-con">
+                    <li><label><input type="checkbox" name="table[]" value="ordermoney">订单金额表</label></li>
+                    <li><label><input type="checkbox" name="table[]" value="orderother">交易扩展信息表</label></li>
+                    <li><label><input type="checkbox" name="table[]" value="orderreturncontent">订单返回内容信息表</label></li>
+                    <li><label><input type="checkbox" name="table[]" value="ordershorturl">返回二维码路径转换表</label></li>
+                    <li><label><input type="checkbox" name="table[]" value="ordersubmitparameter">订单提交参数记录表</label></li>
+                    <li><label><input type="checkbox" name="table[]" value="userparameter">用户提交参数信息表</label></li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+
+            <li><label><input type="checkbox" name="table[]" value="orderunfreezetask">冻结订单自动解冻任务请求解冻过程</label></li>
+            <li><label><input type="checkbox" name="table[]" value="secretkeyrecord">修改密钥记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="userinvitecode">管理员生成邀请码表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="userloginerror">用户登录错误信息表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="userloginrecord">用户登录记录表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="usernotice">管理员发布公告表</label></li>
+            <li><label><input type="checkbox" name="table[]" value="useroperaterecord">用户操作记录表</label>
+            <li><label><input type="checkbox" name="table[]" value="userworkorder">用户工单管理表</label>
+            <li><label><input type="checkbox" name="table[]" value="userworkordercontent">用户工单沟通内容表</label>
+            <li><label><input type="checkbox" name="table[]" value="userworkorderhelp">用户工单帮助文档表</label>
+            <li><label><input  id="settle" type="checkbox" name="table[]" value="settle">结算记录表</label>
+                <ul class="child-con">
+                    <li><label><input type="checkbox" name="table[]" value="settlemoney">结算金额表</label></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    </form>
+</div>
+
+
+<script>
+    $(function () {
+        $(".child-con").hide();
+        var s = $(".date-list li input");
+    });
+    $("#order").click(function(){
+        var order = $('#order');
+        var t = $(".child-con:eq(0) li input");
+        if(order.attr('checked')==true){
+            $(".child-con:eq(0)").show();
+            t.each(function(i){
+                $(this).attr('checked',true);
+            });
+        }else{
+            $(".child-con").eq(0).hide();
+            t.each(function(i){
+                $(this).attr('checked',false);
+            });
+        }
+    });
+    $("#settle").click(function(){
+        var settle = $('#settle');
+        var t = $(".child-con:eq(1) li input");
+        if(settle.attr('checked')==true){
+            $(".child-con:eq(1)").show();
+            t.each(function(i){
+                $(this).attr('checked',true);
+            });
+        }else{
+            $(".child-con").eq(1).hide();
+            t.each(function(i){
+                $(this).attr('checked',false);
+            });
+        }
+    });
+
+    $(".checkall").click(function () {
+        if (this.checked) {
+            $(".date-list :checkbox").attr("checked", true);
+            $(".child-con").show();
+        } else {
+            $(".date-list :checkbox").attr("checked", false);
+        }
+    });
+
+    layui.use(['layer'], function(){
+        var layer = layui.layer;
+    });
+
+    function del(){
+        layer.confirm('清除数据前,请做好数据备份!',function(){
+            var index = layer.load();
+            $.ajax({
+                url:$('form').attr('loadurl'),
+                type:'post',
+                dataType:'json',
+                data:$('#form').serialize(),
+                success:function(response){
+                    layer.closeAll('loading'); //关闭加载层
+                    if(response.status=='success'){
+                        layer.msg(response.msg, {icon: 1, time: 1500}, function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(response.msg, {icon: 5, time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading'); //关闭加载层
+                    layer.msg('操作错误,请检查');
+                }
+            });
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

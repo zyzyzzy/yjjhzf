@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加管理员</title>
+    <include file="BaseTemplate:includecssjs"/> 
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form layui-form-pane" method="post" onsubmit="return false">
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="user_name" id="userName" placeholder="请输入管理员名称"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-1-21 任梦龙：添加管理员别名-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理员别名</label>
+            <div class="layui-input-block">
+                <input type="text" name="bieming" id="bieming" placeholder="请输入管理员别名"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+        </div>
+        <!--2019-2-28 任梦龙：添加管理密码，并将登录密码和管理密码默认设置为123456-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" id="passWord" placeholder="请输入登录密码" value="123456"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+
+        </div>
+        <!--2019-1-21 任梦龙：添加管理员确认密码-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">管理密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="manage_pwd" id="manage_pwd" placeholder="请输入管理密码" value="123456"
+                       class="layui-input addeditinput" autocomplete="off">
+            </div>
+            <div class="layui-form-mid layui-word-aux">登录密码默认设置为:123456;管理密码默认设置为:123456</div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="javascript: FormSumit('<{:U("createAdminUser")}>');">确认添加</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

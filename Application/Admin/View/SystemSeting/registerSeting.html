@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册设置</title>
+    <include file="BaseTemplate:includecssjs" />
+    <style>
+        .select_style .layui-input-inline {
+            width: 90px;
+        }
+    </style>
+</head>
+<body class="x-body">
+<form class="layui-form" action="" method="post" onsubmit="return false">
+    <input type="hidden" name="id" value="<{$website['id']}>" class="addeditinput">
+    <div class="layui-form-item">
+        <label class="layui-form-label">注册设置</label>
+        <div class="layui-input-inline select_style">
+            <select name="reg_status" class="layui-input addeditinput">
+                <option value="">请选择</option>
+                <volist name="list" id="vo">
+                    <option value="<{$vo.id}>" <if condition="$website['reg_status'] eq $vo['id']">selected</if> ><{$vo.statusname}></option>
+                </volist>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux">设置用户在注册时的默认状态,可不设置</div>
+    </div>
+    <include file="BaseTemplate:verifycode"/>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button onclick="javascript: FormSumit('<{:U("editRegSeting")}>','',true,false);" class="layui-btn"
+            lay-submit lay-filter="formDemo">确认修改</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
